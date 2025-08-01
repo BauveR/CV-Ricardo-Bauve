@@ -1,10 +1,16 @@
-import { MainContent } from "./components /MainContent";
+// src/App.tsx
+import { BrowserRouter, Routes, Route } from 'react-router-dom';
+import { Welcome } from './components /welcome/Welcome';
+import { MainContent } from './components /MainContent';
 
 const App = () => {
   return (
-    <div className="w-screen h-screen overflow-auto bg-white flex justify-center">
-      <MainContent />
-    </div>
+    <BrowserRouter>
+      <Routes>
+        <Route path="/" element={<Welcome />} />
+        <Route path="/presupuesto" element={<MainContent />} />
+      </Routes>
+    </BrowserRouter>
   );
 };
 
