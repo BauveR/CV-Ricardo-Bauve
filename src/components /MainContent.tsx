@@ -5,11 +5,11 @@ import { Skills } from "./Skills";
 import { Experience } from "./Experience";
 
 export const MainContent = () => (
-  <div className="w-full max-w-[900px] mx-auto px-6 flex flex-col gap-6 mt-8">
+  <div className="w-full max-w-[900px] mx-auto px-6 flex flex-col gap-6 mt-8 mb-8">
     <HeaderProfile
       fullName="Ricardo Bautista Velázquez"
       imageUrl="src/assets/IMG_6919.png"
-      // No hace falta pasar el badge si es el default
+ 
     />
 
     <Contact

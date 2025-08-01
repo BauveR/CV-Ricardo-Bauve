@@ -2,7 +2,7 @@ import { motion } from "framer-motion";
 
 export const Experience = () => (
   <motion.div
-    className="bg-gray-100 rounded-4xl p-10 mt-3"
+    className="bg-gray-100 rounded-[3.5rem] p-10 mt-3"
     initial="hidden"
     animate="visible"
     variants={{
@@ -68,7 +68,7 @@ export const Experience = () => (
           {exp.place && <p className="italic">{exp.place}</p>}
           {exp.desc && <p>{exp.desc}</p>}
           {exp.extra && (
-            <p className="text-pink-600 font-semibold">{exp.extra}</p>
+            <p className=" mt-8 text-2xl sm:text-2xl md:text-4xl font-bold bg-gradient-to-r from-pink-700 to-purple-800 bg-clip-text text-transparent">{exp.extra}</p>
           )}
         </motion.div>
       ))}

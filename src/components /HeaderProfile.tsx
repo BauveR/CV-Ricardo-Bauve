@@ -65,7 +65,7 @@ export const HeaderProfile = ({
       </div>
 
       <motion.div
-        className="bg-pink-600 text-white text-sm font-bold px-4 py-2 rounded-full shadow cursor-default"
+        className="bg-pink-600 text-white text-xs font-bold px-4 py-2 rounded-full shadow cursor-default"
         initial={{ opacity: 0, y: 20, scale: 0.95 }}
         animate={{ opacity: 1, y: 0, scale: 1 }}
         whileHover={{

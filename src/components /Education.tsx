@@ -12,7 +12,7 @@ type EducationProps = {
 
 export const Education = ({ studies }: EducationProps) => (
   <motion.div
-    className="bg-gray-100 rounded-4xl p-10 mt-3"
+    className="bg-gray-100 rounded-[4.5rem] p-10 mt-3"
     initial="hidden"
     animate="visible"
     variants={{
