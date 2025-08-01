@@ -6,11 +6,10 @@ import { Experience } from "./Experience";
 
 export const MainContent = () => (
   <div className="w-full max-w-[900px] mx-auto px-6 flex flex-col gap-6 mt-8">
-    {/* Header con datos */}
     <HeaderProfile
       fullName="Ricardo Bautista Velázquez"
       imageUrl="src/assets/IMG_6919.png"
-      badge="✅ Documentación en regla y permiso de trabajo"
+      // No hace falta pasar el badge si es el default
     />
 
     <Contact

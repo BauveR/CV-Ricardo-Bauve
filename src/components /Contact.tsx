@@ -1,49 +1,72 @@
+import { motion } from "framer-motion";
 import { GlassButton } from "./Button";
 
 type ContactProps = {
-    email: string;
-    phone: string;
-    linkedin: string;
-    web: string;
-  };
-  
-  export const Contact = ({ email, phone, linkedin, web }: ContactProps) => (
-    <div className="flex flex-wrap gap-1 text-s">
-      <a
-        href={`https://${linkedin}`}
-        target="_blank"
-        rel="noopener noreferrer"
-      >
-        <GlassButton className="flex items-center gap-2 text-sm px-4 py-2">
-          <span className="font-semibold">in</span>
-          <span>{linkedin}</span>
-        </GlassButton>
-      </a>
-  
-      <a
-        href={`https://${web}`}
-        target="_blank"
-        rel="noopener noreferrer"
-      >
-        <GlassButton className="flex items-center gap-2 text-sm px-4 py-2">
-          <span className="font-semibold">🌐</span>
-          <span>{web}</span>
-        </GlassButton>
-      </a>
-  
-      <a href={`tel:${phone}`}>
-        <GlassButton className="flex items-center gap-2 text-sm px-4 py-2">
-          <span className="font-semibold">📞</span>
-          <span>{phone}</span>
-        </GlassButton>
-      </a>
-  
-      <a href={`mailto:${email}`}>
-        <GlassButton className="flex items-center gap-2 text-sm px-4 py-2">
-          <span className="font-semibold">✉️</span>
-          <span>{email}</span>
-        </GlassButton>
-      </a>
-    </div>
+  email: string;
+  phone: string;
+  linkedin: string;
+  web: string;
+};
+
+export const Contact = ({ email, phone, linkedin, web }: ContactProps) => {
+  const items = [
+    {
+      href: `https://${linkedin}`,
+      label: "in",
+      value: linkedin,
+    },
+    {
+      href: `https://${web}`,
+      label: "🌐",
+      value: web,
+    },
+    {
+      href: `tel:${phone}`,
+      label: "📞",
+      value: phone,
+    },
+    {
+      href: `mailto:${email}`,
+      label: "✉️",
+      value: email,
+    },
+  ];
+
+  return (
+    <motion.div
+      className="flex flex-wrap gap-2 mt-4 text-s"
+      initial="hidden"
+      animate="visible"
+      variants={{
+        hidden: {},
+        visible: {
+          transition: {
+            staggerChildren: 0.15,
+            delayChildren: 0.6, // espera después de HeaderProfile
+          },
+        },
+      }}
+    >
+      {items.map((item, index) => (
+      <motion.a
+      key={index}
+      href={item.href}
+      target="_blank"
+      rel="noopener noreferrer"
+      whileHover={{ y: -2, scale: 1.05 }}
+      transition={{ type: "spring", stiffness: 300, damping: 15 }}
+      variants={{
+        hidden: { opacity: 0, y: 10 },
+        visible: { opacity: 1, y: 0 },
+      }}
+    >
+    
+          <GlassButton className="flex items-center gap-2 text-sm px-4 py-2">
+            <span className="font-semibold">{item.label}</span>
+            <span>{item.value}</span>
+          </GlassButton>
+        </motion.a>
+      ))}
+    </motion.div>
   );
-  
+};
