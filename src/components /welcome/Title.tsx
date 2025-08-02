@@ -4,7 +4,7 @@ export const Title = () => (
   <motion.div
     initial={{ opacity: 0, scale: 0.8, filter: 'blur(10px)' }}
     animate={{ opacity: 1, scale: 1, filter: 'blur(0px)' }}
-    transition={{ duration: 1.2, ease: 'easeOut' }}
+    transition={{ delay: 0.8, duration: 1.2, ease: 'easeOut' }}
     className="mb-2 mx-auto text-center"
     style={{
       fontFamily: "'Lexend', sans-serif",
@@ -13,14 +13,14 @@ export const Title = () => (
       backgroundClip: 'text',
       color: 'transparent',
       fontSize: 'clamp(1rem, 9vw, 3.5rem)',
-      letterSpacing: '0.3em',
+      letterSpacing: '0.9rem',
       lineHeight: '1.2',
       padding: '0.5em 0',
       wordBreak: 'break-word',
     }}
   >
-    <span style={{ fontSize: '150%' }}>RICARDO</span>
+    <span style={{ fontSize: '130%' }}>RICARDO</span>
     <br />
-    <span style={{ fontSize: '80%' }}>BAUVE</span>
+    <span style={{ fontSize: '90%' }}>BAUVE</span>
   </motion.div>
 );

@@ -36,7 +36,7 @@ export const Skills = () => {
 
   return (
     <motion.div
-      className="bg-gray-100 rounded-[3.5rem] p-10 mt-3"
+      className="rounded-[4.5rem] p-10 mt-3 bg-white/30 backdrop-blur-md shadow-xl border border-white/30"
       initial="hidden"
       animate="visible"
       variants={{

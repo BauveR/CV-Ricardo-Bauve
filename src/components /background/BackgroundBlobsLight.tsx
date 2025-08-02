@@ -15,14 +15,14 @@ function useRandomAnimation(rangeX: number, rangeY: number) {
       while (isActive) {
         const x = getRandomPosition(rangeX);
         const y = getRandomPosition(rangeY);
-        const scale = Math.random() > 0.5 ? 1.5 : 1; // alterna el crecimiento
+        const scale = Math.random() > 0.5 ? 1.4 : 1;
 
         await controls.start({
           x,
           y,
           scale,
           transition: {
-            duration: Math.random() * 1.5 + 0.8, // 0.8s - 2.3s
+            duration: Math.random() * 2 + 1.5,
             ease: "easeInOut",
           },
         });
@@ -30,7 +30,6 @@ function useRandomAnimation(rangeX: number, rangeY: number) {
     };
 
     animate();
-
     return () => {
       isActive = false;
     };
@@ -39,36 +38,36 @@ function useRandomAnimation(rangeX: number, rangeY: number) {
   return controls;
 }
 
-export const BackgroundBlobs = () => {
-  // Similar rango de movimiento para simular "colisión"
-  const blob1 = useRandomAnimation(150, 150);
-  const blob2 = useRandomAnimation(130, 130);
-  const blob3 = useRandomAnimation(150, 150);
+export const BackgroundBlobsLight = () => {
+  // Rango amplio para cubrir toda la pantalla (aprox. 50vw / 50vh)
+  const blob1 = useRandomAnimation(700, 500); // más grande y amplio
+  const blob2 = useRandomAnimation(600, 600);
+  const blob3 = useRandomAnimation(700, 600);
 
   return (
-    <div className="fixed inset-0 -z-10 overflow-hidden">
-      {/* Blob grande */}
+    <div className="fixed inset-0 -z-10 overflow-hidden pointer-events-none">
+      {/* Blob muy grande */}
       <motion.div
-        className="absolute w-[600px] h-[600px] bg-purple-400 rounded-full blur-3xl opacity-40"
+        className="absolute w-[1200px] h-[1200px] bg-indigo-400 rounded-full blur-3xl opacity-40"
         initial={{ x: 0, y: 0, scale: 1 }}
         animate={blob1}
-        style={{ top: "20%", left: "25%" }}
+        style={{ top: "0%", left: "5%" }}
       />
 
       {/* Blob mediano */}
       <motion.div
-        className="absolute w-[400px] h-[400px] bg-pink-300 rounded-full blur-2xl opacity-40"
+        className="absolute w-[800px] h-[800px] bg-pink-200 rounded-full blur-3xl opacity-40"
         initial={{ x: 0, y: 0, scale: 1 }}
         animate={blob2}
-        style={{ top: "25%", left: "45%" }}
+        style={{ top: "40%", left: "60%" }}
       />
 
       {/* Blob pequeño */}
       <motion.div
-        className="absolute w-[300px] h-[300px] bg-blue-300 rounded-full blur-3xl opacity-40"
+        className="absolute w-[600px] h-[600px] bg-orange-300 rounded-full blur-3xl opacity-40"
         initial={{ x: 0, y: 0, scale: 1 }}
         animate={blob3}
-        style={{ top: "30%", left: "35%" }}
+        style={{ top: "70%", left: "30%" }}
       />
     </div>
   );
