@@ -5,13 +5,11 @@ type HeaderProfileProps = {
   firstNameClassName?: string;
   lastNameClassName?: string;
   imageUrl: string;
-  badge?: string;
 };
 
 export const HeaderProfile = ({
   fullName,
   imageUrl,
-  badge = "🇪🇸 Documentación en regla y permiso de trabajo",
   firstNameClassName = "text-2xl sm:text-3xl md:text-4xl font-bold bg-gradient-to-r from-pink-700 to-purple-800 bg-clip-text text-transparent",
   lastNameClassName = "text-2xl sm:text-3xl md:text-4xl font-bold bg-gradient-to-r from-pink-600 to-blue-800 bg-clip-text text-transparent",
 }: HeaderProfileProps) => {
@@ -20,7 +18,7 @@ export const HeaderProfile = ({
 
   return (
     <motion.div
-      className="flex justify-between items-start gap-4"
+      className="flex justify-start items-start gap-4"
       initial={{ opacity: 0, y: -20 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.6, ease: "easeOut" }}
@@ -63,19 +61,6 @@ export const HeaderProfile = ({
           </motion.span>
         </motion.h1>
       </div>
-
-      <motion.div
-        className="bg-blue-900 text-white text-xs font-bold px-4 py-2 rounded-full shadow cursor-default"
-        initial={{ opacity: 0, y: 20, scale: 0.95 }}
-        animate={{ opacity: 1, y: 0, scale: 1 }}
-        whileHover={{
-          scale: 1.05,
-          boxShadow: "0px 6px 15px rgba(0, 0, 0, 0.25)",
-        }}
-        transition={{ delay: 0.8, duration: 0.6, ease: "easeOut" }}
-      >
-        {badge}
-      </motion.div>
     </motion.div>
   );
 };
