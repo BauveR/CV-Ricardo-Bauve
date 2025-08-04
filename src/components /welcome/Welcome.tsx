@@ -21,7 +21,7 @@ export const Welcome = () => {
       {!fadeOut && (
         <motion.div
           className="fixed inset-0 min-h-screen bg-gradient-to-br
-           from-pink-600 to-indigo-900 flex flex-col items-center
+           from-zinc-400 to-stone-700 flex flex-col items-center
             justify-center p-4 overflow-hidden"
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}

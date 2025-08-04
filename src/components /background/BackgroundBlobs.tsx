@@ -49,7 +49,7 @@ export const BackgroundBlobs = () => {
     <div className="fixed inset-0 -z-10 overflow-hidden">
       {/* Blob grande */}
       <motion.div
-        className="absolute w-[600px] h-[600px] bg-purple-400 rounded-full blur-3xl opacity-40"
+        className="absolute w-[600px] h-[600px] bg-slate-300 rounded-full blur-3xl opacity-40"
         initial={{ x: 0, y: 0, scale: 1 }}
         animate={blob1}
         style={{ top: "20%", left: "25%" }}
@@ -57,7 +57,7 @@ export const BackgroundBlobs = () => {
 
       {/* Blob mediano */}
       <motion.div
-        className="absolute w-[400px] h-[400px] bg-pink-300 rounded-full blur-2xl opacity-40"
+        className="absolute w-[400px] h-[400px] bg-lime-400 rounded-full blur-2xl opacity-40"
         initial={{ x: 0, y: 0, scale: 1 }}
         animate={blob2}
         style={{ top: "25%", left: "45%" }}

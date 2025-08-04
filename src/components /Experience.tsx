@@ -68,7 +68,7 @@ export const Experience = () => (
           {exp.place && <p className="italic">{exp.place}</p>}
           {exp.desc && <p>{exp.desc}</p>}
           {exp.extra && (
-            <p className=" mt-8 text-2xl sm:text-2xl md:text-4xl font-bold bg-gradient-to-r from-pink-700 to-purple-800 bg-clip-text text-transparent">{exp.extra}</p>
+            <p className=" mt-8 text-2xl sm:text-2xl md:text-4xl font-bold bg-gradient-to-r from-lime-500 to-lime-900 bg-clip-text text-transparent">{exp.extra}</p>
           )}
         </motion.div>
       ))}

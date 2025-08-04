@@ -1,33 +1,52 @@
-import React, { useState, KeyboardEvent } from "react";
+import React, { useEffect, useState, KeyboardEvent } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 
-type LiquidGlassCardJellyProps = {
-  imageSrc: string;
+type Props = {
+  images: string[];
+  index: number;
   hoverText: string;
   className?: string;
-  /** Llamado cuando se abre/cierra el modal (opcional) */
-  onExpandChange?: (expanded: boolean) => void;
 };
 
-export const LiquidGlassCardJelly: React.FC<LiquidGlassCardJellyProps> = ({
-  imageSrc,
+export const LiquidGlassCardJelly: React.FC<Props> = ({
+  images,
+  index,
   hoverText,
   className,
-  onExpandChange,
 }) => {
-  const [isExpanded, setIsExpanded] = useState<boolean>(false);
+  const [current, setCurrent] = useState<number | null>(null);
 
-  const open = () => {
-    setIsExpanded(true);
-    onExpandChange?.(true);
+  const open = () => setCurrent(index);
+  const close = () => setCurrent(null);
+
+  const goNext = () =>
+    setCurrent((prev) => (prev !== null ? (prev + 1) % images.length : prev));
+  const goPrev = () =>
+    setCurrent((prev) =>
+      prev !== null ? (prev - 1 + images.length) % images.length : prev
+    );
+
+  // teclado: flechas y Escape
+  useEffect(() => {
+    if (current === null) return;
+    const onKey = (e: KeyboardEvent | KeyboardEventInit | any) => {
+      if (e.key === "ArrowRight") goNext();
+      if (e.key === "ArrowLeft") goPrev();
+      if (e.key === "Escape") close();
+    };
+    window.addEventListener("keydown", onKey);
+    return () => window.removeEventListener("keydown", onKey);
+  }, [current]);
+
+  // clic en zonas izquierda/derecha del overlay
+  const handleOverlayClick = (e: React.MouseEvent<HTMLDivElement>) => {
+    const x = e.clientX;
+    const w = window.innerWidth;
+    if (x > w / 2) goNext();
+    else goPrev();
   };
 
-  const close = () => {
-    setIsExpanded(false);
-    onExpandChange?.(false);
-  };
-
-  const onKey = (e: KeyboardEvent<HTMLDivElement>) => {
+  const onKeyCard = (e: KeyboardEvent<HTMLDivElement>) => {
     if (e.key === "Enter" || e.key === " ") {
       e.preventDefault();
       open();
@@ -36,32 +55,24 @@ export const LiquidGlassCardJelly: React.FC<LiquidGlassCardJellyProps> = ({
 
   return (
     <>
+      {/* Tarjeta */}
       <motion.div
         role="button"
         tabIndex={0}
         aria-label="Abrir imagen"
-        onKeyDown={onKey}
+        onKeyDown={onKeyCard}
         onClick={open}
         className={[
-          "relative w-80 h-56 cursor-pointer overflow-hidden",
+          "relative cursor-pointer overflow-hidden",
           "rounded-3xl bg-white/10 shadow-[0_8px_30px_rgba(0,0,0,0.25)]",
           "backdrop-blur-xl border border-white/20",
-          className ?? "",
+          className ?? "w-[340px] h-[260px]",
         ].join(" ")}
-        // “Jelly” al hover (keyframes + ligera rotación)
-        whileHover={{
-          scale: [1, 1.05, 0.98, 1.02, 0.995, 1],
-          rotate: [0, 0.4, -0.25, 0.15, -0.05, 0],
-        }}
-        transition={{
-          duration: 0.65,
-          ease: [0.2, 0.8, 0.2, 1],
-          times: [0, 0.25, 0.45, 0.65, 0.85, 1],
-        }}
-        // “Squish” al presionar
+        whileHover={{ scale: 1.02 }}
+        transition={{ duration: 0.3, ease: "easeOut" }}
         whileTap={{ scaleX: 0.98, scaleY: 0.96 }}
       >
-        {/* Blob líquido animado de fondo */}
+        {/* Blob líquido de fondo */}
         <motion.div
           aria-hidden
           className="absolute -inset-24 blur-3xl"
@@ -83,7 +94,7 @@ export const LiquidGlassCardJelly: React.FC<LiquidGlassCardJellyProps> = ({
 
         {/* Imagen */}
         <img
-          src={imageSrc}
+          src={images[index]}
           alt=""
           className="relative z-10 w-full h-full object-cover object-center"
           draggable={false}
@@ -103,35 +114,92 @@ export const LiquidGlassCardJelly: React.FC<LiquidGlassCardJellyProps> = ({
         <div className="pointer-events-none absolute -left-1/3 -top-1/3 w-2/3 h-2/3 rotate-45 bg-white/15 blur-xl" />
       </motion.div>
 
-      {/* Modal de zoom con muelle elástico */}
-      <AnimatePresence>
-        {isExpanded && (
-          <motion.div
-            className="fixed inset-0 z-50 bg-black/60 backdrop-blur-sm flex items-center justify-center p-4"
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
-            onClick={close}
-            aria-modal="true"
-            role="dialog"
-          >
-            <motion.img
-              src={imageSrc}
-              alt=""
-              initial={{ scale: 0.86, y: 10, opacity: 0 }}
-              animate={{
-                scale: 1,
-                y: 0,
-                opacity: 1,
-                transition: { type: "spring", stiffness: 260, damping: 18 },
-              }}
-              exit={{ scale: 0.9, opacity: 0 }}
-              className="max-w-4xl max-h-[90vh] rounded-2xl shadow-2xl border border-white/20"
-              onClick={(e) => e.stopPropagation()}
-            />
-          </motion.div>
-        )}
-      </AnimatePresence>
+      {/* Modal con navegación */}
+<AnimatePresence>
+  {current !== null && (
+    <motion.div
+      className="fixed inset-0 z-50 bg-black/70 backdrop-blur-sm flex items-center justify-center p-2 sm:p-4 pointer-events-none"
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
+      exit={{ opacity: 0 }}
+      aria-modal="true"
+      role="dialog"
+    >
+      {/* ZONA IZQUIERDA (anterior) */}
+      <div
+        aria-hidden
+        className="absolute left-0 top-0 h-full w-1/2 z-30 pointer-events-auto cursor-[w-resize]"
+        onClick={(e) => {
+          e.stopPropagation();
+          goPrev();
+        }}
+      />
+
+      {/* ZONA DERECHA (siguiente) */}
+      <div
+        aria-hidden
+        className="absolute right-0 top-0 h-full w-1/2 z-30 pointer-events-auto cursor-[e-resize]"
+        onClick={(e) => {
+          e.stopPropagation();
+          goNext();
+        }}
+      />
+
+      {/* IMAGEN GRANDE */}
+      <motion.img
+        src={images[current]}
+        alt=""
+        initial={{ scale: 0.9, y: 8, opacity: 0 }}
+        animate={{
+          scale: 1,
+          y: 0,
+          opacity: 1,
+          transition: { type: "spring", stiffness: 260, damping: 18 },
+        }}
+        exit={{ scale: 0.95, opacity: 0 }}
+        className="z-40 pointer-events-auto w-[96vw] h-[92vh] max-w-none object-contain rounded-2xl shadow-2xl border border-white/20"
+        onClick={(e) => e.stopPropagation()}
+      />
+
+      {/* BOTÓN CERRAR (por encima de todo) */}
+      <button
+        onClick={(e) => {
+          e.stopPropagation();
+          close();
+        }}
+        className="absolute top-4 right-6 z-50 pointer-events-auto text-white text-4xl font-bold"
+        aria-label="Cerrar"
+      >
+        ×
+      </button>
+
+      {/* FLECHAS VISUALES (opcionales) */}
+      <button
+        onClick={(e) => {
+          e.stopPropagation();
+          goPrev();
+        }}
+        aria-label="Anterior"
+        className="absolute left-4 md:left-6 top-1/2 -translate-y-1/2 z-40 pointer-events-auto
+                   text-white/90 text-3xl md:text-5xl select-none"
+      >
+        ‹
+      </button>
+      <button
+        onClick={(e) => {
+          e.stopPropagation();
+          goNext();
+        }}
+        aria-label="Siguiente"
+        className="absolute right-4 md:right-6 top-1/2 -translate-y-1/2 z-40 pointer-events-auto
+                   text-white/90 text-3xl md:text-5xl select-none"
+      >
+        ›
+      </button>
+    </motion.div>
+  )}
+</AnimatePresence>
+
     </>
   );
 };

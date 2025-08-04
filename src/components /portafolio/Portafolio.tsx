@@ -1,52 +1,67 @@
-// src/pages/PortafolioGrid.tsx
-import { LiquidGlassCardJelly } from "./Card";
 import { useMemo } from "react";
+import { LiquidGlassCardJelly } from "./Card";
 
-const images = [
-  // Puedes reemplazar estas imágenes con las tuyas
-  "src/assets/IMG_6919.png",
-  "https://source.unsplash.com/random/800x600?sig=2",
-  "https://source.unsplash.com/random/800x600?sig=3",
-  "https://source.unsplash.com/random/800x600?sig=4",
-  "https://source.unsplash.com/random/800x600?sig=5",
-  "https://source.unsplash.com/random/800x600?sig=6",
-  "https://source.unsplash.com/random/800x600?sig=7",
-  "https://source.unsplash.com/random/800x600?sig=8",
-  "https://source.unsplash.com/random/800x600?sig=9",
-  "https://source.unsplash.com/random/800x600?sig=10",
-  "https://source.unsplash.com/random/800x600?sig=11",
-  "https://source.unsplash.com/random/800x600?sig=12",
-  "https://source.unsplash.com/random/800x600?sig=13",
-  "https://source.unsplash.com/random/800x600?sig=14",
-  "https://source.unsplash.com/random/800x600?sig=15",
-  "https://source.unsplash.com/random/800x600?sig=16",
-  "https://source.unsplash.com/random/800x600?sig=17",
-  "https://source.unsplash.com/random/800x600?sig=18",
-  "https://source.unsplash.com/random/800x600?sig=19",
-  "https://source.unsplash.com/random/800x600?sig=20"
+const projects = [
+  { src: "src/assets/bauve-01.png", text: "Identidad visual para museo" },
+  { src: "src/assets/bauve-02.png", text: "Campaña gráfica otoño 2022" },
+  { src: "src/assets/bauve-03.png", text: "Cartel para festival de jazz" },
+  { src: "src/assets/bauve-04.png", text: "Ilustración editorial" },
+  { src: "src/assets/bauve-05.png", text: "Diseño de portada de libro" },
+  { src: "src/assets/bauve-06.png", text: "Tipografía experimental" },
+  { src: "src/assets/bauve-07.png", text: "Campaña para redes sociales" },
+  { src: "src/assets/bauve-08.png", text: "Packaging para té artesanal" },
+  { src: "src/assets/bauve-09.png", text: "Ilustración digital" },
+  { src: "src/assets/bauve-10.png", text: "Diseño UX/UI para app" },
+  { src: "src/assets/bauve-11.png", text: "Cartel político feminista" },
+  { src: "src/assets/bauve-12.png", text: "Motion Graphics para documental" },
+  { src: "src/assets/bauve-13.png", text: "Diseño de logotipo institucional" },
+  { src: "src/assets/bauve-14.png", text: "Mapa gráfico interactivo" },
+  { src: "src/assets/bauve-15.png", text: "Diseño editorial para revista" },
+  { src: "src/assets/bauve-16.png", text: "Arte visual con Midjourney" },
+  { src: "src/assets/bauve-17.png", text: "Cartel de cine independiente" },
+  { src: "src/assets/bauve-18.png", text: "Campaña gráfica contra el racismo" },
+  { src: "src/assets/bauve-19.png", text: "Diseño de marca para cafetería" },
+  { src: "src/assets/bauve-20.png", text: "Diseño tipográfico modular" },
+  { src: "src/assets/bauve-21.png", text: "Infografía para proyecto social" },
+  { src: "src/assets/bauve-22.png", text: "Poster festival música electrónica" },
+  { src: "src/assets/bauve-23.png", text: "Diseño y arte para disco" },
+  { src: "src/assets/bauve-24.png", text: "Narrativa visual para instalación" },
+  { src: "src/assets/bauve-25.png", text: "Estampa digital sobre textil" },
+  { src: "src/assets/bauve-26.png", text: "Animación gráfica para YouTube" },
+  { src: "src/assets/bauve-27.png", text: "Diseño crítico y político" },
+  { src: "src/assets/bauve-28.png", text: "Branding para proyecto feminista" },
+  { src: "src/assets/bauve-29.png", text: "Diseño inclusivo para folleto" },
+  { src: "src/assets/bauve-31.png", text: "Serie de ilustraciones LGTBQ+" },
+  { src: "src/assets/bauve-32.png", text: "Visualización de datos urbanos" },
 ];
 
 export const PortafolioGrid = () => {
   const cards = useMemo(
     () =>
-      images.map((src, idx) => (
+      projects.map((project, idx) => (
         <LiquidGlassCardJelly
           key={idx}
-          imageSrc={src}
-          hoverText={`Proyecto ${idx + 1}`}
+          images={projects.map((p) => p.src)}
+          index={idx}
+          hoverText={project.text}
+          className="w-[360px] h-[280px]"
         />
       )),
     []
   );
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-gray-900 to-gray-700 px-6 py-10">
-      <h1 className="text-4xl text-white font-bold text-center mb-10">
+    <div className="min-h-screen bg-gradient-to-br from-stone-500 to-stone-400 px-6 py-10">
+      <h1 className="text-4xl text-black font-bold text-center mb-10">
         Mi Portafolio
       </h1>
-      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-8 max-w-[1400px] mx-auto">
+
+      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4
+                      gap-10 max-w-[1600px] mx-auto place-items-center">
         {cards}
       </div>
     </div>
   );
 };
+
+export default PortafolioGrid;

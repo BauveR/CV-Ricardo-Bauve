@@ -26,7 +26,7 @@ export const Education = ({ studies }: EducationProps) => (
     }}
   >
     <motion.h2
-      className="text-3xl font-bold text-gray-700 mb-2"
+      className="text-3xl font-bold text-stone-400 mb-2"
       variants={{
         hidden: { opacity: 0, y: 10 },
         visible: { opacity: 1, y: 0 },
@@ -48,11 +48,11 @@ export const Education = ({ studies }: EducationProps) => (
           transition={{ duration: 0.4, ease: "easeOut" }}
         >
           <div>
-            <p className="font-medium text-gray-800">{study.title}</p>
-            <p className="text-gray-500">{study.place}</p>
+            <p className="font-medium text-stone-700">{study.title}</p>
+            <p className="text-stone-500">{study.place}</p>
           </div>
           <div>
-            <p className="text-gray-500">{study.year}</p>
+            <p className="text-stone-500">{study.year}</p>
           </div>
         </motion.li>
       ))}

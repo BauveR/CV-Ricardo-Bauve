@@ -10,8 +10,8 @@ type HeaderProfileProps = {
 export const HeaderProfile = ({
   fullName,
   imageUrl,
-  firstNameClassName = "text-2xl sm:text-3xl md:text-4xl font-bold bg-gradient-to-r from-pink-700 to-purple-800 bg-clip-text text-transparent",
-  lastNameClassName = "text-2xl sm:text-3xl md:text-4xl font-bold bg-gradient-to-r from-pink-600 to-blue-800 bg-clip-text text-transparent",
+  firstNameClassName = "text-2xl sm:text-3xl md:text-4xl font-bold bg-gradient-to-r from-stone-500 to-stone-500 bg-clip-text text-transparent",
+  lastNameClassName = "text-2xl sm:text-3xl md:text-4xl font-bold bg-gradient-to-r from-stone-500 to-stone-400 bg-clip-text text-transparent",
 }: HeaderProfileProps) => {
   const [firstName, ...rest] = fullName.split(" ");
   const lastName = rest.join(" ");
