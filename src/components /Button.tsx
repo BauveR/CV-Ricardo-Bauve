@@ -22,7 +22,7 @@ export const GlassButton = ({
         bg-white/10 
         backdrop-blur-md
         border border-white/30
-        text-blue-900
+        text-stone-900
         font-semibold 
         py-2 px-5 
         rounded-2xl

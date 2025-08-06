@@ -1,9 +1,10 @@
 import { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { useNavigate } from 'react-router-dom';
-import { Title } from './Title';
+import { TitleMov } from '../titleRicardo/TitleMov';
+import { TitleBauve } from '../titleBauve/TitleBauve';
 import { GlassButton } from '../Button';
-import { BackgroundBlobs } from '../background/BackgroundBlobs'; // ajusta si tu ruta es distinta
+import { BackgroundBlobs } from '../background/BackgroundBlobs'; 
 
 export const Welcome = () => {
   const [fadeOut, setFadeOut] = useState(false);
@@ -21,7 +22,7 @@ export const Welcome = () => {
       {!fadeOut && (
         <motion.div
           className="fixed inset-0 min-h-screen bg-gradient-to-br
-           from-zinc-400 to-stone-700 flex flex-col items-center
+           from-slate-600 to-slate-800 flex flex-col items-center
             justify-center p-4 overflow-hidden"
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
@@ -30,17 +31,18 @@ export const Welcome = () => {
         >
           <BackgroundBlobs />
 
-          <Title />
+          <TitleMov />
+          <TitleBauve />
 
           <motion.p
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            transition={{ delay: 0.5, duration: 1 }}
-            className="text-lg tracking-widest text-white mb-10 font-sans mx-auto font-light"
-          >
-            <span>Diseñador Sr.</span>
-            <span className="ml-8">Front End Developer Jr.</span>
-          </motion.p>
+  initial={{ opacity: 0 }}
+  animate={{ opacity: 1 }}
+  transition={{ delay: 0.5, duration: 1 }}
+  className="text-2xl sm:text-xl tracking-[0.2em] text-blue-400 mb-10 font-sans mx-auto font-medium whitespace-nowrap overflow-hidden text-ellipsis mt-8"
+>
+DISEÑADOR SR.  |  FRONTEND DEVELOPER JR.
+</motion.p>
+
 
           <motion.div
             whileHover={{ scale: 1.05 }}

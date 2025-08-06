@@ -8,7 +8,8 @@ import { GlassButton } from "../components /Button";
 import { Link } from "react-router-dom";
 
 export const MainContent = () => (
-    <div className="w-full py-8 relative overflow-hidden lg:h-screen lg:overflow-y-hidden">
+    <div className="w-full py-8 relative overflow-hidden lg:min-h-screen">
+
 
       <BackgroundBlobsLight />
   

@@ -16,7 +16,7 @@ export const Experience = () => (
     }}
   >
     <motion.h2
-      className="text-3xl font-bold text-gray-500 mb-6"
+      className="ms-8 text-3xl font-bold text-stone-400"
       variants={{
         hidden: { opacity: 0, y: 10 },
         visible: { opacity: 1, y: 0 },
@@ -26,7 +26,7 @@ export const Experience = () => (
       Experiencia
     </motion.h2>
 
-    <div className="ms-8 mt-8 mb-8 space-y-6 text-sm text-gray-800">
+    <div className="ms-8 mt-6 mb-8 space-y-6 text-sm text-slate-500">
       {[
         {
           title: "2013 - 2022 Dirección y curaduría de arte",

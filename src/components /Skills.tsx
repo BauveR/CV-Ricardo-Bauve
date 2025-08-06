@@ -36,7 +36,7 @@ export const Skills = () => {
 
   return (
     <motion.div
-      className="rounded-[4.5rem] p-10 mt-3 bg-white/30 backdrop-blur-md shadow-xl border border-white/30"
+      className="rounded-[4rem] p-9 mt-3 mb-6 bg-white/30 backdrop-blur-md shadow-lg border border-white/30"
       initial="hidden"
       animate="visible"
       variants={{
@@ -50,7 +50,7 @@ export const Skills = () => {
       }}
     >
       <motion.h2
-        className="text-3xl font-bold text-gray-500 mb-6"
+        className="ms-8 text-3xl font-bold text-stone-400"
         variants={{
           hidden: { opacity: 0, y: 10 },
           visible: { opacity: 1, y: 0 },
@@ -60,7 +60,7 @@ export const Skills = () => {
         Skills
       </motion.h2>
 
-    <div className="ms-8 mt-8 mb-8 grid grid-cols-2 md:grid-cols-3 gap-x-20 gap-y-8 text-sm">
+    <div className="ms-8 mt-6 mb-2 grid grid-cols-2 md:grid-cols-3 gap-x-20 gap-y-8 text-sm">
 
         {[
           {
@@ -121,10 +121,10 @@ export const Skills = () => {
             }}
             transition={{ duration: 0.4, ease: "easeOut" }}
           >
-            <h3 className="font-bold text-pink-600 mb-1">{section.title}</h3>
+            <h3 className="font-bold text-slate-500 mb-2">{section.title}</h3>
             <ul className="space-y-2">
               {section.items.map((item, j) => (
-                <li key={j} className="flex items-center gap-2 text-gray-700">
+                <li key={j} className="flex items-center gap-2 text-stone-600">
                   {iconMap[item] && <span className="w-5 h-5">{iconMap[item]}</span>}
                   <span>{item}</span>
                 </li>

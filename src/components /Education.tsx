@@ -12,7 +12,7 @@ type EducationProps = {
 
 export const Education = ({ studies }: EducationProps) => (
   <motion.div
-    className="rounded-[4.5rem] p-10 mt-3 bg-white/30 backdrop-blur-md shadow-xl border border-white/30"
+    className="rounded-[4rem] p-9 mt-3 bg-white/30 backdrop-blur-md shadow-lg border border-white/30"
     initial="hidden"
     animate="visible"
     variants={{
@@ -26,7 +26,7 @@ export const Education = ({ studies }: EducationProps) => (
     }}
   >
     <motion.h2
-      className="text-3xl font-bold text-stone-400 mb-2"
+      className="ms-8 text-3xl font-bold text-stone-400 mb-2"
       variants={{
         hidden: { opacity: 0, y: 10 },
         visible: { opacity: 1, y: 0 },
@@ -48,7 +48,7 @@ export const Education = ({ studies }: EducationProps) => (
           transition={{ duration: 0.4, ease: "easeOut" }}
         >
           <div>
-            <p className="font-medium text-stone-700">{study.title}</p>
+            <p className="font-bold text-slate-500">{study.title}</p>
             <p className="text-stone-500">{study.place}</p>
           </div>
           <div>
