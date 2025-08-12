@@ -1,5 +1,7 @@
 import { useMemo } from "react";
 import { LiquidGlassCardJelly } from "./Card";
+import { TitleMovCv } from "../titleRicardo/TitleMovCv";
+import { TitleBauveCv } from "../titleBauve/TitleBauveCv";
 
 const projects = [
   { src: "src/assets/bauve-01.png", text: "Identidad visual para museo" },
@@ -44,18 +46,21 @@ export const PortafolioGrid = () => {
           images={projects.map((p) => p.src)}
           index={idx}
           hoverText={project.text}
-          className="w-[360px] h-[280px]"
+          className="w-[400px] h-[280px]"
         />
       )),
     []
   );
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-stone-500 to-stone-400 px-6 py-10">
-      <h1 className="text-4xl text-black font-bold text-center mb-10">
-        Mi Portafolio
-      </h1>
+    <div className="min-h-screen bg-gradient-to-br from-stone-200 to-stone-200 px-6 py-10">
+      {/* Título animado personalizado */}
+      <div className="flex justify-center items-end gap-4 mb-20 flex-wrap mt-5">
+        <TitleMovCv />
+        <TitleBauveCv />
+      </div>
 
+      {/* Grilla de proyectos */}
       <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4
                       gap-10 max-w-[1600px] mx-auto place-items-center">
         {cards}

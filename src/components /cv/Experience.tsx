@@ -2,7 +2,7 @@ import { motion } from "framer-motion";
 
 export const Experience = () => (
   <motion.div
-    className="rounded-[4.5rem] p-10 mt-3 bg-white/20 backdrop-blur-md shadow-xl border border-white/30"
+    className="rounded-[3rem] p-8 mt-3 bg-white/20 backdrop-blur-md shadow-xs border border-white/30"
     initial="hidden"
     animate="visible"
     variants={{
@@ -64,11 +64,22 @@ export const Experience = () => (
           }}
           transition={{ duration: 0.4, ease: "easeOut" }}
         >
-          <p className="font-bold">{exp.title}</p>
-          {exp.place && <p className="italic">{exp.place}</p>}
-          {exp.desc && <p>{exp.desc}</p>}
+          {/* Título en color fuerte */}
+          <p className="font-bold text-slate-500 text-base md:text-sm">{exp.title}</p>
+
+          {/* Lugar en color más sutil */}
+          {exp.place && (
+            <p className=" font-bold text-stone-500 text-sm md:text-base">{exp.place}</p>
+          )}
+
+          {/* Descripción */}
+          {exp.desc && <p className="text-stone-500">{exp.desc}</p>}
+
+          {/* Campo extra */}
           {exp.extra && (
-            <p className=" mt-8 text-2xl sm:text-2xl md:text-4xl font-bold bg-gradient-to-r from-lime-500 to-lime-900 bg-clip-text text-transparent">{exp.extra}</p>
+            <p className="mt-6 text-xl sm:text-lg md:text-3xl font-bold bg-gradient-to-r from-slate-500 to-lime-900 bg-clip-text text-transparent">
+              {exp.extra}
+            </p>
           )}
         </motion.div>
       ))}

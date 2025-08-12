@@ -3,8 +3,9 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { useNavigate } from 'react-router-dom';
 import { TitleMov } from '../titleRicardo/TitleMov';
 import { TitleBauve } from '../titleBauve/TitleBauve';
-import { GlassButton } from '../Button';
+import { GlassButton } from '../buttons/Button';
 import { BackgroundBlobs } from '../background/BackgroundBlobs'; 
+
 
 export const Welcome = () => {
   const [fadeOut, setFadeOut] = useState(false);
@@ -38,7 +39,7 @@ export const Welcome = () => {
   initial={{ opacity: 0 }}
   animate={{ opacity: 1 }}
   transition={{ delay: 0.5, duration: 1 }}
-  className="text-2xl sm:text-xl tracking-[0.2em] text-blue-400 mb-10 font-sans mx-auto font-medium whitespace-nowrap overflow-hidden text-ellipsis mt-8"
+  className="text-md sm:text-xl tracking-[0.2em] text-blue-400 mb-10 font-sans mx-auto font-medium whitespace-nowrap overflow-hidden text-ellipsis mt-8"
 >
 DISEÑADOR SR.  |  FRONTEND DEVELOPER JR.
 </motion.p>

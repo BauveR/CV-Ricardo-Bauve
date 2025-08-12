@@ -1,5 +1,5 @@
 import { motion } from "framer-motion";
-import { GlassButton } from "./Button";
+import { GlassButton } from "../buttons/Button";
 
 type ContactProps = {
   email: string;
@@ -34,7 +34,7 @@ export const Contact = ({ email, phone, linkedin, web }: ContactProps) => {
 
   return (
     <motion.div
-      className="flex flex-col sm:flex-row flex-wrap justify-center gap-2 mt-4 text-s"
+      className="flex flex-col sm:flex-row flex-wrap justify-center gap-2 mt-2 text-s"
       initial="hidden"
       animate="visible"
       variants={{

@@ -1,7 +1,8 @@
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { Welcome } from "./components /welcome/Welcome";
-import { MainContent } from "./components /MainContent";
-import { PortafolioGrid } from "./components /portafolio/Portafolio"; 
+import { MainContent } from "./components /cv/MainContent";
+import { ProductGrid } from "./components /portafolio/ProductGrid";
+import { ProductDetailPage } from "./components /portafolio/ProductDetailPage"; // ← NUEVO
 
 const App = () => {
   return (
@@ -9,7 +10,8 @@ const App = () => {
       <Routes>
         <Route path="/" element={<Welcome />} />
         <Route path="/presupuesto" element={<MainContent />} />
-        <Route path="/portafolio" element={<PortafolioGrid />} /> {/* NUEVA */}
+        <Route path="/portafolio" element={<ProductGrid />} />
+        <Route path="/product/:id" element={<ProductDetailPage />} /> {/* ← NUEVO */}
       </Routes>
     </BrowserRouter>
   );
