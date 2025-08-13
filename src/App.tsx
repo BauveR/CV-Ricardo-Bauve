@@ -90,7 +90,7 @@ function ScrollShell() {
   const productMatch = useMatch("/product/:id");
 
   return (
-    <div className="relative min-h-screen bg-slate-700 text-neutral-100">
+    <div className="relative min-h-screen bg-slate-700">
       {/* Menú con burger en móvil */}
       <NavbarSections active={active} onGo={scrollTo} />
 
@@ -197,7 +197,7 @@ function ProductModal() {
         transition={{ duration: 0.35, ease: [0.22, 1, 0.36, 1] }}
       >
         <div className="sticky top-0 flex items-center justify-between p-3 border-b border-white/10 bg-neutral-900/80 backdrop-blur">
-          <div className="text-sm opacity-70">Detalle del producto</div>
+          <div className="text-sm opacity-70">#CreativeMind</div>
           <button
             onClick={onClose}
             className="px-3 py-1.5 rounded-lg bg-white/10 hover:bg-white/15 ring-1 ring-white/15"
@@ -216,7 +216,7 @@ function ProductModal() {
 function Divider() {
   return (
     <div className="relative h-24 flex items-center justify-center">
-      <div className="h-px w-64 bg-gradient-to-r from-transparent via-white/20 to-transparent" />
+      <div className="h-px w-64 bg-gradient-to-r from-transparent via-white/0 to-transparent" />
     </div>
   );
 }
