@@ -1,58 +1,63 @@
-import { motion } from "framer-motion";
+import { motion, Variants } from "framer-motion";
 
-type Study = {
-  title: string;
-  place: string;
-  year: string;
+const container: Variants = {
+  hidden: { opacity: 0, y: 16 },
+  visible: {
+    opacity: 1,
+    y: 0,
+    transition: {
+      duration: 0.5,
+      ease: "easeOut",
+      when: "beforeChildren",
+      staggerChildren: 0.08,
+      delayChildren: 0.10,
+    },
+  },
 };
 
-type EducationProps = {
-  studies: Study[];
+const item: Variants = {
+  hidden: { opacity: 0, y: 10 },
+  visible: { opacity: 1, y: 0, transition: { duration: 0.35, ease: "easeOut" } },
 };
+
+type Study = { title: string; place: string; year: string; };
+type EducationProps = { studies: Study[]; };
 
 export const Education = ({ studies }: EducationProps) => (
   <motion.div
-    className="rounded-[3rem] p-8 mt-3 bg-white/20 backdrop-blur-md shadow-xs border border-white/30"
+  className="rounded-[3rem] p-8 mt-3 
+  bg-slate-900/70 
+  backdrop-blur-xl 
+  shadow-lg 
+  border border-white/20 
+  ring-1 ring-white/10
+  hover:bg-slate-900/80 
+  transition-colors duration-500"
+    variants={container}
     initial="hidden"
-    animate="visible"
-    variants={{
-      hidden: {},
-      visible: {
-        transition: {
-          delayChildren: 1.2,
-          staggerChildren: 0.15,
-        },
-      },
-    }}
+    whileInView="visible"
+    viewport={{ once: true, amount: 0.35 }}
   >
     <motion.h2
       className="ms-8 text-3xl font-bold text-stone-400 mb-2"
-      variants={{
-        hidden: { opacity: 0, y: 10 },
-        visible: { opacity: 1, y: 0 },
-      }}
-      transition={{ duration: 0.5, ease: "easeOut" }}
+      variants={item}
     >
       Educación
     </motion.h2>
 
     <ul className="ms-8 grid gap-1 mt-4 text-sm">
-      {studies.map((study, index) => (
+      {studies.map((s, idx) => (
         <motion.li
-          key={index}
+          key={idx}
           className="grid grid-cols-1 md:grid-cols-[3fr_1fr] gap-3"
-          variants={{
-            hidden: { opacity: 0, y: 10 },
-            visible: { opacity: 1, y: 0 },
-          }}
-          transition={{ duration: 0.4, ease: "easeOut" }}
+          variants={item}
         >
           <div>
-            <p className="font-bold text-slate-500">{study.title}</p>
-            <p className="text-stone-500">{study.place}</p>
+            <p className="font-bold text-slate-400">{s.title}</p>
+            <p className="text-stone-50">{s.place}</p>
           </div>
           <div>
-            <p className="text-stone-500">{study.year}</p>
+            <p className="text-orange-400">{s.year}</p>
           </div>
         </motion.li>
       ))}

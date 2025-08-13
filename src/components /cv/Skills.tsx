@@ -1,29 +1,18 @@
 import { motion } from "framer-motion";
 import {
-  SiHtml5,
-  SiCss3,
-  SiJavascript,
-  SiTypescript,
-  SiReact,
-  SiTailwindcss,
-  SiVite,
-  SiNodedotjs,
-  SiAdobephotoshop,
-  SiAdobeillustrator,
-  SiAdobeindesign,
-  SiWordpress,
-  SiApple,
-  SiOpenai,
+  SiHtml5, SiCss3, SiJavascript, SiTypescript, SiReact, SiTailwindcss,
+  SiVite, SiNodedotjs, SiAdobephotoshop, SiAdobeillustrator, SiAdobeindesign,
+  SiWordpress, SiApple, SiOpenai
 } from "react-icons/si";
 
 export const Skills = () => {
   const iconMap: Record<string, JSX.Element> = {
     "Photoshop CC": <SiAdobephotoshop className="text-blue-500 w-5 h-5" />,
     "Illustrator CC": <SiAdobeillustrator className="text-orange-500 w-5 h-5" />,
-    "Final Cut": <SiApple className="text-gray-400 w-5 h-5" />, 
+    "Final Cut": <SiApple className="text-gray-400 w-5 h-5" />,
     "InDesign CC": <SiAdobeindesign className="text-pink-600 w-5 h-5" />,
     "Wix y Wordpress": <SiWordpress className="text-blue-700 w-5 h-5" />,
-    "Midjourney AI": <SiOpenai className="text-indigo-500 w-5 h-5" />, 
+    "Midjourney AI": <SiOpenai className="text-indigo-500 w-5 h-5" />,
     HTML: <SiHtml5 className="text-orange-500 w-5 h-5" />,
     CSS: <SiCss3 className="text-blue-500 w-5 h-5" />,
     JavaScript: <SiJavascript className="text-yellow-400 w-5 h-5" />,
@@ -36,95 +25,47 @@ export const Skills = () => {
 
   return (
     <motion.div
-      className="rounded-[3rem] p-8 mt-3 bg-white/20 backdrop-blur-md shadow-xs border border-white/30"
+    className="rounded-[3rem] p-8 mt-3 
+    bg-slate-900/70 
+    backdrop-blur-xl 
+    shadow-lg 
+    border border-white/20 
+    ring-1 ring-white/10
+    hover:bg-slate-900/80 
+    transition-colors duration-500"
       initial="hidden"
-      animate="visible"
+      whileInView="visible"
+      viewport={{ once: true, amount: 0.3 }}
       variants={{
         hidden: {},
-        visible: {
-          transition: {
-            delayChildren: 1.4,
-            staggerChildren: 0.15,
-          },
-        },
+        visible: { transition: { delayChildren: 0.15, staggerChildren: 0.12 } },
       }}
     >
       <motion.h2
         className="ms-8 text-3xl font-bold text-stone-400"
-        variants={{
-          hidden: { opacity: 0, y: 10 },
-          visible: { opacity: 1, y: 0 },
-        }}
+        variants={{ hidden: { opacity: 0, y: 10 }, visible: { opacity: 1, y: 0 } }}
         transition={{ duration: 0.5, ease: "easeOut" }}
       >
         Skills
       </motion.h2>
 
-    <div className="ms-8 mt-6 mb-2 grid grid-cols-2 md:grid-cols-3 gap-x-20 gap-y-8 text-sm">
-
+      <div className="ms-8 mt-6 mb-2 grid grid-cols-2 md:grid-cols-3 gap-x-20 gap-y-8 text-sm">
         {[
-          {
-            title: "Programas",
-            items: [
-              "Photoshop CC",
-              "Illustrator CC",
-              "Final Cut",
-              "InDesign CC",
-              "Wix y Wordpress",
-              "Midjourney AI",
-            ],
-          },
-          {
-            title: "Habilidades",
-            items: [
-              "Liderazgo",
-              "Gestión de Personal",
-              "Implementación de estrategias",
-              "Manejo de crisis internas",
-              "Coordinación de eventos",
-              "Creatividad",
-            ],
-          },
-          {
-            title: "IT Skills",
-            items: [
-              "HTML",
-              "CSS",
-              "JavaScript",
-              "TypeScript",
-              "React",
-              "Tailwind CSS",
-              "Vite",
-              "Node.js",
-            ],
-          },
-          {
-            title: "Programas extra",
-            items: [
-              "Slack, Asana, Zendesk",
-              "Google Suite Avanzado",
-              "Microsoft 365",
-              "Revelado y edición fotográfica",
-              "Bases de datos",
-            ],
-          },
-          {
-            title: "Idiomas",
-            items: ["Español: Nativo", "Inglés: Intermedio", "Catalán: Básico 2"],
-          },
+          { title: "Programas", items: ["Photoshop CC","Illustrator CC","Final Cut","InDesign CC","Wix y Wordpress","Midjourney AI"] },
+          { title: "Habilidades", items: ["Liderazgo","Gestión de Personal","Implementación de estrategias","Manejo de crisis internas","Coordinación de eventos","Creatividad"] },
+          { title: "IT Skills", items: ["HTML","CSS","JavaScript","TypeScript","React","Tailwind CSS","Vite","Node.js"] },
+          { title: "Programas extra", items: ["Slack, Asana, Zendesk","Google Suite Avanzado","Microsoft 365","Revelado y edición fotográfica","Bases de datos"] },
+          { title: "Idiomas", items: ["Español: Nativo","Inglés: Intermedio","Catalán: Básico 2"] },
         ].map((section, i) => (
           <motion.div
             key={i}
-            variants={{
-              hidden: { opacity: 0, y: 10 },
-              visible: { opacity: 1, y: 0 },
-            }}
+            variants={{ hidden: { opacity: 0, y: 10 }, visible: { opacity: 1, y: 0 } }}
             transition={{ duration: 0.4, ease: "easeOut" }}
           >
-            <h3 className="font-bold text-slate-500 mb-2">{section.title}</h3>
+            <h3 className="font-bold text-slate-400 mb-2">{section.title}</h3>
             <ul className="space-y-2">
               {section.items.map((item, j) => (
-                <li key={j} className="flex items-center gap-2 text-stone-600">
+                <li key={j} className="flex items-center gap-2 text-stone-50">
                   {iconMap[item] && <span className="w-5 h-5">{iconMap[item]}</span>}
                   <span>{item}</span>
                 </li>

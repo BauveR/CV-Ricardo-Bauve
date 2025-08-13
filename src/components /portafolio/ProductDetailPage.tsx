@@ -2,7 +2,7 @@
 import React, { useMemo, useState } from "react";
 import { useLocation, useParams, useNavigate } from "react-router-dom";
 import { motion } from "framer-motion";
-import { projects } from "./projects";
+import { projects } from "./projects"; // ← ajusta si tu ruta cambia
 
 type ProductState = {
   id: string;
@@ -11,7 +11,40 @@ type ProductState = {
   primaryImage: string;
 };
 
-type GlobModule = { default: string };
+function useAssetMap() {
+  const mods = import.meta.glob("/src/assets/**/*.{png,jpg,jpeg,webp,svg,gif}", {
+    eager: true,
+    import: "default",
+  }) as Record<string, string>;
+
+  return useMemo(() => {
+    const map: Record<string, string> = {};
+    Object.entries(mods).forEach(([abs, url]) => {
+      const relFromSrc = abs.replace(/^.*\/src\//, "src/"); // src/assets/foo.png
+      const withLeadingSlash = "/" + relFromSrc;            // /src/assets/foo.png
+      const noSrc = relFromSrc.replace(/^src\//, "");       // assets/foo.png
+      const base = relFromSrc.split("/").pop()!;            // foo.png
+      map[relFromSrc] = url;
+      map[withLeadingSlash] = url;
+      map[noSrc] = url;
+      if (!map[base]) map[base] = url;
+    });
+    return map;
+  }, []);
+}
+
+function resolveImg(src: string | undefined, map: Record<string, string>): string | undefined {
+  if (!src) return undefined;
+  return (
+    map[src] ||
+    map[src.replace(/^\//, "")] ||
+    map["src/" + src] ||
+    map["/src/" + src] ||
+    map[src.replace(/^src\//, "assets/")] ||
+    map[src.split("/").pop()!] ||
+    undefined
+  );
+}
 
 export const ProductDetailPage: React.FC = () => {
   const { id } = useParams<{ id: string }>();
@@ -22,29 +55,19 @@ export const ProductDetailPage: React.FC = () => {
   const initialIndex = Math.max(0, (Number(id) || 1) - 1);
   const [index, setIndex] = useState(initialIndex);
 
-  // Mapa filename -> URL (Vite)
-  const urlMap = useMemo(() => {
-    const mods = import.meta.glob("/src/assets/bauve-*.png", { eager: true }) as Record<
-      string,
-      GlobModule
-    >;
-    const map: Record<string, string> = {};
-    Object.entries(mods).forEach(([abs, mod]) => {
-      const rel = abs.replace(/^.*\/src\/assets\//, "src/assets/");
-      map[rel] = mod.default;
-    });
-    return map;
-  }, []);
+  const urlMap = useAssetMap();
 
   const project = projects[index] || projects[0];
+  const primaryImage =
+    resolveImg(project?.src, urlMap) ??
+    productFromState?.primaryImage ??
+    "";
+
   const data: ProductState = {
     id: String(index + 1),
     name: project?.text ?? productFromState?.name ?? "Proyecto",
     description: project?.longDescription ?? productFromState?.description,
-    primaryImage:
-      (project && (urlMap[project.src] ?? project.src)) ||
-      productFromState?.primaryImage ||
-      "",
+    primaryImage,
   };
 
   const goPrev = () => setIndex((i) => (i - 1 + projects.length) % projects.length);
@@ -52,12 +75,10 @@ export const ProductDetailPage: React.FC = () => {
 
   return (
     <main className="relative mx-auto max-w-[1600px] px-4 md:px-6 lg:px-8 pt-20 md:pt-24 pb-10">
-      {/* Migas */}
       <nav className="text-xs text-stone-500 mb-4">
         <a href="/" className="hover:underline">Inicio</a> / <span>{data.name}</span>
       </nav>
 
-      {/* Botón cerrar (misma posición/estilo que acordamos) */}
       <button
         onClick={() => navigate(-1)}
         className="absolute top-6 md:top-8 right-4 p-2 rounded-full bg-white/80 hover:bg-white shadow-md z-20"
@@ -68,7 +89,6 @@ export const ProductDetailPage: React.FC = () => {
         </svg>
       </button>
 
-      {/* Flechas fuera de la imagen */}
       <button
         onClick={goPrev}
         className="absolute top-1/2 -translate-y-1/2 left-2 sm:left-[-16px] lg:left-[-50px] p-2 rounded-full bg-white/80 hover:bg-white shadow-md z-20"
@@ -89,9 +109,7 @@ export const ProductDetailPage: React.FC = () => {
         </svg>
       </button>
 
-      {/* Layout: imagen + texto. La imagen usa la MISMA proporción que el grid */}
       <div className="grid grid-cols-1 lg:grid-cols-[2fr_1fr] gap-8 items-start">
-        {/* Cambia 'aspect-[4/3]' por la que estés usando en ProductCard si es distinta */}
         <div className="relative w-full overflow-hidden rounded-xl bg-stone-100 aspect-[4/3]">
           <motion.img
             key={data.primaryImage + index}
@@ -104,7 +122,6 @@ export const ProductDetailPage: React.FC = () => {
           />
         </div>
 
-        {/* Texto a la derecha */}
         <div className="flex flex-col justify-center">
           <h1 className="text-3xl font-medium">{data.name}</h1>
           {data.description && (

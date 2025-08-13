@@ -17,23 +17,24 @@ export const GlassButton = ({
     <button
       type={type}
       onClick={onClick}
-      className={`
-        mt-0
-        bg-white/10 
-        backdrop-blur-md
-        border border-white/30
-        text-stone-900
+      className={`mt-0
+        bg-slate-900/70
+        backdrop-blur-xl
+        shadow-lg
+        border border-white/20
+        ring-1 ring-white/10
+        text-stone-100
         font-semibold 
         py-2 px-5 
         rounded-2xl
-        shadow-md
-        hover:bg-white/20 
-        hover:backdrop-blur-lg 
+        hover:bg-slate-900/80 
+        hover:backdrop-blur-2xl 
         transition-all
-        duration-300
+        duration-500
         whitespace-nowrap
         ${className}
       `}
+      
     >
       {children}
     </button>
