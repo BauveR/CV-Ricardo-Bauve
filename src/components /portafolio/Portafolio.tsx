@@ -1,5 +1,4 @@
 import { useMemo } from "react";
-import { LiquidGlassCardJelly } from "./Card";
 import { TitleMovCv } from "../titleRicardo/TitleMovCv";
 import { TitleBauveCv } from "../titleBauve/TitleBauveCv";
 

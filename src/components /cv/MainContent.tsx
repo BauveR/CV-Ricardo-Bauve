@@ -1,4 +1,3 @@
-// src/components/cv/MainContent.tsx
 import { HeaderProfile } from "./HeaderProfile";
 import { Contact } from "./Contact";
 import { Education } from "./Education";
@@ -7,13 +6,14 @@ import { Experience } from "./Experience";
 import { BackgroundBlobsLight } from "../background/BackgroundBlobsLight";
 import { TitleMovCv } from "../titleRicardo/TitleMovCv";
 import { TitleBauveCv } from "../titleBauve/TitleBauveCv";
+import { studies } from "./data/cvData";
 
 export const MainContent = () => (
   <section className="relative isolate w-full min-h-[100svh] overflow-visible bg-transparent">
     {/* separador por el menú fijo del App */}
     <div className="h-14 md:h-16" />
 
-    {/* Los blobs van ABSOLUTE dentro de esta sección */}
+    {/* blobs absolute */}
     <BackgroundBlobsLight />
 
     {/* Contenido a pantalla completa */}
@@ -28,14 +28,7 @@ export const MainContent = () => (
             linkedin="linkedin.com/in/ricardo-bauve"
             web="bauve.tumblr.com"
           />
-          <Education
-            studies={[
-              { title: "Diseño y Comunicación Visual Facultad de Artes y Diseño", place: "UNAM", year: "2009 - 2013" },
-              { title: "Master en Chief Digital Officer", place: "Gray Matter", year: "2019" },
-              { title: "MidJourney IA generativa", place: "S.O.D.A", year: "2023" },
-              { title: "BootCamp IT Academy Cibernarium", place: "Barcelona", year: "2024 - Actualidad" },
-            ]}
-          />
+          <Education studies={studies} />
           <Skills />
         </div>
 

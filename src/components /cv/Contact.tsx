@@ -1,40 +1,17 @@
-import { motion, Variants } from "framer-motion";
+import { motion } from "framer-motion";
+import { containerVariants, itemVariants } from "./ui/motion";
+import { contactItems } from "./data/cvData";
 import { GlassButton } from "../buttons/Button";
 
-const container: Variants = {
-  hidden: { opacity: 0, y: 16 },
-  visible: {
-    opacity: 1,
-    y: 0,
-    transition: {
-      duration: 0.5,
-      ease: "easeOut",
-      when: "beforeChildren",
-      staggerChildren: 0.08,
-      delayChildren: 0.10,
-    },
-  },
-};
+type Props = { email: string; phone: string; linkedin: string; web: string; };
 
-const item: Variants = {
-  hidden: { opacity: 0, y: 10 },
-  visible: { opacity: 1, y: 0, transition: { duration: 0.35, ease: "easeOut" } },
-};
-
-type ContactProps = { email: string; phone: string; linkedin: string; web: string; };
-
-export const Contact = ({ email, phone, linkedin, web }: ContactProps) => {
-  const items = [
-    { href: `https://${linkedin}`, label: "in", value: linkedin },
-    { href: `https://${web}`, label: "🌐", value: web },
-    { href: `tel:${phone}`, label: "📞", value: phone },
-    { href: `mailto:${email}`, label: "✉️", value: email },
-  ];
+export function Contact({ email, phone, linkedin, web }: Props) {
+  const items = contactItems(email, phone, linkedin, web);
 
   return (
     <motion.div
       className="flex flex-col sm:flex-row flex-wrap justify-center gap-2 mt-2 text-s"
-      variants={container}
+      variants={containerVariants}
       initial="hidden"
       whileInView="visible"
       viewport={{ once: true, amount: 0.3 }}
@@ -45,7 +22,7 @@ export const Contact = ({ email, phone, linkedin, web }: ContactProps) => {
           href={it.href}
           target="_blank"
           rel="noopener noreferrer"
-          variants={item}
+          variants={itemVariants}
           whileHover={{ y: -2, scale: 1.05 }}
           transition={{ type: "spring", stiffness: 300, damping: 15 }}
           className="w-full sm:w-auto"
@@ -58,4 +35,4 @@ export const Contact = ({ email, phone, linkedin, web }: ContactProps) => {
       ))}
     </motion.div>
   );
-};
+}

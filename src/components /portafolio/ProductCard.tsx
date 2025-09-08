@@ -38,7 +38,7 @@ export const ProductCard: React.FC<ProductCardProps> = ({
     <div
       className={[
         "group relative flex flex-col cursor-pointer w-full overflow-hidden",
-        "text-stone-900",
+        "text-stone-300",
         className,
       ].join(" ")}
       role="link"
@@ -78,7 +78,12 @@ export const ProductCard: React.FC<ProductCardProps> = ({
             e.stopPropagation();
             goDetail();
           }}
-          className="pointer-events-none absolute inset-x-3 bottom-3 z-20 hidden h-10 items-center justify-center bg-white text-stone-900 text-sm tracking-wide uppercase border border-stone-200 group-hover:flex group-hover:pointer-events-auto"
+          className="pointer-events-none absolute inset-x-3 bottom-3 z-20 hidden h-10 items-center justify-center bg-orange-500 text-white text-md tracking-wide uppercase  group-hover:flex group-hover:pointer-events-auto rounded-2xl shadow-xl
+  bg-gradient-to-r from-orange-500 to-orange-700
+  shadow-orange-300/50
+  hover:shadow-orange-500/70
+  transition duration-300 ease-in-out
+"
           whileTap={{ scale: 0.98 }}
         >
           View
@@ -91,7 +96,7 @@ export const ProductCard: React.FC<ProductCardProps> = ({
           <span className="line-clamp-2">{name}</span>
         </h3>
         {description && (
-          <p className="mt-1 text-sm text-stone-600 leading-snug line-clamp-2">
+          <p className="mt-1 text-sm text-white leading-snug line-clamp-2">
             {description}
           </p>
         )}
