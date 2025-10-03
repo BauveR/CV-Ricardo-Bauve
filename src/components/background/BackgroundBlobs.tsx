@@ -1,47 +1,11 @@
-import { motion, useAnimation } from "framer-motion";
-import { useEffect } from "react";
-
-function getRandomPosition(range: number) {
-  return Math.floor(Math.random() * range * 2) - range;
-}
-
-function useRandomAnimation(rangeX: number, rangeY: number) {
-  const controls = useAnimation();
-
-  useEffect(() => {
-    let isActive = true;
-
-    const animate = async () => {
-      while (isActive) {
-        const x = getRandomPosition(rangeX);
-        const y = getRandomPosition(rangeY);
-        const scale = 1 + Math.random() * 0.4; // 1 → 1.4
-        await controls.start({
-          x,
-          y,
-          scale,
-          transition: {
-            duration: Math.random() * 1.5 + 0.8, // 0.8s - 2.3s
-            ease: "easeInOut",
-          },
-        });
-      }
-    };
-
-    animate();
-    return () => {
-      isActive = false;
-    };
-  }, [controls, rangeX, rangeY]);
-
-  return controls;
-}
+import { motion } from "framer-motion";
+import { useFloatingAnimation } from "../../hooks/useFloatingAnimation";
 
 export const BackgroundBlobs = () => {
   // Rango de movimiento suave para evitar que se "salgan" visualmente
-  const blob1 = useRandomAnimation(140, 140);
-  const blob2 = useRandomAnimation(120, 120);
-  const blob3 = useRandomAnimation(140, 140);
+  const blob1 = useFloatingAnimation({ rangeX: 140, rangeY: 140 });
+  const blob2 = useFloatingAnimation({ rangeX: 120, rangeY: 120 });
+  const blob3 = useFloatingAnimation({ rangeX: 140, rangeY: 140 });
 
   return (
     // IMPORTANTE: absolute (no fixed), pointer-events-none y -z-10

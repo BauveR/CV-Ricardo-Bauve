@@ -1,21 +1,22 @@
-import React, { useCallback, useEffect, useMemo, useRef, useState } from "react";
-import { BrowserRouter, useLocation, useMatch, useNavigate } from "react-router-dom";
+import { useCallback, useEffect, useMemo, useRef, useState } from "react";
+import { BrowserRouter, useMatch, useNavigate } from "react-router-dom";
 import { motion, AnimatePresence } from "framer-motion";
 
-// ⚠️ Sin espacios en las rutas
-import { Welcome } from "./components /welcome/Welcome";
-import { MainContent } from "./components /cv/MainContent";
-import { ProductGrid } from "./components /portafolio/ProductGrid";
-import { ProductDetailPage } from "./components /portafolio/ProductDetailPage";
-import NavbarSections from "./components /navbar/NavBarSections";
+import { Welcome } from "./components/welcome/Welcome";
+import { MainContent } from "./components/cv/MainContent";
+import { ProductGrid } from "./components/portafolio/ProductGrid";
+import { ProductDetailPage } from "./components/portafolio/ProductDetailPage";
+import NavbarSections from "./components/navbar/NavBarSections";
+import { AnimatedSection } from "./components/common/AnimatedSection";
+import { useScrollSections } from "./hooks/useScrollSections";
+import { useScrollNavigation } from "./hooks/useScrollNavigation";
+import { useScrollRestoration } from "./hooks/useScrollRestoration";
+import { useInitialNavigation } from "./hooks/useInitialNavigation";
 
 type SectionId = "welcome" | "presupuesto" | "portafolio";
 const SECTION_IDS: SectionId[] = ["welcome", "presupuesto", "portafolio"];
 
 function ScrollShell() {
-  const location = useLocation();
-  const navigate = useNavigate();
-
   const welcomeRef = useRef<HTMLElement | null>(null);
   const presupuestoRef = useRef<HTMLElement | null>(null);
   const portafolioRef = useRef<HTMLElement | null>(null);
@@ -25,115 +26,56 @@ function ScrollShell() {
     []
   );
 
-  const [active, setActive] = useState<SectionId>("welcome");
   const [showPortfolio, setShowPortfolio] = useState(false);
-  const firstLoadRef = useRef(true);
 
-  useEffect(() => {
-    if (typeof window === "undefined" || !("IntersectionObserver" in window)) return;
-    const io = new IntersectionObserver(
-      (entries) => {
-        const vis = entries
-          .filter((e) => e.isIntersecting)
-          .sort((a, b) => b.intersectionRatio - a.intersectionRatio)[0];
-        const id = (vis?.target as HTMLElement | undefined)?.id as SectionId | undefined;
-        if (id && SECTION_IDS.includes(id)) setActive(id);
-      },
-      { root: null, rootMargin: "-40% 0px -50% 0px", threshold: 0 }
-    );
-    const nodes = [welcomeRef.current, presupuestoRef.current, portafolioRef.current].filter(Boolean) as HTMLElement[];
-    nodes.forEach((n) => io.observe(n));
-    return () => io.disconnect();
-  }, []);
+  // Hooks personalizados para manejar scroll
+  const activeSection = useScrollSections({ sectionIds: SECTION_IDS, sectionRefs: refs });
+  const { scrollTo } = useScrollNavigation({ sectionIds: SECTION_IDS, sectionRefs: refs });
+  useScrollRestoration();
 
-  useEffect(() => {
-    if ("scrollRestoration" in window.history) {
-      window.history.scrollRestoration = "manual";
-    }
-  }, []);
-
-  const scrollTo = useCallback((id: SectionId, replace?: boolean) => {
-    const el = refs[id].current;
-    if (!el) return;
-    el.scrollIntoView({ behavior: "smooth", block: "start" });
-    const url = `/#${id}`;
-    if (replace) window.history.replaceState(null, "", url);
-    else window.history.pushState(null, "", url);
-  }, [refs]);
-
-  useEffect(() => {
-    if (!firstLoadRef.current) return;
-    firstLoadRef.current = false;
-
-    const path = location.pathname;
-    if (/\/product\//.test(path)) return;
-
-    if (path.includes("presupuesto")) { scrollTo("presupuesto", true); return; }
-    if (path.includes("portafolio")) { scrollTo("portafolio", true); setShowPortfolio(true); return; }
-
-    window.scrollTo({ top: 0, left: 0, behavior: "auto" });
-    window.history.replaceState(null, "", "/#welcome");
-  }, [location.pathname, scrollTo]);
-
-  useEffect(() => {
-    const onPop = () => {
-      const h = window.location.hash.slice(1) as SectionId | undefined;
-      if (h && (SECTION_IDS as readonly string[]).includes(h)) {
-        const el = refs[h as SectionId].current;
-        if (el) el.scrollIntoView({ behavior: "smooth", block: "start" });
-      }
-    };
-    window.addEventListener("popstate", onPop);
-    return () => window.removeEventListener("popstate", onPop);
-  }, [refs]);
+  // Navegación inicial
+  useInitialNavigation(
+    useCallback((section: string, shouldShowPortfolio?: boolean) => {
+      if (shouldShowPortfolio) setShowPortfolio(true);
+      scrollTo(section as SectionId, true);
+    }, [scrollTo])
+  );
 
   const productMatch = useMatch("/product/:id");
 
   return (
     <div className="relative min-h-screen bg-slate-700">
-      {/* Menú con burger en móvil */}
-      <NavbarSections active={active} onGo={scrollTo} />
+      <NavbarSections active={activeSection} onGo={scrollTo} />
 
       {/* WELCOME */}
-      <motion.section
+      <AnimatedSection
         id="welcome"
-        ref={(el) => (welcomeRef.current = el)}
-        className="min-h-screen flex items-center justify-center px-0 scroll-mt-24"
-        initial={{ opacity: 0, y: 40 }}
-        whileInView={{ opacity: 1, y: 0 }}
-        viewport={{ once: true, amount: 0.45 }}
-        transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
+        ref={welcomeRef}
+        viewportAmount={0.45}
+        className="flex items-center justify-center"
       >
         <div className="w-full"><Welcome /></div>
-      </motion.section>
+      </AnimatedSection>
 
       <Divider />
 
       {/* PRESUPUESTO / CV */}
-      <motion.section
+      <AnimatedSection
         id="presupuesto"
-        ref={(el) => (presupuestoRef.current = el)}
-        className="min-h-screen px-0 scroll-mt-24"
-        initial={{ opacity: 0, y: 40 }}
-        whileInView={{ opacity: 1, y: 0 }}
-        viewport={{ once: true, amount: 0.6 }}
-        transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
+        ref={presupuestoRef}
+        viewportAmount={0.6}
       >
         <div className="w-full"><MainContent /></div>
-      </motion.section>
+      </AnimatedSection>
 
       <Divider />
 
       {/* PORTAFOLIO */}
-      <motion.section
+      <AnimatedSection
         id="portafolio"
-        ref={(el) => (portafolioRef.current = el)}
-        className="min-h-screen px-0 scroll-mt-24"
-        initial={{ opacity: 0, y: 40 }}
-        whileInView={{ opacity: 1, y: 0 }}
-        viewport={{ once: true, amount: 0.25, margin: "0px 0px -15% 0px" }}
+        ref={portafolioRef}
+        viewportAmount={0.25}
         onViewportEnter={() => setShowPortfolio(true)}
-        transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
       >
         <div className="w-full">
           {showPortfolio ? (
@@ -146,7 +88,7 @@ function ScrollShell() {
             </div>
           )}
         </div>
-      </motion.section>
+      </AnimatedSection>
 
       {/* MODAL PRODUCTO */}
       <AnimatePresence>
@@ -166,10 +108,8 @@ function ProductModal() {
   }, [navigate]);
 
   useEffect(() => {
-    const { body } = document;
-    const prev = body.style.overflow;
-    body.style.overflow = "hidden";
-    return () => { body.style.overflow = prev; };
+    document.body.style.overflow = "hidden";
+    return () => { document.body.style.overflow = ""; };
   }, []);
 
   return (
@@ -216,7 +156,7 @@ function ProductModal() {
 function Divider() {
   return (
     <div className="relative h-24 flex items-center justify-center">
-      <div className="h-px w-64 bg-gradient-to-r from-transparent via-white/0 to-transparent" />
+      <div className="h-px w-64 bg-gradient-to-r from-transparent via-white/10 to-transparent" />
     </div>
   );
 }

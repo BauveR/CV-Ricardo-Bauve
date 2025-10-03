@@ -1,34 +1,10 @@
-// src/components/background/BackgroundBlobsLight.tsx
-import { motion, useAnimation } from "framer-motion";
-import { useEffect } from "react";
-
-function rand(range: number) {
-  return Math.floor(Math.random() * range * 2) - range;
-}
-
-function useFloat(rx: number, ry: number) {
-  const controls = useAnimation();
-  useEffect(() => {
-    let on = true;
-    (async () => {
-      while (on) {
-        await controls.start({
-          x: rand(rx),
-          y: rand(ry),
-          scale: 1 + Math.random() * 0.25,
-          transition: { duration: 1 + Math.random() * 1.2, ease: "easeInOut" },
-        });
-      }
-    })();
-    return () => { on = false; };
-  }, [controls, rx, ry]);
-  return controls;
-}
+import { motion } from "framer-motion";
+import { useFloatingAnimation } from "../../hooks/useFloatingAnimation";
 
 export const BackgroundBlobsLight = () => {
-  const a = useFloat(120, 120);
-  const b = useFloat(100, 100);
-  const c = useFloat(140, 140);
+  const a = useFloatingAnimation({ rangeX: 120, rangeY: 120, scaleRange: 0.25, minDuration: 1, maxDuration: 2.2 });
+  const b = useFloatingAnimation({ rangeX: 100, rangeY: 100, scaleRange: 0.25, minDuration: 1, maxDuration: 2.2 });
+  const c = useFloatingAnimation({ rangeX: 140, rangeY: 140, scaleRange: 0.25, minDuration: 1, maxDuration: 2.2 });
 
   return (
     <div className="absolute inset-0 -z-10 pointer-events-none overflow-visible">

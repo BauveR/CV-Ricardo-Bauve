@@ -8,7 +8,6 @@ export function Experience() {
   return (
     <GlassPanel variants={containerVariants}>
       <SectionHeader>Experiencia</SectionHeader>
-
       <div className="ms-8 mt-6 mb-8 space-y-6 text-sm text-slate-400">
         {experienceList.map((exp, i) => (
           <motion.div key={i} className="space-y-1" variants={itemVariants}>

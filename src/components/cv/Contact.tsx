@@ -10,7 +10,7 @@ export function Contact({ email, phone, linkedin, web }: Props) {
 
   return (
     <motion.div
-      className="flex flex-col sm:flex-row flex-wrap justify-center gap-2 mt-2 text-s"
+      className="ms-2 flex flex-col sm:flex-row flex-wrap justify-start gap-2 mt- text-s"
       variants={containerVariants}
       initial="hidden"
       whileInView="visible"
