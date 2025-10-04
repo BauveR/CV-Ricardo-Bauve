@@ -4,10 +4,11 @@ import { motion, AnimatePresence } from "framer-motion";
 
 import { Welcome } from "./components/welcome/Welcome";
 import { MainContent } from "./components/cv/MainContent";
-import { ProductGrid } from "./components/portafolio/ProductGrid";
-import { ProductDetailPage } from "./components/portafolio/ProductDetailPage";
+import { PortafolioGrid } from "./components/portafolio/PortafolioGrid";
+import { PortafolioDetailPage } from "./components/portafolio/PortafolioDetailPage";
 import NavbarSections from "./components/navbar/NavBarSections";
 import { AnimatedSection } from "./components/common/AnimatedSection";
+import { Footer } from "./components/footer/Footer";
 import { useScrollSections } from "./hooks/useScrollSections";
 import { useScrollNavigation } from "./hooks/useScrollNavigation";
 import { useScrollRestoration } from "./hooks/useScrollRestoration";
@@ -41,7 +42,7 @@ function ScrollShell() {
     }, [scrollTo])
   );
 
-  const productMatch = useMatch("/product/:id");
+  const portafolioMatch = useMatch("/portafolio/:id");
 
   return (
     <div className="relative min-h-screen bg-slate-700">
@@ -57,18 +58,18 @@ function ScrollShell() {
         <div className="w-full"><Welcome /></div>
       </AnimatedSection>
 
-      <Divider />
+      <Divider height="h-[67px]" />
 
       {/* PRESUPUESTO / CV */}
       <AnimatedSection
         id="presupuesto"
         ref={presupuestoRef}
-        viewportAmount={0.6}
+        viewportAmount={0.3}
       >
         <div className="w-full"><MainContent /></div>
       </AnimatedSection>
 
-      <Divider />
+      <Divider height="h-12" />
 
       {/* PORTAFOLIO */}
       <AnimatedSection
@@ -79,7 +80,7 @@ function ScrollShell() {
       >
         <div className="w-full">
           {showPortfolio ? (
-            <ProductGrid />
+            <PortafolioGrid />
           ) : (
             <div className="grid gap-8 grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 p-4">
               {Array.from({ length: 8 }).map((_, i) => (
@@ -90,21 +91,28 @@ function ScrollShell() {
         </div>
       </AnimatedSection>
 
-      {/* MODAL PRODUCTO */}
+      {/* FOOTER */}
+      <Footer />
+
+      {/* MODAL PORTAFOLIO */}
       <AnimatePresence>
-        {productMatch && (
-          <ProductModal key={`product-${productMatch.params?.id ?? "modal"}`} />
+        {portafolioMatch && (
+          <PortafolioModal key={`portafolio-${portafolioMatch.params?.id ?? "modal"}`} />
         )}
       </AnimatePresence>
     </div>
   );
 }
 
-function ProductModal() {
+function PortafolioModal() {
   const navigate = useNavigate();
+
   const onClose = useCallback(() => {
-    if (window.history.length > 1) navigate(-1);
-    else window.history.replaceState(null, "", "/#portafolio");
+    // Cerrar modal y volver a la sección de portafolio
+    navigate("/", { replace: true });
+    setTimeout(() => {
+      window.location.hash = "#portafolio";
+    }, 100);
   }, [navigate]);
 
   useEffect(() => {
@@ -118,7 +126,7 @@ function ProductModal() {
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
       exit={{ opacity: 0 }}
-      transition={{ duration: 0.25 }}
+      transition={{ duration: 0.3 }}
       aria-modal
       role="dialog"
     >
@@ -128,34 +136,24 @@ function ProductModal() {
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         exit={{ opacity: 0 }}
+        transition={{ duration: 0.3 }}
       />
       <motion.div
-        className="relative max-w-5xl w-full max-h-[85vh] overflow-auto rounded-2xl bg-neutral-900 border border-white/10 shadow-2xl"
-        initial={{ y: 40, opacity: 0 }}
-        animate={{ y: 0, opacity: 1 }}
-        exit={{ y: 20, opacity: 0 }}
-        transition={{ duration: 0.35, ease: [0.22, 1, 0.36, 1] }}
+        className="relative max-w-[1640px] w-full max-h-[90vh] overflow-auto rounded-3xl bg-slate-900/30 backdrop-blur-2xl border border-white/10 shadow-xl shadow-black/20 ring-1 ring-white/5"
+        initial={{ scale: 0.95, opacity: 0, y: 20 }}
+        animate={{ scale: 1, opacity: 1, y: 0 }}
+        exit={{ scale: 0.95, opacity: 0, y: 20 }}
+        transition={{ duration: 0.4, ease: [0.16, 1, 0.3, 1] }}
       >
-        <div className="sticky top-0 flex items-center justify-between p-3 border-b border-white/10 bg-neutral-900/80 backdrop-blur">
-          <div className="text-sm opacity-70">#CreativeMind</div>
-          <button
-            onClick={onClose}
-            className="px-3 py-1.5 rounded-lg bg-white/10 hover:bg-white/15 ring-1 ring-white/15"
-          >
-            Cerrar
-          </button>
-        </div>
-        <div className="p-4">
-          <ProductDetailPage />
-        </div>
+        <PortafolioDetailPage onClose={onClose} />
       </motion.div>
     </motion.aside>
   );
 }
 
-function Divider() {
+function Divider({ height = "h-24" }: { height?: string }) {
   return (
-    <div className="relative h-24 flex items-center justify-center">
+    <div className={`relative ${height} flex items-center justify-center`}>
       <div className="h-px w-64 bg-gradient-to-r from-transparent via-white/10 to-transparent" />
     </div>
   );

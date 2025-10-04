@@ -23,8 +23,8 @@ export function useInitialNavigation(onNavigate: NavigationCallback) {
 
     const path = location.pathname;
 
-    // Si es una ruta de producto, no hacer nada
-    if (path.includes("/product/")) return;
+    // Si es una ruta de portafolio, no hacer nada
+    if (path.includes("/portafolio/")) return;
 
     // Determinar sección basada en el path
     const section = INITIAL_SCROLL_MAP[path] || "welcome";

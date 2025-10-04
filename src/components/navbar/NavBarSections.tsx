@@ -1,5 +1,7 @@
 import { useEffect, useState } from "react";
 import { AnimatePresence, motion } from "framer-motion";
+import { TitleMovCv } from "../titleRicardo/TitleMovCv";
+import { TitleBauveCv } from "../titleBauve/TitleBauveCv";
 
 type SectionId = "welcome" | "presupuesto" | "portafolio";
 
@@ -10,7 +12,7 @@ type Props = {
 
 const routes: { id: SectionId; label: string }[] = [
   { id: "welcome", label: "Inicio" },
-  { id: "presupuesto", label: "Presupuesto" },
+  { id: "presupuesto", label: "CV" },
   { id: "portafolio", label: "Portafolio" },
 ];
 
@@ -46,11 +48,11 @@ export default function NavbarSections({ active, onGo }: Props) {
   }, [mobileOpen]);
 
   const linkBase =
-    "relative px-2 py-1 text-sm md:text-[15px] tracking-wide transition";
+    "relative px-2 py-1 text-sm md:text-[15px] tracking-wide transition-all duration-300";
   const linkActive =
-    "text-white";
+    "text-white font-bold blur-none";
   const linkInactive =
-    "text-stone-300 hover:text-white";
+    "text-stone-300 blur-[0.8px] hover:text-white hover:blur-none font-normal";
 
   const go = (id: SectionId) => {
     setMobileOpen(false);
@@ -72,7 +74,7 @@ export default function NavbarSections({ active, onGo }: Props) {
 
         <nav className="w-full px-10">
           <div className="grid grid-cols-3 items-center h-14 md:h-16">
-            {/* LEFT: Burger (móvil) + Links (desktop) */}
+            {/* LEFT: Burger (móvil) */}
             <div className="flex items-center gap-3">
               {/* Burger */}
               <button
@@ -85,7 +87,29 @@ export default function NavbarSections({ active, onGo }: Props) {
                   <path d="M3 6h18M3 12h18M3 18h18" strokeWidth="1.5" strokeLinecap="round" />
                 </svg>
               </button>
+            </div>
 
+            {/* CENTER: logo / marca o títulos CV */}
+            <div className="flex items-center justify-center">
+              <AnimatePresence mode="wait">
+                {active === "presupuesto" && (
+                  <motion.div
+                    key="cv-titles"
+                    className="flex items-center gap-2 flex-wrap justify-center scale-[0.7] origin-center"
+                    initial={{ opacity: 0, scale: 0.5 }}
+                    animate={{ opacity: 1, scale: 0.7 }}
+                    exit={{ opacity: 0, scale: 0.5 }}
+                    transition={{ duration: 0.4, ease: [0.22, 1, 0.36, 1] }}
+                  >
+                    <TitleMovCv />
+                    <TitleBauveCv />
+                  </motion.div>
+                )}
+              </AnimatePresence>
+            </div>
+
+            {/* RIGHT: Links (desktop) */}
+            <div className="flex items-center justify-end pr-16">
               {/* Links desktop */}
               <div className="hidden lg:flex items-start gap-4">
                 {routes.map((r) => (
@@ -113,12 +137,6 @@ export default function NavbarSections({ active, onGo }: Props) {
                 ))}
               </div>
             </div>
-
-            {/* CENTER: logo / marca */}
-            
-
-            {/* RIGHT: vacío (espacio para futuro) */}
-            <div className="flex items-center justify-end" />
           </div>
         </nav>
       </header>
@@ -162,10 +180,10 @@ export default function NavbarSections({ active, onGo }: Props) {
                     key={r.id}
                     onClick={() => go(r.id)}
                     className={[
-                      "py-3 text-base border-b border-white/10 text-left",
+                      "py-3 text-base border-b border-white/10 text-left transition-all duration-300",
                       active === r.id
-                        ? "text-white"
-                        : "text-stone-300 hover:text-white",
+                        ? "text-white font-bold blur-none"
+                        : "text-stone-300 hover:text-white blur-[0.8px] hover:blur-none font-normal",
                     ].join(" ")}
                     aria-current={active === r.id ? "page" : undefined}
                   >

@@ -10,7 +10,7 @@ export function Contact({ email, phone, linkedin, web }: Props) {
 
   return (
     <motion.div
-      className="ms-2 flex flex-col sm:flex-row flex-wrap justify-start gap-2 mt- text-s"
+      className="ms-2 flex flex-col sm:flex-row flex-wrap justify-start gap-2 mt-0 text-sm"
       variants={containerVariants}
       initial="hidden"
       whileInView="visible"
@@ -27,9 +27,9 @@ export function Contact({ email, phone, linkedin, web }: Props) {
           transition={{ type: "spring", stiffness: 300, damping: 15 }}
           className="w-full sm:w-auto"
         >
-          <GlassButton className="w-full sm:w-auto flex justify-center sm:justify-start items-center gap-2 text-sm px-4 py-2">
-            <span className="font-semibold">{it.label}</span>
-            <span>{it.value}</span>
+          <GlassButton className="w-full sm:w-auto flex justify-center sm:justify-start items-center gap-2 text-sm px-3 py-1.5">
+            <span className="font-semibold text-sm">{it.label}</span>
+            <span className="text-sm">{it.value}</span>
           </GlassButton>
         </motion.a>
       ))}

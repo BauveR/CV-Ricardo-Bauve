@@ -1,10 +1,10 @@
 /**
  * LEGACY FILE - No longer in use
- * This component has been replaced by ProductGrid.tsx
- * Keeping for reference only
+ * This component has been replaced by PortafolioGrid.tsx
+ * Keeping for backward compatibility
  */
 
-// Re-export ProductGrid for backward compatibility
-export { ProductGrid as PortafolioGrid, ProductGrid as default } from './ProductGrid';
+// Re-export PortafolioGrid for backward compatibility
+export { PortafolioGrid, PortafolioGrid as default } from './PortafolioGrid';
 
 

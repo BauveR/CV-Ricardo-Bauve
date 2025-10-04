@@ -12,7 +12,7 @@ const SvgLetter = ({ delay, children }: { delay: number; children: React.ReactNo
     initial={{ opacity: 0, y: -40 }}
     animate={{ opacity: 1, y: 0 }}
     transition={{ delay, duration: 0.7, ease: "easeOut" }}
-    className="h-60"
+    className="h-32 sm:h-40 md:h-52 lg:h-60"
   >
     {children}
   </motion.div>
@@ -30,7 +30,7 @@ export const TitleMov = () => {
       ];
 
   return (
-    <div className="flex items-end justify-center gap-[1px]">
+    <div className="flex items-end justify-center gap-0.5 sm:gap-[1px]">
       {letters.map(({ id, delay, Component }) => (
         <SvgLetter key={id} delay={delay}>
           <Component className="w-full h-full" />

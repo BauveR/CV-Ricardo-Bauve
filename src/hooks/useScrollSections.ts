@@ -16,7 +16,7 @@ interface UseScrollSectionsOptions<T extends SectionId> {
 export function useScrollSections<T extends SectionId>({
   sectionIds,
   sectionRefs,
-  rootMargin = "-40% 0px -50% 0px",
+  rootMargin = "-30% 0px -30% 0px",
 }: UseScrollSectionsOptions<T>) {
   const [activeSection, setActiveSection] = useState<T>(sectionIds[0]);
 
@@ -25,21 +25,22 @@ export function useScrollSections<T extends SectionId>({
 
     const observer = new IntersectionObserver(
       (entries) => {
-        // Encontrar la entrada con mayor intersectionRatio
-        const mostVisible = entries
-          .filter((e) => e.isIntersecting)
-          .reduce((max, e) =>
-            e.intersectionRatio > max.intersectionRatio ? e : max
-          , entries[0]);
+        // Filtrar solo las entradas que están intersectando
+        const intersecting = entries.filter((e) => e.isIntersecting);
 
-        if (!mostVisible) return;
+        if (intersecting.length === 0) return;
+
+        // Encontrar la entrada con mayor intersectionRatio
+        const mostVisible = intersecting.reduce((max, e) =>
+          e.intersectionRatio > max.intersectionRatio ? e : max
+        );
 
         const id = mostVisible.target.id as T;
         if (sectionIds.includes(id)) {
           setActiveSection(id);
         }
       },
-      { root: null, rootMargin, threshold: 0 }
+      { root: null, rootMargin, threshold: [0, 0.25, 0.5, 0.75, 1] }
     );
 
     // Observar todas las secciones

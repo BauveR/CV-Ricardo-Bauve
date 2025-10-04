@@ -1,9 +1,7 @@
-// src/components/portafolio/ProductCard.tsx
-import React from "react";
 import { motion } from "framer-motion";
 import { useNavigate } from "react-router-dom";
 
-export type ProductCardProps = {
+export type PortafolioCardProps = {
   id: string;
   name: string;
   primaryImage: string;
@@ -12,19 +10,19 @@ export type ProductCardProps = {
   className?: string;
 };
 
-export const ProductCard: React.FC<ProductCardProps> = ({
+export const PortafolioCard = ({
   id,
   name,
   primaryImage,
   secondaryImage,
   description,
   className = "",
-}) => {
+}: PortafolioCardProps) => {
   const navigate = useNavigate();
   const hoverImage = secondaryImage || primaryImage;
 
   const goDetail = () => {
-    navigate(`/product/${id}`, {
+    navigate(`/portafolio/${id}`, {
       state: {
         id,
         name,
@@ -37,8 +35,15 @@ export const ProductCard: React.FC<ProductCardProps> = ({
   return (
     <div
       className={[
-        "group relative flex flex-col cursor-pointer w-full overflow-hidden",
+        "group relative flex flex-col cursor-pointer w-full overflow-hidden rounded-3xl",
+        "bg-slate-900/30 backdrop-blur-2xl",
+        "shadow-xl shadow-black/20",
+        "border border-white/10",
+        "ring-1 ring-white/5",
+        "hover:bg-slate-900/40 hover:border-white/15",
+        "transition-all duration-500",
         "text-stone-300",
+        "p-3",
         className,
       ].join(" ")}
       role="link"
@@ -47,7 +52,7 @@ export const ProductCard: React.FC<ProductCardProps> = ({
       onKeyDown={(e) => (e.key === "Enter" ? goDetail() : null)}
     >
       {/* Imagen horizontal */}
-      <div className="relative aspect-[4/3] w-full overflow-hidden bg-stone-100/70">
+      <div className="relative aspect-[4/3] w-full overflow-hidden rounded-2xl bg-slate-800/50">
         {/* Imagen principal */}
         <motion.img
           src={primaryImage}
@@ -78,7 +83,7 @@ export const ProductCard: React.FC<ProductCardProps> = ({
             e.stopPropagation();
             goDetail();
           }}
-          className="pointer-events-none absolute inset-x-3 bottom-3 z-20 hidden h-10 items-center justify-center bg-orange-500 text-white text-md tracking-wide uppercase  group-hover:flex group-hover:pointer-events-auto rounded-2xl shadow-xl
+          className="pointer-events-none absolute inset-x-4 bottom-4 z-20 hidden h-10 items-center justify-center bg-orange-500 text-white text-md tracking-wide uppercase group-hover:flex group-hover:pointer-events-auto rounded-2xl shadow-xl
   bg-gradient-to-r from-orange-500 to-orange-700
   shadow-orange-300/50
   hover:shadow-orange-500/70
@@ -91,7 +96,7 @@ export const ProductCard: React.FC<ProductCardProps> = ({
       </div>
 
       {/* Título + descripción breve */}
-      <div className="mt-3">
+      <div className="mt-2 px-1">
         <h3 className="text-sm tracking-wide">
           <span className="line-clamp-2">{name}</span>
         </h3>
