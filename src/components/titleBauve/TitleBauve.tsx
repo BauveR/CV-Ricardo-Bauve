@@ -10,7 +10,7 @@ const SvgLetter = ({ delay, children }: { delay: number; children: React.ReactNo
     initial={{ opacity: 0, y: 60 }}
     animate={{ opacity: 1, y: 0 }}
     transition={{ delay, duration: 0.6, ease: "easeOut" }}
-    className="h-[190px] sm:h-[190px] md:h-[300px] lg:h-[300px]" // responsive height
+    className="h-[150px] sm:h-[190px] md:h-[300px] lg:h-[300px]" // responsive height
   >
     {children}
   </motion.div>
@@ -26,10 +26,10 @@ export const TitleBauve = () => {
   ];
 
   return (
-    <div className="flex items-start justify-start gap-[0px] flex-wrap ">
+    <div className="flex items-start justify-start gap-[0px] flex-wrap max-w-full overflow-x-hidden">
       {letters.map(({ id, delay, Component }) => (
         <SvgLetter key={id} delay={delay}>
-          <Component className="w-full h-full max-w-[90vw]" /> {/* prevent overflow */}
+          <Component className="w-full h-full max-w-[85vw]" /> {/* prevent overflow */}
         </SvgLetter>
       ))}
     </div>

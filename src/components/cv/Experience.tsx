@@ -6,9 +6,9 @@ import { experienceList } from "./data/cvData";
 
 export function Experience() {
   return (
-    <GlassPanel variants={containerVariants}>
+    <GlassPanel variants={containerVariants} className="h-full flex flex-col">
       <SectionHeader>Experiencia</SectionHeader>
-      <div className="ms-8 mt-6 mb-8 space-y-6 text-sm text-slate-400">
+      <div className="ms-4 sm:ms-8 mt-6 mb-8 space-y-6 text-sm text-slate-400">
         {experienceList.map((exp, i) => (
           <motion.div key={i} className="space-y-1" variants={itemVariants}>
             <p className="font-bold text-slate-400 text-base md:text-sm">{exp.title}</p>

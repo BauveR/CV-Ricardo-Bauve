@@ -28,16 +28,16 @@ const iconMap: Record<string, JSX.Element> = {
 
 export function Skills() {
   return (
-    <GlassPanel variants={containerVariants} viewportAmount={0.3}>
+    <GlassPanel variants={containerVariants} viewportAmount={0.3} className="h-full flex flex-col">
       <motion.h2
-        className="ms-8 text-3xl font-bold text-stone-400"
+        className="ms-4 sm:ms-8 text-2xl sm:text-3xl font-bold text-stone-400"
         variants={itemVariants}
         transition={{ duration: 0.5, ease: "easeOut" }}
       >
         Skills
       </motion.h2>
 
-      <div className="ms-8 mt-6 mb-2 grid grid-cols-2 md:grid-cols-3 gap-x-20 gap-y-8 text-sm">
+      <div className="ms-4 sm:ms-8 mt-6 mb-2 grid grid-cols-2 md:grid-cols-3 gap-x-4 sm:gap-x-8 md:gap-x-20 gap-y-6 sm:gap-y-8 text-sm">
         {skillsSections.map((section, i) => (
           <motion.div
             key={i}

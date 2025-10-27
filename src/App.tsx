@@ -45,7 +45,7 @@ function ScrollShell() {
   const portafolioMatch = useMatch("/portafolio/:id");
 
   return (
-    <div className="relative min-h-screen bg-slate-700">
+    <div className="relative min-h-screen bg-slate-700 overflow-x-hidden max-w-full">
       <NavbarSections active={activeSection} onGo={scrollTo} />
 
       {/* WELCOME */}
@@ -64,7 +64,7 @@ function ScrollShell() {
       <AnimatedSection
         id="presupuesto"
         ref={presupuestoRef}
-        viewportAmount={0.3}
+        viewportAmount={0.01}
       >
         <div className="w-full"><MainContent /></div>
       </AnimatedSection>

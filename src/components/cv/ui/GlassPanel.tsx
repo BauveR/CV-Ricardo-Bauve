@@ -17,7 +17,7 @@ export default function GlassPanel({
     <motion.div
       className={[
         // 👇 tu estilo intacto
-        "rounded-[3rem] p-8 mt-3",
+        "rounded-[3rem] p-4 sm:p-8 mt-3",
         "bg-slate-900/70",
         "backdrop-blur-xl",
         "shadow-lg",
@@ -25,6 +25,7 @@ export default function GlassPanel({
         "ring-1 ring-white/10",
         "hover:bg-slate-900/80",
         "transition-colors duration-500",
+        "max-w-full overflow-x-hidden",
         className,
       ].join(" ")}
       variants={variants}

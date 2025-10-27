@@ -8,10 +8,10 @@ type Props = { studies: Study[] };
 
 export function Education({ studies }: Props) {
   return (
-    <GlassPanel variants={containerVariants}>
+    <GlassPanel variants={containerVariants} className="h-full flex flex-col">
       <SectionHeader>Educación</SectionHeader>
 
-      <ul className="ms-8 grid gap-1 mt-4 text-sm">
+      <ul className="ms-4 sm:ms-8 grid gap-1 mt-4 text-sm">
         {studies.map((s, idx) => (
           <motion.li
             key={idx}

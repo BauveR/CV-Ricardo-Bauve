@@ -30,10 +30,10 @@ export const TitleMov = () => {
       ];
 
   return (
-    <div className="flex items-end justify-center gap-0.5 sm:gap-[1px]">
+    <div className="flex items-end justify-center gap-0.5 sm:gap-[1px] max-w-full overflow-x-hidden">
       {letters.map(({ id, delay, Component }) => (
         <SvgLetter key={id} delay={delay}>
-          <Component className="w-full h-full" />
+          <Component className="w-full h-full max-w-[12vw]" />
         </SvgLetter>
       ))}
     </div>
