@@ -16,7 +16,7 @@ interface UseScrollSectionsOptions<T extends SectionId> {
 export function useScrollSections<T extends SectionId>({
   sectionIds,
   sectionRefs,
-  rootMargin = "-30% 0px -30% 0px",
+  rootMargin = "0px 0px -40% 0px",
 }: UseScrollSectionsOptions<T>) {
   const [activeSection, setActiveSection] = useState<T>(sectionIds[0]);
 
@@ -40,7 +40,7 @@ export function useScrollSections<T extends SectionId>({
           setActiveSection(id);
         }
       },
-      { root: null, rootMargin, threshold: [0, 0.25, 0.5, 0.75, 1] }
+      { root: null, rootMargin, threshold: [0, 0.1, 0.3, 0.5] }
     );
 
     // Observar todas las secciones
