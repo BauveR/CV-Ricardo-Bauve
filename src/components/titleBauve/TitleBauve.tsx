@@ -26,10 +26,10 @@ export const TitleBauve = () => {
   ];
 
   return (
-    <div className="flex items-start justify-start gap-[0px] flex-wrap max-w-full overflow-x-hidden">
+    <div className="flex items-start justify-start gap-[0px] flex-wrap max-w-[95vw]">
       {letters.map(({ id, delay, Component }) => (
         <SvgLetter key={id} delay={delay}>
-          <Component className="w-full h-full max-w-[85vw]" /> {/* prevent overflow */}
+          <Component className="w-full h-full" /> {/* prevent overflow */}
         </SvgLetter>
       ))}
     </div>
