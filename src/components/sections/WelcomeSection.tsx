@@ -3,7 +3,7 @@ import { AnimatedSection } from "../common/AnimatedSection";
 import { Welcome } from "../welcome/Welcome";
 
 type Props = {
-  sectionRef: RefObject<HTMLElement>;
+  sectionRef: RefObject<HTMLElement | null>;
 };
 
 export function WelcomeSection({ sectionRef }: Props) {

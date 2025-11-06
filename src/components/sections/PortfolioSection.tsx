@@ -3,7 +3,7 @@ import { AnimatedSection } from "../common/AnimatedSection";
 import { PortafolioGrid } from "../portafolio/PortafolioGrid";
 
 type Props = {
-  sectionRef: RefObject<HTMLElement>;
+  sectionRef: RefObject<HTMLElement | null>;
   showPortfolio: boolean;
   onViewportEnter: () => void;
 };

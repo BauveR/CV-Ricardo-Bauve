@@ -28,7 +28,7 @@ export const Welcome = () => {
         </motion.p>
 
         {/* no navegación programática: dejamos que el App haga el scroll suave */}
-        <a href="/#presupuesto" className="relative z-10">
+        <a href="/#cv" className="relative z-10">
           <motion.button
             className="px-6 py-3 rounded-xl border border-white/20 bg-white/10 hover:bg-white/15 text-white backdrop-blur-md tracking-wide"
             whileHover={{ scale: 1.05 }}

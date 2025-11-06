@@ -1,9 +1,9 @@
 import { useEffect, useState } from "react";
 import { AnimatePresence, motion } from "framer-motion";
-import { TitleMovCv } from "../titleRicardo/TitleMovCv";
-import { TitleBauveCv } from "../titleBauve/TitleBauveCv";
+import { TitleMovCvFast } from "../titleRicardo/TitleMovCvFast";
+import { TitleBauveCvFast } from "../titleBauve/TitleBauveCvFast";
 
-type SectionId = "welcome" | "presupuesto" | "portafolio";
+type SectionId = "welcome" | "cv" | "portafolio";
 
 type Props = {
   active: SectionId;
@@ -12,13 +12,29 @@ type Props = {
 
 const routes: { id: SectionId; label: string }[] = [
   { id: "welcome", label: "Inicio" },
-  { id: "presupuesto", label: "CV" },
+  { id: "cv", label: "CV" },
   { id: "portafolio", label: "Portafolio" },
 ];
 
 export default function NavbarSections({ active, onGo }: Props) {
   const [scrolled, setScrolled] = useState(false);
   const [mobileOpen, setMobileOpen] = useState(false);
+  const [showTitles, setShowTitles] = useState(false);
+
+  // Estabilizar el estado de los títulos con debounce e hysteresis
+  useEffect(() => {
+    const shouldShow = active !== "welcome";
+
+    // Si vamos a mostrar, hacerlo más rápido (100ms)
+    // Si vamos a ocultar, hacerlo más lento (400ms) para evitar parpadeos
+    const delay = shouldShow ? 100 : 400;
+
+    const timer = setTimeout(() => {
+      setShowTitles(shouldShow);
+    }, delay);
+
+    return () => clearTimeout(timer);
+  }, [active]);
 
   // Cambia estilo al hacer scroll
   useEffect(() => {
@@ -63,7 +79,7 @@ export default function NavbarSections({ active, onGo }: Props) {
     <>
       <header
   className={[
-    "sticky top-0 z-50 transition-colors",
+    "fixed top-0 left-0 right-0 z-50 transition-colors",
     scrolled
       ? "bg-gradient-to-b from-slate-900/90 to-slate-900/30 backdrop-blur-md "
       : "bg-gradient-to-b from-slate-900/60 to-slate-900/0 backdrop-blur-md ",
@@ -90,22 +106,19 @@ export default function NavbarSections({ active, onGo }: Props) {
             </div>
 
             {/* CENTER: logo / marca o títulos CV */}
-            <div className="flex items-center justify-center">
-              <AnimatePresence mode="wait">
-                {active === "presupuesto" && (
-                  <motion.div
-                    key="cv-titles"
-                    className="flex items-center gap-2 flex-wrap justify-center scale-[0.7] origin-center"
-                    initial={{ opacity: 0, scale: 0.5 }}
-                    animate={{ opacity: 1, scale: 0.7 }}
-                    exit={{ opacity: 0, scale: 0.5 }}
-                    transition={{ duration: 0.4, ease: [0.22, 1, 0.36, 1] }}
-                  >
-                    <TitleMovCv />
-                    <TitleBauveCv />
-                  </motion.div>
-                )}
-              </AnimatePresence>
+            <div className="flex items-center justify-center h-14 md:h-16 relative">
+              <motion.div
+                className="flex items-center gap-2 flex-wrap justify-center scale-[0.7] origin-center absolute"
+                initial={{ opacity: 0 }}
+                animate={{
+                  opacity: showTitles ? 1 : 0
+                }}
+                transition={{ duration: 0.5, ease: [0.22, 1, 0.36, 1] }}
+                style={{ pointerEvents: showTitles ? "auto" : "none" }}
+              >
+                <TitleMovCvFast />
+                <TitleBauveCvFast />
+              </motion.div>
             </div>
 
             {/* RIGHT: Links (desktop) */}

@@ -5,7 +5,7 @@ export function RightColumn() {
   return (
     <div className="flex flex-col gap-4">
       {/* Wrapper para Sobre mí y Experiencia */}
-      <div className="flex flex-col gap-4 flex-1 mt-12 md:mt-16">
+      <div className="flex flex-col gap-4 flex-1 mt-20 md:mt-[7.5rem]">
         <div className="flex-1">
           <AboutMe />
         </div>

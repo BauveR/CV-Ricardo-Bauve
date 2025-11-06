@@ -1,20 +1,15 @@
-import { useMemo } from "react";
 import { PortafolioCard } from "./PortafolioCard";
-import { projects } from "./projects";
-import { useAssetMap } from "../../hooks/useAssetMap";
-import { resolveAssetUrl } from "../../utils/assetResolver";
+import { useValidProjects } from "../../hooks/useValidProjects";
 
 export const PortafolioGrid = () => {
-  const urlMap = useAssetMap();
+  const validProjects = useValidProjects();
 
-  const items = useMemo(() => {
-    const list = projects.map((p, i) => {
-      const img = resolveAssetUrl(p.src, urlMap);
-      if (!img) console.warn("[PortafolioGrid] No se pudo resolver imagen:", p.src);
-      return { id: String(i + 1), name: p.text, description: p.longDescription, primaryImage: img };
-    });
-    return list.filter((p) => !!p.primaryImage);
-  }, [urlMap]);
+  const items = validProjects.map((project, displayIndex) => ({
+    id: String(displayIndex), // índice en la lista filtrada
+    name: project.text,
+    description: project.longDescription,
+    primaryImage: project.resolvedImage,
+  }));
 
   return (
     <div className="w-full pt-16 pb-12 px-[1.05rem] sm:px-[1.575rem] lg:px-[2.1rem]">

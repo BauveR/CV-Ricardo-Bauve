@@ -4,7 +4,7 @@ import { useLocation } from "react-router-dom";
 type NavigationCallback = (section: string, shouldShowPortfolio?: boolean) => void;
 
 const INITIAL_SCROLL_MAP: Record<string, string> = {
-  "/presupuesto": "presupuesto",
+  "/cv": "cv",
   "/portafolio": "portafolio",
   "/": "welcome",
 };

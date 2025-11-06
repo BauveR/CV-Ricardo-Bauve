@@ -1,9 +1,7 @@
 import { useState } from "react";
 import { useLocation, useParams, useNavigate } from "react-router-dom";
 import { motion } from "framer-motion";
-import { projects } from "./projects";
-import { useAssetMap } from "../../hooks/useAssetMap";
-import { resolveAssetUrl } from "../../utils/assetResolver";
+import { useValidProjects } from "../../hooks/useValidProjects";
 
 type PortafolioItemState = {
   id: string;
@@ -33,26 +31,22 @@ export const PortafolioDetailPage = ({ onClose }: Props) => {
     }
   };
 
-  const initialIndex = Math.max(0, (Number(id) || 1) - 1);
+  const validProjects = useValidProjects();
+
+  const initialIndex = Math.max(0, Math.min(Number(id) || 0, validProjects.length - 1));
   const [index, setIndex] = useState(initialIndex);
 
-  const urlMap = useAssetMap();
-
-  const project = projects[index] || projects[0];
-  const primaryImage =
-    resolveAssetUrl(project?.src, urlMap) ??
-    itemFromState?.primaryImage ??
-    "";
+  const project = validProjects[index] || validProjects[0];
 
   const data: PortafolioItemState = {
-    id: String(index + 1),
+    id: String(index),
     name: project?.text ?? itemFromState?.name ?? "Proyecto",
     description: project?.longDescription ?? itemFromState?.description,
-    primaryImage,
+    primaryImage: project?.resolvedImage ?? itemFromState?.primaryImage ?? "",
   };
 
-  const goPrev = () => setIndex((i) => (i - 1 + projects.length) % projects.length);
-  const goNext = () => setIndex((i) => (i + 1) % projects.length);
+  const goPrev = () => setIndex((i) => (i - 1 + validProjects.length) % validProjects.length);
+  const goNext = () => setIndex((i) => (i + 1) % validProjects.length);
 
   return (
     <main className="relative mx-auto max-w-[1550px] px-8 md:px-12 lg:px-16 pt-8 pb-12">
