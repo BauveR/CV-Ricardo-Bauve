@@ -1,31 +1,19 @@
-import { motion } from "framer-motion";
 import GlassPanel from "./ui/GlassPanel";
 import SectionHeader from "./ui/SectionHeader";
-import { containerVariants, itemVariants } from "./ui/motion";
+import { EducationItem } from "./ui/EducationItem";
+import { containerVariants } from "./ui/motion";
 import type { Study } from "./data/cvData";
 
 type Props = { studies: Study[] };
 
 export function Education({ studies }: Props) {
   return (
-    <GlassPanel variants={containerVariants} className="h-full flex flex-col">
+    <GlassPanel variants={containerVariants} className="h-full flex flex-col py-10">
       <SectionHeader>Educación</SectionHeader>
 
       <ul className="ms-4 sm:ms-8 grid gap-1 mt-4 text-sm">
-        {studies.map((s, idx) => (
-          <motion.li
-            key={idx}
-            className="grid grid-cols-1 md:grid-cols-[3fr_1fr] gap-3"
-            variants={itemVariants}
-          >
-            <div>
-              <p className="font-bold text-slate-400">{s.title}</p>
-              <p className="text-stone-50">{s.place}</p>
-            </div>
-            <div>
-              <p className="text-orange-400">{s.year}</p>
-            </div>
-          </motion.li>
+        {studies.map((study, idx) => (
+          <EducationItem key={idx} study={study} index={idx} />
         ))}
       </ul>
     </GlassPanel>
