@@ -2,37 +2,13 @@ import { motion } from "framer-motion";
 import { BackgroundBlobs } from "../background/BackgroundBlobs";
 import { TitleMov } from "../titleRicardo/TitleMov";
 import { TitleBauve } from "../titleBauve/TitleBauve";
-import CircularGallery from "../gallery/CircularGallery";
-import { useValidProjects } from "../../hooks/useValidProjects";
-import { useMemo } from "react";
 
 export const Welcome = () => {
-  const validProjects = useValidProjects();
-
-  const galleryItems = useMemo(() => {
-    return validProjects.map((project) => ({
-      image: project.resolvedImage,
-      text: project.text
-    }));
-  }, [validProjects]);
 
   return (
     <section className="relative w-full max-w-full min-h-[100svh] flex flex-col items-center justify-center px-4 sm:px-6 lg:px-8 overflow-x-hidden isolate">
       {/* Blobs dentro de esta sección y detrás del contenido */}
       <BackgroundBlobs />
-
-      {/* Galería circular - por encima de los blobs, debajo de los títulos */}
-      <div className="absolute inset-0 z-[5] pointer-events-none">
-        <div className="w-full h-[600px] absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 pointer-events-auto">
-          <CircularGallery
-            items={galleryItems}
-            bend={3}
-            textColor="#ffffff"
-            borderRadius={0.05}
-            scrollEase={0.02}
-          />
-        </div>
-      </div>
 
       <motion.div
         initial={{ opacity: 0, y: 16 }}

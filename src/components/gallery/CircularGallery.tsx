@@ -214,7 +214,7 @@ class Media {
     this.font = font;
     this.createShader();
     this.createMesh();
-    this.createTitle();
+    // this.createTitle(); // Textos deshabilitados
     this.onResize();
   }
 
@@ -237,7 +237,7 @@ class Media {
         void main() {
           vUv = uv;
           vec3 p = position;
-          p.z = (sin(p.x * 4.0 + uTime) * 1.5 + cos(p.y * 2.0 + uTime) * 1.5) * (0.1 + uSpeed * 0.5);
+          // p.z = (sin(p.x * 4.0 + uTime) * 0.75 + cos(p.y * 2.0 + uTime) * 0.75) * (0.05 + uSpeed * 0.25);
           gl_Position = projectionMatrix * modelViewMatrix * vec4(p, 1.0);
         }
       `,
@@ -271,7 +271,8 @@ class Media {
           float edgeSmooth = 0.002;
           float alpha = 1.0 - smoothstep(-edgeSmooth, edgeSmooth, d);
 
-          gl_FragColor = vec4(color.rgb, alpha);
+          // Respetar transparencia de la imagen PNG
+          gl_FragColor = vec4(color.rgb, color.a * alpha);
         }
       `,
       uniforms: {
@@ -363,8 +364,8 @@ class Media {
       }
     }
     this.scale = this.screen.height / 1500;
-    this.plane.scale.y = (this.viewport.height * (900 * this.scale)) / this.screen.height;
-    this.plane.scale.x = (this.viewport.width * (700 * this.scale)) / this.screen.width;
+    this.plane.scale.y = (this.viewport.height * (1300 * this.scale)) / this.screen.height;
+    this.plane.scale.x = (this.viewport.width * (900 * this.scale)) / this.screen.width;
     this.plane.program.uniforms.uPlaneSizes.value = [this.plane.scale.x, this.plane.scale.y];
     this.padding = 2;
     this.width = this.plane.scale.x + this.padding;
@@ -658,7 +659,7 @@ export default function CircularGallery({
   items,
   bend = 3,
   textColor = '#ffffff',
-  borderRadius = 0.05,
+  borderRadius = 0,
   font = 'bold 30px Figtree',
   scrollSpeed = 2,
   scrollEase = 0.05

@@ -35,7 +35,7 @@ export const PortafolioCard = ({
   return (
     <div
       className={[
-        "group relative flex flex-col cursor-pointer w-full overflow-hidden rounded-3xl",
+        "group relative flex flex-col cursor-pointer w-full h-full overflow-hidden rounded-3xl",
         "bg-slate-900/30 backdrop-blur-2xl",
         "shadow-xl shadow-black/20",
         "border border-white/10",
@@ -51,13 +51,13 @@ export const PortafolioCard = ({
       onClick={goDetail}
       onKeyDown={(e) => (e.key === "Enter" ? goDetail() : null)}
     >
-      {/* Imagen horizontal */}
-      <div className="relative aspect-[4/3] w-full overflow-hidden rounded-2xl bg-slate-800/50">
+      {/* Imagen con proporción vertical - ocupa la mayor parte del espacio */}
+      <div className="relative w-full flex-1 overflow-hidden rounded-2xl bg-slate-800/50">
         {/* Imagen principal */}
         <motion.img
           src={primaryImage}
           alt={name}
-          className="absolute inset-0 h-full w-full object-cover"
+          className="absolute inset-0 h-full w-full object-contain"
           initial={{ opacity: 1, scale: 1 }}
           whileHover={{ opacity: secondaryImage ? 0 : 1 }}
           transition={{ duration: 0.35, ease: "easeOut" }}
@@ -69,7 +69,7 @@ export const PortafolioCard = ({
           <motion.img
             src={hoverImage}
             alt={`${name} – alternativa`}
-            className="absolute inset-0 h-full w-full object-cover"
+            className="absolute inset-0 h-full w-full object-contain"
             initial={{ opacity: 0, scale: 1.02 }}
             whileHover={{ opacity: 1, scale: 1 }}
             transition={{ duration: 0.35, ease: "easeOut" }}
@@ -95,13 +95,13 @@ export const PortafolioCard = ({
         </motion.button>
       </div>
 
-      {/* Título + descripción breve */}
-      <div className="mt-2 px-1">
-        <h3 className="text-sm tracking-wide">
-          <span className="line-clamp-2">{name}</span>
+      {/* Título + descripción breve - en la parte inferior */}
+      <div className="mt-3 px-1 flex-shrink-0">
+        <h3 className="text-base tracking-wide font-medium">
+          <span className="line-clamp-1">{name}</span>
         </h3>
         {description && (
-          <p className="mt-1 text-sm text-white leading-snug line-clamp-2">
+          <p className="mt-1 text-sm text-stone-400 leading-snug line-clamp-2">
             {description}
           </p>
         )}
