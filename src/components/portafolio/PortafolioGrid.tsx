@@ -16,14 +16,14 @@ export const PortafolioGrid = () => {
 
   const scrollLeft = () => {
     if (scrollContainerRef.current) {
-      const scrollAmount = window.innerWidth < 640 ? window.innerWidth * 0.85 : 486;
+      const scrollAmount = window.innerWidth < 640 ? window.innerWidth * 0.935 : 534; // 93.5vw o 528px + 6px gap
       scrollContainerRef.current.scrollBy({ left: -scrollAmount, behavior: "smooth" });
     }
   };
 
   const scrollRight = () => {
     if (scrollContainerRef.current) {
-      const scrollAmount = window.innerWidth < 640 ? window.innerWidth * 0.85 : 486;
+      const scrollAmount = window.innerWidth < 640 ? window.innerWidth * 0.935 : 534; // 93.5vw o 528px + 6px gap
       scrollContainerRef.current.scrollBy({ left: scrollAmount, behavior: "smooth" });
     }
   };
@@ -64,7 +64,7 @@ export const PortafolioGrid = () => {
         {items.map((p) => (
           <div
             key={p.id}
-            className="flex-shrink-0 w-[85vw] h-[calc(85vw*1.67)] sm:w-[400px] sm:h-[667px] md:w-[480px] md:h-[800px]"
+            className="flex-shrink-0 w-[93.5vw] h-[calc(93.5vw*1.67)] sm:w-[440px] sm:h-[734px] md:w-[528px] md:h-[880px]"
           >
             <PortafolioCard
               id={p.id}
