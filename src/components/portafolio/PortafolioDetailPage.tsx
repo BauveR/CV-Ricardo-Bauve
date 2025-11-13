@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useLocation, useParams, useNavigate } from "react-router-dom";
 import { motion } from "framer-motion";
 import { useValidProjects } from "../../hooks/useValidProjects";
@@ -35,6 +35,12 @@ export const PortafolioDetailPage = ({ onClose }: Props) => {
 
   const initialIndex = Math.max(0, Math.min(Number(id) || 0, validProjects.length - 1));
   const [index, setIndex] = useState(initialIndex);
+
+  // Actualizar el índice cuando cambia el id de la URL
+  useEffect(() => {
+    const newIndex = Math.max(0, Math.min(Number(id) || 0, validProjects.length - 1));
+    setIndex(newIndex);
+  }, [id, validProjects.length]);
 
   const project = validProjects[index] || validProjects[0];
 
