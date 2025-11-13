@@ -16,13 +16,15 @@ export const PortafolioGrid = () => {
 
   const scrollLeft = () => {
     if (scrollContainerRef.current) {
-      scrollContainerRef.current.scrollBy({ left: -486, behavior: "smooth" }); // 480px + 6px gap
+      const scrollAmount = window.innerWidth < 640 ? window.innerWidth * 0.85 : 486;
+      scrollContainerRef.current.scrollBy({ left: -scrollAmount, behavior: "smooth" });
     }
   };
 
   const scrollRight = () => {
     if (scrollContainerRef.current) {
-      scrollContainerRef.current.scrollBy({ left: 486, behavior: "smooth" }); // 480px + 6px gap
+      const scrollAmount = window.innerWidth < 640 ? window.innerWidth * 0.85 : 486;
+      scrollContainerRef.current.scrollBy({ left: scrollAmount, behavior: "smooth" });
     }
   };
 
@@ -31,10 +33,10 @@ export const PortafolioGrid = () => {
       {/* Botón izquierdo */}
       <button
         onClick={scrollLeft}
-        className="absolute left-4 top-1/2 -translate-y-1/2 z-10 p-3 rounded-full bg-white/10 hover:bg-white/20 backdrop-blur-sm transition-all duration-200 text-white shadow-lg"
+        className="absolute left-2 sm:left-4 top-1/2 -translate-y-1/2 z-10 p-2 sm:p-3 rounded-full bg-white/10 hover:bg-white/20 backdrop-blur-sm transition-all duration-200 text-white shadow-lg"
         aria-label="Scroll izquierda"
       >
-        <svg width="24" height="24" viewBox="0 0 24 24" stroke="currentColor" fill="none" strokeWidth="2">
+        <svg width="20" height="20" className="sm:w-6 sm:h-6" viewBox="0 0 24 24" stroke="currentColor" fill="none" strokeWidth="2">
           <path d="M15 18l-6-6 6-6" strokeLinecap="round" strokeLinejoin="round" />
         </svg>
       </button>
@@ -42,10 +44,10 @@ export const PortafolioGrid = () => {
       {/* Botón derecho */}
       <button
         onClick={scrollRight}
-        className="absolute right-4 top-1/2 -translate-y-1/2 z-10 p-3 rounded-full bg-white/10 hover:bg-white/20 backdrop-blur-sm transition-all duration-200 text-white shadow-lg"
+        className="absolute right-2 sm:right-4 top-1/2 -translate-y-1/2 z-10 p-2 sm:p-3 rounded-full bg-white/10 hover:bg-white/20 backdrop-blur-sm transition-all duration-200 text-white shadow-lg"
         aria-label="Scroll derecha"
       >
-        <svg width="24" height="24" viewBox="0 0 24 24" stroke="currentColor" fill="none" strokeWidth="2">
+        <svg width="20" height="20" className="sm:w-6 sm:h-6" viewBox="0 0 24 24" stroke="currentColor" fill="none" strokeWidth="2">
           <path d="M9 6l6 6-6 6" strokeLinecap="round" strokeLinejoin="round" />
         </svg>
       </button>
@@ -53,14 +55,17 @@ export const PortafolioGrid = () => {
       {/* Contenedor del carousel */}
       <div
         ref={scrollContainerRef}
-        className="flex gap-6 overflow-x-auto scrollbar-hide px-[1.05rem] sm:px-[1.575rem] lg:px-[2.1rem] pb-4"
+        className="flex gap-4 sm:gap-6 overflow-x-auto scrollbar-hide px-[1.05rem] sm:px-[1.575rem] lg:px-[2.1rem] pb-4"
         style={{
           scrollbarWidth: "none",
           msOverflowStyle: "none",
         }}
       >
         {items.map((p) => (
-          <div key={p.id} className="flex-shrink-0" style={{ width: "480px", height: "800px" }}>
+          <div
+            key={p.id}
+            className="flex-shrink-0 w-[85vw] h-[calc(85vw*1.67)] sm:w-[400px] sm:h-[667px] md:w-[480px] md:h-[800px]"
+          >
             <PortafolioCard
               id={p.id}
               index={p.index}
