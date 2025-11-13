@@ -1,9 +1,9 @@
-import { useLocation, useParams, useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import { motion } from "framer-motion";
 import { useValidProjects } from "../../hooks/useValidProjects";
 
 type PortafolioItemState = {
-  id: string;
+  index: number;
   name: string;
   description?: string;
   primaryImage: string;
@@ -14,9 +14,10 @@ type Props = {
 };
 
 export const PortafolioDetailPage = ({ onClose }: Props) => {
-  const { id } = useParams<{ id: string }>();
   const { state } = useLocation();
   const navigate = useNavigate();
+  const validProjects = useValidProjects();
+
   const itemFromState = state as PortafolioItemState | undefined;
 
   const handleClose = () => {
@@ -30,39 +31,40 @@ export const PortafolioDetailPage = ({ onClose }: Props) => {
     }
   };
 
-  const validProjects = useValidProjects();
+  // Usar el índice del state, o defaultear a 0 si no existe
+  const currentIndex = itemFromState?.index ?? 0;
+  const project = validProjects[currentIndex];
 
-  // Calcular el índice actual directamente desde el id de la URL
-  const currentIndex = Math.max(0, Math.min(Number(id) || 0, validProjects.length - 1));
-  const project = validProjects[currentIndex] || validProjects[0];
-
+  // Si no hay state, usar el primer proyecto
   const data: PortafolioItemState = {
-    id: String(currentIndex),
-    name: project?.text ?? itemFromState?.name ?? "Proyecto",
-    description: project?.longDescription ?? itemFromState?.description,
-    primaryImage: project?.resolvedImage ?? itemFromState?.primaryImage ?? "",
+    index: currentIndex,
+    name: itemFromState?.name ?? project?.text ?? "Proyecto",
+    description: itemFromState?.description ?? project?.longDescription,
+    primaryImage: itemFromState?.primaryImage ?? project?.resolvedImage ?? "",
   };
 
   const goPrev = () => {
     const prevIndex = (currentIndex - 1 + validProjects.length) % validProjects.length;
+    const prevProject = validProjects[prevIndex];
     navigate(`/portafolio/${prevIndex}`, {
       state: {
-        id: String(prevIndex),
-        name: validProjects[prevIndex]?.text,
-        primaryImage: validProjects[prevIndex]?.resolvedImage,
-        description: validProjects[prevIndex]?.longDescription,
+        index: prevIndex,
+        name: prevProject?.text,
+        primaryImage: prevProject?.resolvedImage,
+        description: prevProject?.longDescription,
       },
     });
   };
 
   const goNext = () => {
     const nextIndex = (currentIndex + 1) % validProjects.length;
+    const nextProject = validProjects[nextIndex];
     navigate(`/portafolio/${nextIndex}`, {
       state: {
-        id: String(nextIndex),
-        name: validProjects[nextIndex]?.text,
-        primaryImage: validProjects[nextIndex]?.resolvedImage,
-        description: validProjects[nextIndex]?.longDescription,
+        index: nextIndex,
+        name: nextProject?.text,
+        primaryImage: nextProject?.resolvedImage,
+        description: nextProject?.longDescription,
       },
     });
   };

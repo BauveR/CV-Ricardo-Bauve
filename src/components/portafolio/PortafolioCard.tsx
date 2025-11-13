@@ -3,6 +3,7 @@ import { useNavigate } from "react-router-dom";
 
 export type PortafolioCardProps = {
   id: string;
+  index: number;
   name: string;
   primaryImage: string;
   secondaryImage?: string;
@@ -12,6 +13,7 @@ export type PortafolioCardProps = {
 
 export const PortafolioCard = ({
   id,
+  index,
   name,
   primaryImage,
   secondaryImage,
@@ -24,7 +26,7 @@ export const PortafolioCard = ({
   const goDetail = () => {
     navigate(`/portafolio/${id}`, {
       state: {
-        id,
+        index,
         name,
         primaryImage,
         description,

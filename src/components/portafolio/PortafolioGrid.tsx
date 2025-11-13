@@ -8,6 +8,7 @@ export const PortafolioGrid = () => {
 
   const items = validProjects.map((project, displayIndex) => ({
     id: String(displayIndex),
+    index: displayIndex,
     name: project.text,
     description: project.longDescription,
     primaryImage: project.resolvedImage,
@@ -62,6 +63,7 @@ export const PortafolioGrid = () => {
           <div key={p.id} className="flex-shrink-0" style={{ width: "480px", height: "800px" }}>
             <PortafolioCard
               id={p.id}
+              index={p.index}
               name={p.name}
               description={p.description}
               primaryImage={p.primaryImage!}
