@@ -105,17 +105,17 @@ export const PortafolioDetailPage = ({ onClose }: Props) => {
       </button>
 
       <motion.div
-        className="grid grid-cols-1 lg:grid-cols-[2.1fr_0.71fr] gap-12 lg:gap-16 items-start mt-16"
+        className="flex flex-col items-center gap-8 mt-16"
         initial={{ opacity: 0, y: 10 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.5, delay: 0.1, ease: [0.16, 1, 0.3, 1] }}
       >
-        <div className="relative w-full overflow-hidden rounded-2xl bg-slate-800/30 aspect-[4/3]">
+        <div className="relative w-full max-w-[700px] overflow-hidden rounded-2xl bg-slate-800/30">
           <motion.img
             key={data.primaryImage + currentIndex}
             src={data.primaryImage}
             alt={data.name}
-            className="h-full w-full object-cover"
+            className="w-full h-auto object-contain"
             initial={{ opacity: 0, scale: 1.05 }}
             animate={{ opacity: 1, scale: 1 }}
             transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
@@ -123,14 +123,14 @@ export const PortafolioDetailPage = ({ onClose }: Props) => {
         </div>
 
         <motion.div
-          className="flex flex-col justify-start pt-4 lg:pt-8"
-          initial={{ opacity: 0, x: 20 }}
-          animate={{ opacity: 1, x: 0 }}
+          className="flex flex-col justify-start text-center max-w-[700px] px-4"
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.5, delay: 0.2, ease: [0.16, 1, 0.3, 1] }}
         >
           <h1 className="text-xl lg:text-2xl font-medium text-stone-200 leading-tight">{data.name}</h1>
           {data.description && (
-            <p className="mt-6 text-sm lg:text-base leading-relaxed text-stone-300">
+            <p className="mt-4 text-sm lg:text-base leading-relaxed text-stone-300">
               {data.description}
             </p>
           )}
