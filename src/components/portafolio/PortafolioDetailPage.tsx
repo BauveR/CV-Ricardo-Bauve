@@ -1,4 +1,3 @@
-import { useState, useEffect } from "react";
 import { useLocation, useParams, useNavigate } from "react-router-dom";
 import { motion } from "framer-motion";
 import { useValidProjects } from "../../hooks/useValidProjects";
@@ -33,26 +32,40 @@ export const PortafolioDetailPage = ({ onClose }: Props) => {
 
   const validProjects = useValidProjects();
 
-  const initialIndex = Math.max(0, Math.min(Number(id) || 0, validProjects.length - 1));
-  const [index, setIndex] = useState(initialIndex);
-
-  // Actualizar el índice cuando cambia el id de la URL
-  useEffect(() => {
-    const newIndex = Math.max(0, Math.min(Number(id) || 0, validProjects.length - 1));
-    setIndex(newIndex);
-  }, [id, validProjects.length]);
-
-  const project = validProjects[index] || validProjects[0];
+  // Calcular el índice actual directamente desde el id de la URL
+  const currentIndex = Math.max(0, Math.min(Number(id) || 0, validProjects.length - 1));
+  const project = validProjects[currentIndex] || validProjects[0];
 
   const data: PortafolioItemState = {
-    id: String(index),
+    id: String(currentIndex),
     name: project?.text ?? itemFromState?.name ?? "Proyecto",
     description: project?.longDescription ?? itemFromState?.description,
     primaryImage: project?.resolvedImage ?? itemFromState?.primaryImage ?? "",
   };
 
-  const goPrev = () => setIndex((i) => (i - 1 + validProjects.length) % validProjects.length);
-  const goNext = () => setIndex((i) => (i + 1) % validProjects.length);
+  const goPrev = () => {
+    const prevIndex = (currentIndex - 1 + validProjects.length) % validProjects.length;
+    navigate(`/portafolio/${prevIndex}`, {
+      state: {
+        id: String(prevIndex),
+        name: validProjects[prevIndex]?.text,
+        primaryImage: validProjects[prevIndex]?.resolvedImage,
+        description: validProjects[prevIndex]?.longDescription,
+      },
+    });
+  };
+
+  const goNext = () => {
+    const nextIndex = (currentIndex + 1) % validProjects.length;
+    navigate(`/portafolio/${nextIndex}`, {
+      state: {
+        id: String(nextIndex),
+        name: validProjects[nextIndex]?.text,
+        primaryImage: validProjects[nextIndex]?.resolvedImage,
+        description: validProjects[nextIndex]?.longDescription,
+      },
+    });
+  };
 
   return (
     <main className="relative mx-auto max-w-[1550px] px-8 md:px-12 lg:px-16 pt-8 pb-12">
@@ -97,7 +110,7 @@ export const PortafolioDetailPage = ({ onClose }: Props) => {
       >
         <div className="relative w-full overflow-hidden rounded-2xl bg-slate-800/30 aspect-[4/3]">
           <motion.img
-            key={data.primaryImage + index}
+            key={data.primaryImage + currentIndex}
             src={data.primaryImage}
             alt={data.name}
             className="h-full w-full object-cover"
