@@ -105,25 +105,27 @@ export const PortafolioDetailPage = ({ onClose }: Props) => {
       </button>
 
       <motion.div
-        className="flex flex-col items-center gap-8 mt-16"
+        className="flex flex-col lg:flex-row items-start lg:items-center gap-8 lg:gap-12 mt-16 max-w-[1200px] mx-auto"
         initial={{ opacity: 0, y: 10 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.5, delay: 0.1, ease: [0.16, 1, 0.3, 1] }}
       >
-        <div className="relative w-full max-w-[700px] overflow-hidden rounded-2xl bg-slate-800/30">
+        {/* Imagen - 20% más pequeña: de 700px a 560px */}
+        <div className="relative w-full lg:w-auto lg:flex-shrink-0 overflow-hidden rounded-2xl bg-slate-800/30">
           <motion.img
             key={data.primaryImage + currentIndex}
             src={data.primaryImage}
             alt={data.name}
-            className="w-full h-auto object-contain"
+            className="w-full lg:w-[560px] h-auto object-contain"
             initial={{ opacity: 0, scale: 1.05 }}
             animate={{ opacity: 1, scale: 1 }}
             transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
           />
         </div>
 
+        {/* Título y descripción - derecha en desktop, abajo en mobile */}
         <motion.div
-          className="flex flex-col justify-start text-center max-w-[700px] px-4"
+          className="flex flex-col justify-start lg:flex-1 px-4 lg:px-0"
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.5, delay: 0.2, ease: [0.16, 1, 0.3, 1] }}
