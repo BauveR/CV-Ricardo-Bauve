@@ -9,7 +9,8 @@ interface UseScrollSectionsOptions<T extends SectionId> {
 }
 
 /**
- * Hook para detectar qué sección está visible en el viewport usando IntersectionObserver
+ * Hook para detectar qué sección está visible en el viewport
+ * Usa scroll position para mobile y IntersectionObserver para desktop
  * @param options - Configuración de secciones y refs
  * @returns ID de la sección activa actualmente
  */
@@ -21,45 +22,87 @@ export function useScrollSections<T extends SectionId>({
   const [activeSection, setActiveSection] = useState<T>(sectionIds[0]);
 
   useEffect(() => {
-    if (typeof window === "undefined" || !("IntersectionObserver" in window)) return;
+    if (typeof window === "undefined") return;
 
-    // Detectar si es mobile
     const isMobile = window.innerWidth < 768;
-    // En mobile usar threshold más bajo para detectar CV antes
-    const minThreshold = isMobile ? 0.01 : 0.2;
-    // En mobile usar rootMargin más agresivo para detectar antes
-    const effectiveRootMargin = isMobile ? "0px 0px -20% 0px" : rootMargin;
+
+    // MOBILE: Usar scroll position (más confiable)
+    if (isMobile) {
+      let ticking = false;
+
+      const handleScroll = () => {
+        if (!ticking) {
+          window.requestAnimationFrame(() => {
+            const scrollY = window.scrollY;
+            const windowHeight = window.innerHeight;
+            const triggerPoint = scrollY + windowHeight * 0.3; // 30% desde arriba
+
+            // Obtener todas las secciones y sus posiciones
+            const sections = sectionIds
+              .map(id => ({
+                id,
+                element: sectionRefs[id].current,
+              }))
+              .filter((s): s is { id: T; element: HTMLElement } => s.element !== null)
+              .map(s => ({
+                id: s.id,
+                top: s.element.offsetTop,
+                bottom: s.element.offsetTop + s.element.offsetHeight,
+              }));
+
+            // Encontrar la sección activa basada en scroll position
+            let newActiveSection = sectionIds[0];
+
+            for (let i = sections.length - 1; i >= 0; i--) {
+              const section = sections[i];
+              if (triggerPoint >= section.top) {
+                newActiveSection = section.id;
+                break;
+              }
+            }
+
+            setActiveSection(newActiveSection);
+            ticking = false;
+          });
+          ticking = true;
+        }
+      };
+
+      // Llamar inmediatamente y en cada scroll
+      handleScroll();
+      window.addEventListener("scroll", handleScroll, { passive: true });
+
+      return () => {
+        window.removeEventListener("scroll", handleScroll);
+      };
+    }
+
+    // DESKTOP: Usar IntersectionObserver (comportamiento original estable)
+    if (!("IntersectionObserver" in window)) return;
 
     const observer = new IntersectionObserver(
       (entries) => {
-        // Filtrar solo las entradas que están intersectando
         const intersecting = entries.filter((e) => e.isIntersecting);
 
-        // Si no hay nada intersectando, mantener el estado actual
         if (intersecting.length === 0) return;
 
-        // Encontrar la entrada con mayor intersectionRatio
         const mostVisible = intersecting.reduce((max, e) =>
           e.intersectionRatio > max.intersectionRatio ? e : max
         );
 
         const id = mostVisible.target.id as T;
 
-        // Solo actualizar si hay un cambio significativo
-        // Mobile: threshold muy bajo (0.01) y rootMargin -20% para detección temprana
-        // Desktop: threshold más alto (0.2) y rootMargin -40% para estabilidad
-        if (sectionIds.includes(id) && mostVisible.intersectionRatio > minThreshold) {
+        if (sectionIds.includes(id) && mostVisible.intersectionRatio > 0.2) {
           setActiveSection(id);
         }
       },
       {
         root: null,
-        rootMargin: effectiveRootMargin,
-        threshold: [0, 0.01, 0.05, 0.1, 0.15, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9, 1.0]
+        rootMargin,
+        threshold: [0, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9, 1.0]
       }
     );
 
-    // Observar todas las secciones
     const elements = sectionIds
       .map(id => sectionRefs[id].current)
       .filter((el): el is HTMLElement => el !== null);
