@@ -1,7 +1,8 @@
 import { useEffect, useState } from "react";
 import { AnimatePresence, motion } from "framer-motion";
-import { TitleMovCvFast } from "../titleRicardo/TitleMovCvFast";
-import { TitleBauveCvFast } from "../titleBauve/TitleBauveCvFast";
+import DualColorTextPressure from "../textPressure/DualColorTextPressure";
+// import { TitleMovCvFast } from "../titleRicardo/TitleMovCvFast";
+// import { TitleBauveCvFast } from "../titleBauve/TitleBauveCvFast";
 
 type SectionId = "welcome" | "cv" | "portafolio";
 
@@ -108,7 +109,7 @@ export default function NavbarSections({ active, onGo }: Props) {
             {/* CENTER: logo / marca o títulos CV */}
             <div className="flex items-center justify-center h-14 md:h-16 relative">
               <motion.div
-                className="flex items-center gap-2 flex-wrap justify-center scale-[0.7] origin-center absolute"
+                className="absolute w-full max-w-md px-4"
                 initial={{ opacity: 0 }}
                 animate={{
                   opacity: showTitles ? 1 : 0
@@ -116,8 +117,20 @@ export default function NavbarSections({ active, onGo }: Props) {
                 transition={{ duration: 0.5, ease: [0.22, 1, 0.36, 1] }}
                 style={{ pointerEvents: showTitles ? "auto" : "none" }}
               >
-                <TitleMovCvFast />
-                <TitleBauveCvFast />
+                <div className="w-full h-[56px] md:h-[64px]">
+                  <DualColorTextPressure
+                    text1="RICARDO"
+                    text2="BAUVE"
+                    color1="#F17313"
+                    color2="#93A1B7"
+                    width={true}
+                    weight={true}
+                    italic={false}
+                    alpha={false}
+                    minFontSize={20}
+                    spacing={10}
+                  />
+                </div>
               </motion.div>
             </div>
 
