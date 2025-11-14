@@ -127,7 +127,7 @@ export default function NavbarSections({ active, onGo }: Props) {
                     weight={true}
                     italic={false}
                     alpha={false}
-                    minFontSize={18}
+                    minFontSize={21}
                     spacing={8}
                   />
                 </div>
