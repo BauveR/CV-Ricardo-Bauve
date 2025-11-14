@@ -28,7 +28,7 @@ export const Welcome = () => {
               text1="RICARDO"
               text2="BAUVE"
               color1="#F17313"
-              color2="#93A1EF"
+              color2="#93A1B7"
               width={true}
               weight={true}
               italic={false}
