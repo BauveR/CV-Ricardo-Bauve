@@ -28,6 +28,7 @@ export function useScrollSections<T extends SectionId>({
         // Filtrar solo las entradas que están intersectando
         const intersecting = entries.filter((e) => e.isIntersecting);
 
+        // Si no hay nada intersectando, mantener el estado actual
         if (intersecting.length === 0) return;
 
         // Encontrar la entrada con mayor intersectionRatio
@@ -36,11 +37,18 @@ export function useScrollSections<T extends SectionId>({
         );
 
         const id = mostVisible.target.id as T;
-        if (sectionIds.includes(id)) {
+
+        // Solo actualizar si hay un cambio significativo (intersectionRatio > 0.2)
+        // Esto evita cambios erráticos durante el scroll
+        if (sectionIds.includes(id) && mostVisible.intersectionRatio > 0.2) {
           setActiveSection(id);
         }
       },
-      { root: null, rootMargin, threshold: [0, 0.1, 0.3, 0.5] }
+      {
+        root: null,
+        rootMargin,
+        threshold: [0, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9, 1.0]
+      }
     );
 
     // Observar todas las secciones
