@@ -26,7 +26,9 @@ export function useScrollSections<T extends SectionId>({
     // Detectar si es mobile
     const isMobile = window.innerWidth < 768;
     // En mobile usar threshold más bajo para detectar CV antes
-    const minThreshold = isMobile ? 0.05 : 0.2;
+    const minThreshold = isMobile ? 0.01 : 0.2;
+    // En mobile usar rootMargin más agresivo para detectar antes
+    const effectiveRootMargin = isMobile ? "0px 0px -20% 0px" : rootMargin;
 
     const observer = new IntersectionObserver(
       (entries) => {
@@ -44,16 +46,16 @@ export function useScrollSections<T extends SectionId>({
         const id = mostVisible.target.id as T;
 
         // Solo actualizar si hay un cambio significativo
-        // Mobile: threshold más bajo (0.05) para detección temprana
-        // Desktop: threshold más alto (0.2) para estabilidad
+        // Mobile: threshold muy bajo (0.01) y rootMargin -20% para detección temprana
+        // Desktop: threshold más alto (0.2) y rootMargin -40% para estabilidad
         if (sectionIds.includes(id) && mostVisible.intersectionRatio > minThreshold) {
           setActiveSection(id);
         }
       },
       {
         root: null,
-        rootMargin,
-        threshold: [0, 0.05, 0.1, 0.15, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9, 1.0]
+        rootMargin: effectiveRootMargin,
+        threshold: [0, 0.01, 0.05, 0.1, 0.15, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9, 1.0]
       }
     );
 
