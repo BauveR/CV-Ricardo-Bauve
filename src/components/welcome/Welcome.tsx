@@ -58,7 +58,7 @@ export const Welcome = () => {
         <div className="hidden md:block w-full max-w-7xl px-4">
           <div className="w-full h-[150px] lg:h-[180px]" style={{ position: 'relative' }}>
             <div className="flex items-center justify-center gap-8 h-full">
-              <div className="flex-1" style={{ position: 'relative', height: '100%' }}>
+              <div style={{ position: 'relative', height: '100%', width: '400px' }}>
                 <TextPressure
                   text="RICARDO"
                   flex={true}
@@ -72,7 +72,7 @@ export const Welcome = () => {
                   minFontSize={50}
                 />
               </div>
-              <div className="flex-1" style={{ position: 'relative', height: '100%' }}>
+              <div style={{ position: 'relative', height: '100%', width: '400px' }}>
                 <TextPressure
                   text="BAUVE"
                   flex={true}
