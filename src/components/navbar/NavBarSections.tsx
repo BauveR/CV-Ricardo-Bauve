@@ -107,9 +107,9 @@ export default function NavbarSections({ active, onGo }: Props) {
             </div>
 
             {/* CENTER: logo / marca o títulos CV */}
-            <div className="flex items-center justify-center h-14 md:h-16 relative">
+            <div className="flex items-center justify-center h-14 md:h-16 relative overflow-hidden">
               <motion.div
-                className="absolute w-full max-w-md px-4"
+                className="absolute w-full max-w-xs md:max-w-md px-2 md:px-4"
                 initial={{ opacity: 0 }}
                 animate={{
                   opacity: showTitles ? 1 : 0
@@ -127,8 +127,8 @@ export default function NavbarSections({ active, onGo }: Props) {
                     weight={true}
                     italic={false}
                     alpha={false}
-                    minFontSize={20}
-                    spacing={10}
+                    minFontSize={16}
+                    spacing={8}
                   />
                 </div>
               </motion.div>
