@@ -56,9 +56,9 @@ export const Welcome = () => {
 
         {/* Desktop: One line with gradient colors */}
         <div className="hidden md:block w-full max-w-7xl px-4">
-          <div className="w-full h-[150px] lg:h-[180px]" style={{ position: 'relative' }}>
-            <div className="flex items-center justify-center gap-8 h-full">
-              <div style={{ position: 'relative', height: '100%', width: '400px' }}>
+          <div className="w-full h-[150px] lg:h-[200px] flex items-center justify-center" style={{ position: 'relative' }}>
+            <div className="flex items-center justify-center gap-2" style={{ height: '100%' }}>
+              <div style={{ position: 'relative', height: '100%', flex: '0 0 auto' }}>
                 <TextPressure
                   text="RICARDO"
                   flex={true}
@@ -69,10 +69,10 @@ export const Welcome = () => {
                   italic={false}
                   textColor="#F17313"
                   strokeColor="#ff0000"
-                  minFontSize={50}
+                  minFontSize={60}
                 />
               </div>
-              <div style={{ position: 'relative', height: '100%', width: '400px' }}>
+              <div style={{ position: 'relative', height: '100%', flex: '0 0 auto' }}>
                 <TextPressure
                   text="BAUVE"
                   flex={true}
@@ -83,7 +83,7 @@ export const Welcome = () => {
                   italic={false}
                   textColor="#93A1EF"
                   strokeColor="#ff0000"
-                  minFontSize={50}
+                  minFontSize={60}
                 />
               </div>
             </div>
