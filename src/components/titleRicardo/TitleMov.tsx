@@ -9,10 +9,10 @@ import { L7 } from './L7';
 
 const SvgLetter = ({ delay, children }: { delay: number; children: React.ReactNode }) => (
   <motion.div
-    initial={{ opacity: 0, y: -40 }}
+    initial={{ opacity: 0, y: -20 }}
     animate={{ opacity: 1, y: 0 }}
-    transition={{ delay, duration: 0.7, ease: "easeOut" }}
-    className="h-32 sm:h-40 md:h-52 lg:h-60"
+    transition={{ delay, duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
+    className="h-28 sm:h-40 md:h-52 lg:h-60"
   >
     {children}
   </motion.div>

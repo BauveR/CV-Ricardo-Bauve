@@ -11,10 +11,10 @@ export const Welcome = () => {
       <BackgroundBlobs />
 
       <motion.div
-        initial={{ opacity: 0, y: 16 }}
+        initial={{ opacity: 0, y: 10 }}
         animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
-        className="relative z-10 flex flex-col items-center"
+        transition={{ duration: 0.5, ease: [0.22, 1, 0.36, 1] }}
+        className="relative z-10 flex flex-col items-center w-full"
       >
         <TitleMov />
         <TitleBauve />
@@ -22,8 +22,8 @@ export const Welcome = () => {
         <motion.p
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
-          transition={{ delay: 0.4, duration: 0.8 }}
-          className="text-base sm:text-xl tracking-[0.2em] text-blue-400 mb-10 font-sans font-medium mt-8 text-center"
+          transition={{ delay: 0.3, duration: 0.6 }}
+          className="text-sm sm:text-base md:text-xl tracking-[0.15em] sm:tracking-[0.2em] text-blue-400 mb-8 sm:mb-10 font-sans font-medium mt-6 sm:mt-8 text-center px-4"
         >
           DISEÑADOR SR. | FRONTEND DEVELOPER JR.
         </motion.p>
@@ -31,7 +31,10 @@ export const Welcome = () => {
         {/* no navegación programática: dejamos que el App haga el scroll suave */}
         <a href="/#cv" className="relative z-10">
           <motion.button
-            className="px-6 py-3 rounded-xl border border-white/20 bg-white/10 hover:bg-white/15 text-white backdrop-blur-md tracking-wide"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ delay: 0.5, duration: 0.4 }}
+            className="px-6 py-3 rounded-xl border border-white/20 bg-white/10 hover:bg-white/15 active:bg-white/20 text-white backdrop-blur-md tracking-wide"
             whileHover={{ scale: 1.05 }}
             whileTap={{ scale: 0.97 }}
           >

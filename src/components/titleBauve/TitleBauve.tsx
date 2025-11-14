@@ -7,10 +7,10 @@ import { B5 } from "./B5";
 
 const SvgLetter = ({ delay, children }: { delay: number; children: React.ReactNode }) => (
   <motion.div
-    initial={{ opacity: 0, y: 60 }}
+    initial={{ opacity: 0, y: 30 }}
     animate={{ opacity: 1, y: 0 }}
-    transition={{ delay, duration: 0.6, ease: "easeOut" }}
-    className="h-[150px] sm:h-[190px] md:h-[300px] lg:h-[300px]" // responsive height
+    transition={{ delay, duration: 0.5, ease: [0.22, 1, 0.36, 1] }}
+    className="h-[140px] sm:h-[190px] md:h-[300px] lg:h-[300px]"
   >
     {children}
   </motion.div>
