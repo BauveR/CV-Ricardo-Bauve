@@ -31,7 +31,7 @@ export const Welcome = () => {
               stroke={false}
               width={true}
               weight={true}
-              italic={true}
+              italic={false}
               textColor="#F17313"
               strokeColor="#ff0000"
               minFontSize={40}
@@ -45,7 +45,7 @@ export const Welcome = () => {
               stroke={false}
               width={true}
               weight={true}
-              italic={true}
+              italic={false}
               textColor="#93A1EF"
               strokeColor="#ff0000"
               minFontSize={40}
