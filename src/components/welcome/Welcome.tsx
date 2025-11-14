@@ -22,19 +22,35 @@ export const Welcome = () => {
         {/* <TitleBauve /> */}
 
         {/* New TextPressure Effect */}
-        <div className="w-full max-w-7xl px-4" style={{ position: 'relative', height: '200px' }}>
-          <TextPressure
-            text="RICARDO BAUVE"
-            flex={true}
-            alpha={false}
-            stroke={false}
-            width={true}
-            weight={true}
-            italic={true}
-            textColor="#ffffff"
-            strokeColor="#ff0000"
-            minFontSize={32}
-          />
+        <div className="w-full max-w-7xl px-4 flex flex-col items-center gap-2">
+          <div className="w-full" style={{ position: 'relative', height: '120px' }}>
+            <TextPressure
+              text="RICARDO"
+              flex={true}
+              alpha={false}
+              stroke={false}
+              width={true}
+              weight={true}
+              italic={true}
+              textColor="#F17313"
+              strokeColor="#ff0000"
+              minFontSize={40}
+            />
+          </div>
+          <div className="w-full" style={{ position: 'relative', height: '120px' }}>
+            <TextPressure
+              text="BAUVE"
+              flex={true}
+              alpha={false}
+              stroke={false}
+              width={true}
+              weight={true}
+              italic={true}
+              textColor="#93A1EF"
+              strokeColor="#ff0000"
+              minFontSize={40}
+            />
+          </div>
         </div>
 
         <motion.p
