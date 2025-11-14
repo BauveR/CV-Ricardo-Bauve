@@ -21,8 +21,9 @@ export const experienceList: ExperienceItem[] = [
   { title: "2023 - 2025 Freelance", place: "", desc: "Varios proyectos...", extra: "BARCELONA 2025 / Documentacion y permisos en regla " },
 ];
 
-export const contactItems = (email: string, phone: string, linkedin: string, web: string) => ([
+export const contactItems = (email: string, phone: string, linkedin: string, github: string, web: string) => ([
   { href: `https://${linkedin}`, label: "in", value: linkedin },
+  { href: github, label: "🐙", value: github.replace('https://', '') },
   { href: `https://${web}`, label: "🌐", value: web },
   { href: `tel:${phone}`, label: "📞", value: phone },
   { href: `mailto:${email}`, label: "✉️", value: email },

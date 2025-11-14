@@ -8,11 +8,11 @@ export function LeftColumn() {
   const { contact } = PROFILE_DATA;
 
   return (
-    <div className="flex flex-col gap-4 mt-12 md:mt-16">
+    <div className="flex flex-col gap-4 md:gap-8 mt-0 md:mt-32">
       <Contact {...contact} />
 
       {/* Wrapper para Education y Skills - mismo alto que Sobre mí + Experiencia */}
-      <div className="flex flex-col gap-4 flex-1">
+      <div className="flex flex-col gap-4 flex-1 md:mt-4">
         <div className="flex-1">
           <Education studies={studies} />
         </div>

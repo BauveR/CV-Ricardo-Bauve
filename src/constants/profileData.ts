@@ -7,6 +7,7 @@ export interface ContactInfo {
   email: string;
   phone: string;
   linkedin: string;
+  github: string;
   web: string;
 }
 
@@ -19,6 +20,7 @@ export const PROFILE_DATA: ProfileData = {
     email: "rick.bauve@gmail.com",
     phone: "602 673 251",
     linkedin: "linkedin.com/in/ricardo-bauve",
+    github: "https://github.com/BauveR",
     web: "bauve.tumblr.com",
   },
 };

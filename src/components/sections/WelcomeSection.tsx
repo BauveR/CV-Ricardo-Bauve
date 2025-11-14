@@ -12,9 +12,9 @@ export function WelcomeSection({ sectionRef }: Props) {
       id="welcome"
       ref={sectionRef}
       viewportAmount={0.45}
-      className="flex items-center justify-center"
+      className="flex items-center justify-center !h-screen !min-h-screen overflow-hidden"
     >
-      <div className="w-full">
+      <div className="w-full h-full flex items-center justify-center">
         <Welcome />
       </div>
     </AnimatedSection>

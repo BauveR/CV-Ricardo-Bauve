@@ -6,7 +6,7 @@ export const MainContent = () => {
   return (
     <section className="relative isolate w-full min-h-[100svh] overflow-x-hidden bg-transparent">
       {/* separador por el menú fijo del App */}
-      <div className="h-14 md:h-0" />
+      <div className="h-4 md:h-0" />
 
       {/* blobs absolute */}
       <BackgroundBlobsLight />
