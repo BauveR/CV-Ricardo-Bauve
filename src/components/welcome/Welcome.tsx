@@ -2,7 +2,6 @@ import { motion } from "framer-motion";
 import { BackgroundBlobs } from "../background/BackgroundBlobs";
 // import { TitleMov } from "../titleRicardo/TitleMov";
 // import { TitleBauve } from "../titleBauve/TitleBauve";
-import TextPressure from "../textPressure/TextPressure";
 import DualColorTextPressure from "../textPressure/DualColorTextPressure";
 
 export const Welcome = () => {
@@ -22,42 +21,9 @@ export const Welcome = () => {
         {/* <TitleMov /> */}
         {/* <TitleBauve /> */}
 
-        {/* New TextPressure Effect */}
-        {/* Mobile: Two lines */}
-        <div className="w-full max-w-7xl px-4 flex md:hidden flex-col items-center gap-1">
-          <div className="w-full h-[100px] sm:h-[120px]" style={{ position: 'relative' }}>
-            <TextPressure
-              text="RICARDO"
-              flex={true}
-              alpha={false}
-              stroke={false}
-              width={true}
-              weight={true}
-              italic={false}
-              textColor="#F17313"
-              strokeColor="#ff0000"
-              minFontSize={40}
-            />
-          </div>
-          <div className="w-full h-[100px] sm:h-[120px]" style={{ position: 'relative' }}>
-            <TextPressure
-              text="BAUVE"
-              flex={true}
-              alpha={false}
-              stroke={false}
-              width={true}
-              weight={true}
-              italic={false}
-              textColor="#93A1EF"
-              strokeColor="#ff0000"
-              minFontSize={40}
-            />
-          </div>
-        </div>
-
-        {/* Desktop: One line with dual colors */}
-        <div className="hidden md:block w-full max-w-7xl px-4">
-          <div className="w-full h-[150px] lg:h-[200px]" style={{ position: 'relative' }}>
+        {/* TextPressure Effect - Single line for all devices */}
+        <div className="w-full max-w-7xl px-4">
+          <div className="w-full h-[100px] sm:h-[120px] md:h-[150px] lg:h-[200px]" style={{ position: 'relative' }}>
             <DualColorTextPressure
               text1="RICARDO"
               text2="BAUVE"
@@ -67,8 +33,8 @@ export const Welcome = () => {
               weight={true}
               italic={false}
               alpha={false}
-              minFontSize={60}
-              spacing={30}
+              minFontSize={40}
+              spacing={20}
             />
           </div>
         </div>
