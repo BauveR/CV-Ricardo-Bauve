@@ -1,7 +1,8 @@
 import { motion } from "framer-motion";
 import { BackgroundBlobs } from "../background/BackgroundBlobs";
-import { TitleMov } from "../titleRicardo/TitleMov";
-import { TitleBauve } from "../titleBauve/TitleBauve";
+// import { TitleMov } from "../titleRicardo/TitleMov";
+// import { TitleBauve } from "../titleBauve/TitleBauve";
+import TextPressure from "../textPressure/TextPressure";
 
 export const Welcome = () => {
 
@@ -16,8 +17,25 @@ export const Welcome = () => {
         transition={{ duration: 0.5, ease: [0.22, 1, 0.36, 1] }}
         className="relative z-10 flex flex-col items-center w-full"
       >
-        <TitleMov />
-        <TitleBauve />
+        {/* SVG Titles - Commented but kept for future use */}
+        {/* <TitleMov /> */}
+        {/* <TitleBauve /> */}
+
+        {/* New TextPressure Effect */}
+        <div className="w-full max-w-7xl px-4" style={{ position: 'relative', height: '200px' }}>
+          <TextPressure
+            text="RICARDO BAUVE"
+            flex={true}
+            alpha={false}
+            stroke={false}
+            width={true}
+            weight={true}
+            italic={true}
+            textColor="#ffffff"
+            strokeColor="#ff0000"
+            minFontSize={32}
+          />
+        </div>
 
         <motion.p
           initial={{ opacity: 0 }}
