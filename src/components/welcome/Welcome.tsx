@@ -22,7 +22,7 @@ export const Welcome = () => {
         {/* <TitleBauve /> */}
 
         {/* New TextPressure Effect */}
-        <div className="w-full max-w-7xl px-4 flex flex-col items-center gap-2">
+        <div className="w-full max-w-7xl px-4 flex flex-col items-center gap-1">
           <div className="w-full" style={{ position: 'relative', height: '120px' }}>
             <TextPressure
               text="RICARDO"
