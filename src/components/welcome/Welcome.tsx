@@ -63,7 +63,7 @@ export const Welcome = () => {
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             transition={{ delay: 0.5, duration: 0.4 }}
-            className="px-6 py-3 rounded-xl border border-white/20 bg-white/10 hover:bg-white/15 active:bg-white/20 text-white backdrop-blur-md tracking-wide"
+            className="px-6 py-3 rounded-3xl border border-white/20 bg-white/10 hover:bg-white/15 active:bg-white/20 text-white backdrop-blur-md tracking-wide text-xs sm:text-base"
             whileHover={{ scale: 1.05 }}
             whileTap={{ scale: 0.97 }}
           >
