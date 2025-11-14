@@ -3,6 +3,7 @@ import { BackgroundBlobs } from "../background/BackgroundBlobs";
 // import { TitleMov } from "../titleRicardo/TitleMov";
 // import { TitleBauve } from "../titleBauve/TitleBauve";
 import TextPressure from "../textPressure/TextPressure";
+import DualColorTextPressure from "../textPressure/DualColorTextPressure";
 
 export const Welcome = () => {
 
@@ -54,39 +55,21 @@ export const Welcome = () => {
           </div>
         </div>
 
-        {/* Desktop: One line with gradient colors */}
+        {/* Desktop: One line with dual colors */}
         <div className="hidden md:block w-full max-w-7xl px-4">
-          <div className="w-full h-[150px] lg:h-[200px] flex items-center justify-center" style={{ position: 'relative' }}>
-            <div className="flex items-center justify-center gap-2" style={{ height: '100%' }}>
-              <div style={{ position: 'relative', height: '100%', flex: '0 0 auto' }}>
-                <TextPressure
-                  text="RICARDO"
-                  flex={true}
-                  alpha={false}
-                  stroke={false}
-                  width={true}
-                  weight={true}
-                  italic={false}
-                  textColor="#F17313"
-                  strokeColor="#ff0000"
-                  minFontSize={60}
-                />
-              </div>
-              <div style={{ position: 'relative', height: '100%', flex: '0 0 auto' }}>
-                <TextPressure
-                  text="BAUVE"
-                  flex={true}
-                  alpha={false}
-                  stroke={false}
-                  width={true}
-                  weight={true}
-                  italic={false}
-                  textColor="#93A1EF"
-                  strokeColor="#ff0000"
-                  minFontSize={60}
-                />
-              </div>
-            </div>
+          <div className="w-full h-[150px] lg:h-[200px]" style={{ position: 'relative' }}>
+            <DualColorTextPressure
+              text1="RICARDO"
+              text2="BAUVE"
+              color1="#F17313"
+              color2="#93A1EF"
+              width={true}
+              weight={true}
+              italic={false}
+              alpha={false}
+              minFontSize={60}
+              spacing={30}
+            />
           </div>
         </div>
 
