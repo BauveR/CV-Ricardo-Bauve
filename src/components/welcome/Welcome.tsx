@@ -23,7 +23,7 @@ export const Welcome = () => {
 
         {/* New TextPressure Effect */}
         <div className="w-full max-w-7xl px-4 flex flex-col items-center gap-1">
-          <div className="w-full" style={{ position: 'relative', height: '120px' }}>
+          <div className="w-full h-[100px] sm:h-[120px] md:h-[150px] lg:h-[180px]" style={{ position: 'relative' }}>
             <TextPressure
               text="RICARDO"
               flex={true}
@@ -37,7 +37,7 @@ export const Welcome = () => {
               minFontSize={40}
             />
           </div>
-          <div className="w-full" style={{ position: 'relative', height: '120px' }}>
+          <div className="w-full h-[100px] sm:h-[120px] md:h-[150px] lg:h-[180px]" style={{ position: 'relative' }}>
             <TextPressure
               text="BAUVE"
               flex={true}

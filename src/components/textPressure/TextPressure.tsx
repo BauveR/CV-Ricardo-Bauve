@@ -141,7 +141,7 @@ const TextPressure: React.FC<TextPressureProps> = ({
           };
 
           const wdth = width ? Math.floor(getAttr(d, 5, 200)) : 100;
-          const wght = weight ? Math.floor(getAttr(d, 600, 900)) : 700;
+          const wght = weight ? Math.floor(getAttr(d, 400, 900)) : 500;
           const italVal = italic ? getAttr(d, 0, 1).toFixed(2) : '0';
           const alphaVal = alpha ? getAttr(d, 0, 1).toFixed(2) : '1';
 
