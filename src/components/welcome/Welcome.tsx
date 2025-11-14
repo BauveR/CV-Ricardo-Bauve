@@ -43,7 +43,7 @@ export const Welcome = () => {
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ delay: 0.3, duration: 0.6 }}
-          className="text-sm sm:text-base md:text-xl tracking-[0.15em] sm:tracking-[0.2em] text-white mb-8 sm:mb-10 font-sans font-medium mt-6 sm:mt-8 text-center px-4"
+          className="text-sm sm:text-base md:text-xl tracking-[0.15em] sm:tracking-[0.2em] text-white mb-8 sm:mb-10 font-sans font-medium mt-6 sm:mt-8 text-center px-4 whitespace-nowrap"
         >
           Product Designer & Frontend Developer
         </motion.p>
