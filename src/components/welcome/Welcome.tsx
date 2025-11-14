@@ -39,14 +39,23 @@ export const Welcome = () => {
           </div>
         </div>
 
-        <motion.p
+        <motion.div
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ delay: 0.3, duration: 0.6 }}
-          className="text-sm sm:text-base md:text-xl tracking-[0.15em] sm:tracking-[0.2em] text-white mb-8 sm:mb-10 font-sans font-medium mt-6 sm:mt-8 text-center px-4 whitespace-nowrap"
+          className="text-sm sm:text-base md:text-xl tracking-[0.15em] sm:tracking-[0.2em] text-white mb-8 sm:mb-10 font-sans font-medium mt-6 sm:mt-8 text-center px-4"
         >
-          Product Designer & Frontend Developer
-        </motion.p>
+          {/* Mobile: 3 líneas */}
+          <div className="flex flex-col items-center sm:hidden">
+            <span>Product Designer</span>
+            <span>&</span>
+            <span>Frontend Developer</span>
+          </div>
+          {/* Desktop: 1 línea */}
+          <div className="hidden sm:block whitespace-nowrap">
+            Product Designer & Frontend Developer
+          </div>
+        </motion.div>
 
         {/* no navegación programática: dejamos que el App haga el scroll suave */}
         <a href="/#cv" className="relative z-10">
