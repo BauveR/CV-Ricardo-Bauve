@@ -22,8 +22,9 @@ export const Welcome = () => {
         {/* <TitleBauve /> */}
 
         {/* New TextPressure Effect */}
-        <div className="w-full max-w-7xl px-4 flex flex-col items-center gap-1">
-          <div className="w-full h-[100px] sm:h-[120px] md:h-[150px] lg:h-[180px]" style={{ position: 'relative' }}>
+        {/* Mobile: Two lines */}
+        <div className="w-full max-w-7xl px-4 flex md:hidden flex-col items-center gap-1">
+          <div className="w-full h-[100px] sm:h-[120px]" style={{ position: 'relative' }}>
             <TextPressure
               text="RICARDO"
               flex={true}
@@ -37,7 +38,7 @@ export const Welcome = () => {
               minFontSize={40}
             />
           </div>
-          <div className="w-full h-[100px] sm:h-[120px] md:h-[150px] lg:h-[180px]" style={{ position: 'relative' }}>
+          <div className="w-full h-[100px] sm:h-[120px]" style={{ position: 'relative' }}>
             <TextPressure
               text="BAUVE"
               flex={true}
@@ -50,6 +51,42 @@ export const Welcome = () => {
               strokeColor="#ff0000"
               minFontSize={40}
             />
+          </div>
+        </div>
+
+        {/* Desktop: One line with gradient colors */}
+        <div className="hidden md:block w-full max-w-7xl px-4">
+          <div className="w-full h-[150px] lg:h-[180px]" style={{ position: 'relative' }}>
+            <div className="flex items-center justify-center gap-8 h-full">
+              <div className="flex-1" style={{ position: 'relative', height: '100%' }}>
+                <TextPressure
+                  text="RICARDO"
+                  flex={true}
+                  alpha={false}
+                  stroke={false}
+                  width={true}
+                  weight={true}
+                  italic={false}
+                  textColor="#F17313"
+                  strokeColor="#ff0000"
+                  minFontSize={50}
+                />
+              </div>
+              <div className="flex-1" style={{ position: 'relative', height: '100%' }}>
+                <TextPressure
+                  text="BAUVE"
+                  flex={true}
+                  alpha={false}
+                  stroke={false}
+                  width={true}
+                  weight={true}
+                  italic={false}
+                  textColor="#93A1EF"
+                  strokeColor="#ff0000"
+                  minFontSize={50}
+                />
+              </div>
+            </div>
           </div>
         </div>
 
