@@ -26,11 +26,11 @@ export const Welcome = () => {
         initial={{ opacity: 0, y: 10 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.5, ease: [0.22, 1, 0.36, 1] }}
-        className="relative z-10 h-full w-full max-w-[1920px] mx-auto px-6 sm:px-10 lg:px-20 grid grid-cols-1 md:grid-cols-[1.2fr_1fr] gap-8 md:gap-16 items-center"
+        className="relative z-10 h-full w-full max-w-[1920px] mx-auto px-6 sm:px-10 lg:px-20 grid grid-cols-1 md:grid-cols-[1.2fr_1fr] gap-0 md:gap-16 content-center pt-[30%] md:pt-0 items-start md:items-center"
       >
         {/* Columna izquierda: imagen + subtítulo */}
-        <div className="flex flex-col items-center md:items-start gap-0">
-          <div className="w-full overflow-hidden">
+        <div className="flex flex-col items-center md:items-start gap-0 md:pt-0">
+          <div className="w-[115%] md:w-full -translate-x-[5%] md:translate-x-0 overflow-hidden">
             <img
               src={titleImage}
               alt="Ricardo Bautista Velázquez"
@@ -42,7 +42,7 @@ export const Welcome = () => {
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             transition={{ delay: 0.2, duration: 0.6 }}
-            className="ms-35 mt-2 text-sm sm:text-base md:text-xl tracking-[0.15em] sm:tracking-[0.2em] text-gray-500 font-sans font-bold text-center md:text-left"
+            className="mt-2 text-sm sm:text-base md:text-xl md:ms-35 tracking-[0.15em] sm:tracking-[0.2em] text-gray-500 font-sans font-bold text-center md:text-left"
           >
             Diseñador y comunicador visual<br />
             Product owner jr.<br />
@@ -51,7 +51,7 @@ export const Welcome = () => {
         </div>
 
         {/* Columna derecha: texto + botón */}
-        <div className="flex flex-col items-center md:items-start gap-6 md:pt-[25%]">
+        <div className="flex flex-col items-center md:items-start gap-6 pt-4 md:pt-[25%]">
           <motion.p
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}

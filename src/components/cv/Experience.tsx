@@ -4,7 +4,7 @@ import { experienceList } from "./data/cvData";
 
 export function Experience() {
   return (
-    <GlassPanel className="h-full flex flex-col">
+    <GlassPanel className="h-full flex flex-col md:py-[4.375rem]">
       <SectionHeader>Experiencia</SectionHeader>
       <div className="ms-4 sm:ms-8 mt-6 mb-8 space-y-6 text-sm text-slate-400">
         {experienceList.map((exp, i) => (

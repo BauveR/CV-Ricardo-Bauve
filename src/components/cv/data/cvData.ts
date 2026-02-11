@@ -14,11 +14,11 @@ export type ExperienceItem = {
 };
 
 export const experienceList: ExperienceItem[] = [
-  { title: "2013 - 2022 Dirección y curaduría de arte", place: "Grupo MYPSA SA DE CV", desc: "Pop-Up’s de arte con creadores..." },
-  { title: "2016 - 2023 Chief Digital Officer, Jefe de adopción digital", place: "Ecova Green SA de CV / PIXKA SAPI de CV", desc: "Desarrollo de marcas y automatización..." },
-  { title: "2019 - 2020 Voluntariado Proyecto 2020", place: "Fundación Sophia (Madrid, México)", desc: "" },
-  { title: "2017 - 2023 Chief Sales Officer, Jefe de ventas", place: "", desc: "Ventas directas..." },
-  { title: "2023 - 2025 Freelance", place: "", desc: "Varios proyectos...", extra: "BARCELONA 2025 / Documentacion y permisos en regla " },
+  { title: "2026  Website & design experience", place: "Corpus Colonia de la Universidad de Lleiden, Universidad de la laguna", desc: "" },
+  { title: "2023 - 2025  Freelance Graphic design", place: "Wow PR, Beeok, CreAI, Galgos Group, Prüne Chile y Guatemala", desc: "" },
+  { title: "2017 - 2023  Product owner Jr.", place: "noox /t PIXKA SAPI de CV", desc: "CRM Development" },
+  { title: "2015 - 2017  Chief Digital officer & designer", place: "noox, Ticopó, kankabal, Mühlberg Schloss", desc: "" },
+  { title: "2013 - 2022  Art manager", place: "Grupo MYPSA SA DE CV", desc: "Pop-Up's Manager CDMX, Yucatán, Superfine (NYC, Berlín, Miami, Madrid, Chicago). 180 eventos realizados.", extra: "BARCELONA 2025 / Documentacion y permisos en regla " },
 ];
 
 export const contactItems = (email: string, phone: string, linkedin: string, github: string, web: string) => ([
@@ -55,6 +55,6 @@ export const skillsSections: SkillSection[] = [
   },
   {
     title: "Idiomas",
-    items: ["Español: Nativo","Inglés: Intermedio","Catalán: Básico 2"],
+    items: ["Español: Nativo","Inglés: Intermedio","Catalán: Elemental 2"],
   },
 ];

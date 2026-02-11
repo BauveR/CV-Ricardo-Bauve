@@ -18,7 +18,7 @@ export function Contact({ email, phone, linkedin, github, web }: Props) {
             rel="noopener noreferrer"
             className="w-full sm:w-auto transition-transform duration-200 hover:-translate-y-0.5 hover:scale-105"
           >
-            <GlassButton className="w-full sm:w-auto flex justify-center sm:justify-start items-center gap-3 text-base md:text-lg px-8 py-5 md:px-11 md:py-6 rounded-3xl">
+            <GlassButton className="w-full sm:w-auto flex justify-center sm:justify-start items-center gap-3 text-base md:text-lg px-8 py-2 md:px-11 md:py-6 rounded-3xl">
               <span className="font-semibold text-xl md:text-2xl">{it.label}</span>
               <span>{it.value}</span>
             </GlassButton>
@@ -36,7 +36,7 @@ export function Contact({ email, phone, linkedin, github, web }: Props) {
             rel="noopener noreferrer"
             className="w-full sm:w-auto transition-transform duration-200 hover:-translate-y-0.5 hover:scale-105"
           >
-            <GlassButton className="w-full sm:w-auto flex justify-center sm:justify-start items-center gap-3 text-base md:text-lg px-8 py-5 md:px-11 md:py-6 rounded-3xl">
+            <GlassButton className="w-full sm:w-auto flex justify-center sm:justify-start items-center gap-3 text-base md:text-lg px-8 py-2 md:px-11 md:py-6 rounded-3xl">
               <span className="font-semibold text-xl md:text-2xl">{it.label}</span>
               <span>{it.value}</span>
             </GlassButton>

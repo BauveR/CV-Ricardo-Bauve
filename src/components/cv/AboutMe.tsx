@@ -6,17 +6,11 @@ export function AboutMe() {
     <GlassPanel className="h-full">
       <SectionHeader>Sobre mí</SectionHeader>
       <div className="ms-4 sm:ms-8 mt-4 space-y-4 text-sm text-slate-400">
-        <p className="font-bold text-slate-400 text-sm">
-          Analítico, resiliente y orientado a soluciones | Transicionando al desarrollo frontend con pasión por materializar ideas y experiencias digitales intuitivas
+        <p className="text-gray-400 text-sm">
+          Con más de 10 años de experiencia en diseño, gestión de productos y recién graduado del bootcamp de frontend developer en la IT Academy de Barcelona, me he dedicado a la coordinación de equipos de desarrollo y optimización de plataformas, así como a diseñar materiales fijos, vídeo, webs y ejecutar estrategias digitales. Tengo experiencia como Chief Digital Officer en el sector p2p, realizando campañas de Facebook, Google Ads y TikTok y como Art Manager encargado de festivales, exposiciones y eventos.
         </p>
         <p className="text-gray-400 text-sm">
-          Durante 10 años lideré proyectos en el sector inmobiliario, diseñando alternativas de inversión innovadoras. Esta experiencia me enseñó a analizar datos complejos, comunicar eficazmente y gestionar proyectos bajo presión.
-        </p>
-        <p className="text-gray-400 text-sm">
-          Actualmente en transición hacia el desarrollo frontend, especializándome en React y tecnologías web modernas. Mi background en negocios me aporta una perspectiva única: entiendo que el código debe resolver problemas reales de usuarios y el business core.
-        </p>
-        <p className="text-gray-400 text-sm">
-          Combino capacidad analítica para transformar requisitos en soluciones técnicas con mentalidad de aprendizaje continuo. Mis años en proyectos multidisciplinares me han dado habilidades de colaboración y comunicación, construyendo puentes entre equipos técnicos y de negocio.
+          He colaborado en entornos ágiles en proyectos de comunicación y digitales complejos, coordinando y diseñando campañas digitales y analizando su impacto mediante KPIs y métricas de producto. Mi enfoque en entregas iterativas y MVP me ha permitido optimizar procesos y resolver incidencias de manera asertiva y rápida.
         </p>
         <div className="pt-4 mt-4 border-t border-gray-200 space-y-2">
           <p className="font-bold text-gray-500 text-sm">Stack: React, JavaScript, HTML5, CSS3, Git</p>

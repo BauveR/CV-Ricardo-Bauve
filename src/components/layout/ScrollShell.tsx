@@ -49,10 +49,10 @@ export function ScrollShell() {
       <NavbarSections active={activeSection} onGo={scrollTo} />
 
       <WelcomeSection sectionRef={welcomeRef} />
-      <Divider height="h-[67px]" />
+      <Divider height="h-[27px] md:h-[67px]" />
 
       <CVSection sectionRef={cvRef} />
-      <Divider height="h-12" />
+      <Divider height="h-4 md:h-12" />
 
       <PortfolioSection
         sectionRef={portafolioRef}
