@@ -26,7 +26,7 @@ export function Contact({ email, phone, linkedin, github, web }: Props) {
         ))}
       </div>
 
-      {/* Segunda fila: Teléfono, Email */}
+      {/* Segunda fila: Teléfono, Email, Descargar CV */}
       <div className="flex flex-col sm:flex-row flex-wrap justify-start gap-2">
         {items.slice(3).map((it, i) => (
           <a
@@ -42,6 +42,17 @@ export function Contact({ email, phone, linkedin, github, web }: Props) {
             </GlassButton>
           </a>
         ))}
+        <a
+          href="https://drive.google.com/file/d/1WuUdmdsPKmKT1Gh0kngnyjo9FTJTUr_5/view?usp=sharing"
+          target="_blank"
+          rel="noopener noreferrer"
+          className="w-full sm:w-auto transition-transform duration-200 hover:-translate-y-0.5 hover:scale-105"
+        >
+          <GlassButton className="w-full sm:w-auto flex justify-center sm:justify-start items-center gap-3 text-base md:text-lg px-8 py-2 md:px-11 md:py-6 rounded-3xl">
+            <span className="font-semibold text-xl md:text-2xl">📄</span>
+            <span>Descargar CV</span>
+          </GlassButton>
+        </a>
       </div>
     </div>
   );

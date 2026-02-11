@@ -7,6 +7,12 @@ export type ProjectItem = {
   
   export const projects: ProjectItem[] = [
     {
+      src: "src/assets/portafolio corpus colonia-01.png",
+      text: "Corpus Colonia",
+      longDescription:
+        "website & design experience\nUniversidad de Lleiden\nUniversidad de la laguna"
+    },
+    {
       src: "src/assets/portafolio ricardo bauve-01.png",
       text: "piedra-arte e-commerce",
       longDescription:

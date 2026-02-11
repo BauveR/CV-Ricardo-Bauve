@@ -3,7 +3,7 @@ import SectionHeader from "./ui/SectionHeader";
 
 export function AboutMe() {
   return (
-    <GlassPanel className="h-full">
+    <GlassPanel className="h-full !py-[4.5rem]">
       <SectionHeader>Sobre mí</SectionHeader>
       <div className="ms-4 sm:ms-8 mt-4 space-y-4 text-sm text-slate-400">
         <p className="text-gray-400 text-sm">

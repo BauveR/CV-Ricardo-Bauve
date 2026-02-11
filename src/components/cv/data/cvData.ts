@@ -3,7 +3,7 @@ export const studies: Study[] = [
   { title: "Diseño y Comunicación Visual Facultad de Artes y Diseño", place: "UNAM", year: "2009 - 2013" },
   { title: "Master en Chief Digital Officer", place: "Gray Matter", year: "2019" },
   { title: "MidJourney IA generativa", place: "S.O.D.A", year: "2023" },
-  { title: "BootCamp IT Academy Cibernarium", place: "Barcelona", year: "2024 - Actualidad" },
+  { title: "BootCamp IT Academy Cibernarium", place: "Barcelona", year: "2024 - 2026" },
 ];
 
 export type ExperienceItem = {
@@ -18,7 +18,7 @@ export const experienceList: ExperienceItem[] = [
   { title: "2023 - 2025  Freelance Graphic design", place: "Wow PR, Beeok, CreAI, Galgos Group, Prüne Chile y Guatemala", desc: "" },
   { title: "2017 - 2023  Product owner Jr.", place: "noox /t PIXKA SAPI de CV", desc: "CRM Development" },
   { title: "2015 - 2017  Chief Digital officer & designer", place: "noox, Ticopó, kankabal, Mühlberg Schloss", desc: "" },
-  { title: "2013 - 2022  Art manager", place: "Grupo MYPSA SA DE CV", desc: "Pop-Up's Manager CDMX, Yucatán, Superfine (NYC, Berlín, Miami, Madrid, Chicago). 180 eventos realizados.", extra: "BARCELONA 2025 / Documentacion y permisos en regla " },
+  { title: "2013 - 2022  Art manager", place: "Grupo MYPSA SA DE CV", desc: "Pop-Up's Manager CDMX, Yucatán, Superfine (NYC, Berlín, Miami, Madrid, Chicago). 180 eventos realizados." },
 ];
 
 export const contactItems = (email: string, phone: string, linkedin: string, github: string, web: string) => ([
@@ -36,7 +36,7 @@ export type SkillSection = { title: string; items: string[] };
 export const skillsSections: SkillSection[] = [
   {
     title: "Programas",
-    items: ["Photoshop CC","Illustrator CC","Final Cut","InDesign CC","Wix y Wordpress","Midjourney AI"],
+    items: ["Photoshop CC","Illustrator CC","Final Cut","InDesign CC","Wix y Wordpress","Midjourney AI","Figma","Claude","CapCut"],
   },
   {
     title: "Habilidades",

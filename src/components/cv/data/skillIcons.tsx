@@ -1,7 +1,7 @@
 import {
   SiHtml5, SiCss3, SiJavascript, SiTypescript, SiReact, SiTailwindcss,
   SiVite, SiNodedotjs, SiAdobephotoshop, SiAdobeillustrator, SiAdobeindesign,
-  SiWordpress, SiApple, SiOpenai
+  SiWordpress, SiApple, SiOpenai, SiFigma, SiClaude
 } from "react-icons/si";
 import type { JSX } from "react";
 
@@ -13,6 +13,8 @@ export const skillIconMap: Record<string, JSX.Element> = {
   "InDesign CC": <SiAdobeindesign className="text-pink-600 w-5 h-5" />,
   "Wix y Wordpress": <SiWordpress className="text-blue-700 w-5 h-5" />,
   "Midjourney AI": <SiOpenai className="text-indigo-500 w-5 h-5" />,
+  Figma: <SiFigma className="text-purple-500 w-5 h-5" />,
+  Claude: <SiClaude className="text-amber-600 w-5 h-5" />,
   HTML: <SiHtml5 className="text-[oklch(64.8%_0.2_131.684)] w-5 h-5" />,
   CSS: <SiCss3 className="text-blue-500 w-5 h-5" />,
   JavaScript: <SiJavascript className="text-yellow-400 w-5 h-5" />,
