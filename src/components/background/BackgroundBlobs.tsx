@@ -13,7 +13,7 @@ export const BackgroundBlobs = () => {
     <div className="absolute inset-0 -z-10 pointer-events-none overflow-visible">
       {/* Blob grande */}
       <motion.div
-        className="absolute w-[640px] h-[640px] bg-stone-300 rounded-full blur-3xl opacity-10 will-change-transform"
+        className="absolute w-[640px] h-[640px] bg-gray-300 rounded-full blur-3xl opacity-20 will-change-transform"
         initial={{ x: 0, y: 0, scale: 1 }}
         animate={blob1}
         style={{ top: "15%", left: "18%" }}

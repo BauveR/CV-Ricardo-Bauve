@@ -45,7 +45,7 @@ export function ScrollShell() {
   const portafolioMatch = useMatch("/portafolio/:id");
 
   return (
-    <div className="relative min-h-screen bg-slate-700 overflow-x-hidden max-w-full">
+    <div className="relative min-h-screen bg-white overflow-x-hidden max-w-full">
       <NavbarSections active={activeSection} onGo={scrollTo} />
 
       <WelcomeSection sectionRef={welcomeRef} />

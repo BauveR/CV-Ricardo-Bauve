@@ -38,13 +38,13 @@ export const PortafolioCard = ({
     <div
       className={[
         "group relative flex flex-col cursor-pointer w-full h-full overflow-hidden rounded-3xl",
-        "bg-slate-900/30 backdrop-blur-2xl",
-        "shadow-xl shadow-black/20",
-        "border border-white/10",
-        "ring-1 ring-white/5",
-        "hover:bg-slate-900/40 hover:border-white/15",
+        "bg-white/30 backdrop-blur-2xl",
+        "shadow-xl shadow-gray-200/20",
+        "border border-gray-200",
+        "ring-1 ring-gray-100",
+        "hover:bg-white/40 hover:border-gray-300",
         "transition-all duration-500",
-        "text-stone-300",
+        "text-gray-400",
         "p-3",
         className,
       ].join(" ")}
@@ -54,7 +54,7 @@ export const PortafolioCard = ({
       onKeyDown={(e) => (e.key === "Enter" ? goDetail() : null)}
     >
       {/* Imagen con proporción vertical - ocupa la mayor parte del espacio */}
-      <div className="relative w-full flex-1 overflow-hidden rounded-2xl bg-slate-800/50">
+      <div className="relative w-full flex-1 overflow-hidden rounded-2xl bg-gray-100/50">
         {/* Imagen principal */}
         <motion.img
           src={primaryImage}
@@ -103,7 +103,7 @@ export const PortafolioCard = ({
           <span className="line-clamp-1">{name}</span>
         </h3>
         {description && (
-          <p className="mt-1 text-sm text-stone-400 leading-snug line-clamp-2">
+          <p className="mt-1 text-sm text-gray-400 leading-snug line-clamp-2">
             {description}
           </p>
         )}

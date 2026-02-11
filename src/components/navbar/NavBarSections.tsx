@@ -1,8 +1,6 @@
 import { useEffect, useState } from "react";
 import { AnimatePresence, motion } from "framer-motion";
-import DualColorTextPressure from "../textPressure/DualColorTextPressure";
-// import { TitleMovCvFast } from "../titleRicardo/TitleMovCvFast";
-// import { TitleBauveCvFast } from "../titleBauve/TitleBauveCvFast";
+import navLogo from "../../assets/title/CV 2025 harvard-08.png";
 
 type SectionId = "welcome" | "cv" | "portafolio";
 
@@ -67,9 +65,9 @@ export default function NavbarSections({ active, onGo }: Props) {
   const linkBase =
     "relative px-2 py-1 text-sm md:text-[15px] tracking-wide transition-all duration-300";
   const linkActive =
-    "text-white font-bold blur-none";
+    "text-gray-400 font-bold blur-none";
   const linkInactive =
-    "text-stone-300 blur-[0.8px] hover:text-white hover:blur-none font-normal";
+    "text-gray-300 blur-[0.8px] hover:text-gray-400 hover:blur-none font-normal";
 
   const go = (id: SectionId) => {
     setMobileOpen(false);
@@ -82,8 +80,8 @@ export default function NavbarSections({ active, onGo }: Props) {
   className={[
     "fixed top-0 left-0 right-0 z-50 transition-colors",
     scrolled
-      ? "bg-gradient-to-b from-slate-900/90 to-slate-900/30 backdrop-blur-md "
-      : "bg-gradient-to-b from-slate-900/60 to-slate-900/0 backdrop-blur-md ",
+      ? "bg-gradient-to-b from-white/90 to-white/30 backdrop-blur-md "
+      : "bg-gradient-to-b from-white/60 to-white/0 backdrop-blur-md ",
   ].join(" ")}
   role="banner"
 >
@@ -95,7 +93,7 @@ export default function NavbarSections({ active, onGo }: Props) {
             <div className="flex items-center gap-3">
               {/* Burger */}
               <button
-                className="lg:hidden p-2 rounded-md hover:bg-white/10"
+                className="lg:hidden p-2 rounded-md hover:bg-gray-100"
                 aria-label="Abrir menú"
                 aria-expanded={mobileOpen}
                 onClick={() => setMobileOpen(true)}
@@ -117,20 +115,11 @@ export default function NavbarSections({ active, onGo }: Props) {
                 transition={{ duration: 0.5, ease: [0.22, 1, 0.36, 1] }}
                 style={{ pointerEvents: showTitles ? "auto" : "none" }}
               >
-                <div className="w-full h-[56px] md:h-[64px]">
-                  <DualColorTextPressure
-                    text1="RICARDO"
-                    text2="BAUVE"
-                    color1="#F17313"
-                    color2="#93A1B7"
-                    width={true}
-                    weight={true}
-                    italic={false}
-                    alpha={false}
-                    minFontSize={21}
-                    spacing={8}
-                  />
-                </div>
+                <img
+                  src={navLogo}
+                  alt="Ricardo Bautista Velázquez"
+                  className="h-[40px] md:h-[48px] w-auto object-contain"
+                />
               </motion.div>
             </div>
 
@@ -152,7 +141,7 @@ export default function NavbarSections({ active, onGo }: Props) {
                       {r.label}
                       <span
                         className="
-                          absolute left-0 -bottom-0.5 w-full h-[2px] bg-white
+                          absolute left-0 -bottom-0.5 w-full h-[2px] bg-gray-400
                           origin-left scale-x-0
                           lg:group-hover:scale-x-100
                           transition-transform duration-300 ease-out
@@ -179,7 +168,7 @@ export default function NavbarSections({ active, onGo }: Props) {
               onClick={() => setMobileOpen(false)}
             />
             <motion.aside
-              className="fixed left-0 top-0 z-50 h-screen w-[86vw] max-w-[270px] bg-stone-500/50 text-stone-200 shadow-xl p-4"
+              className="fixed left-0 top-0 z-50 h-screen w-[86vw] max-w-[270px] bg-white/80 text-gray-400 shadow-xl p-4"
               initial={{ x: -24, opacity: 0 }}
               animate={{ x: 0, opacity: 1 }}
               exit={{ x: -24, opacity: 0 }}
@@ -190,7 +179,7 @@ export default function NavbarSections({ active, onGo }: Props) {
               <div className="flex items-center justify-between h-12">
                 <span className="text-lg tracking-wide"></span>
                 <button
-                  className="p-2 rounded-md hover:bg-white/10"
+                  className="p-2 rounded-md hover:bg-gray-100"
                   aria-label="Cerrar menú"
                   onClick={() => setMobileOpen(false)}
                 >
@@ -206,10 +195,10 @@ export default function NavbarSections({ active, onGo }: Props) {
                     key={r.id}
                     onClick={() => go(r.id)}
                     className={[
-                      "py-3 text-base border-b border-white/10 text-left transition-all duration-300",
+                      "py-3 text-base border-b border-gray-200 text-left transition-all duration-300",
                       active === r.id
-                        ? "text-white font-bold blur-none"
-                        : "text-stone-300 hover:text-white blur-[0.8px] hover:blur-none font-normal",
+                        ? "text-gray-400 font-bold blur-none"
+                        : "text-gray-300 hover:text-gray-400 blur-[0.8px] hover:blur-none font-normal",
                     ].join(" ")}
                     aria-current={active === r.id ? "page" : undefined}
                   >

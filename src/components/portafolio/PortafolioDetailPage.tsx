@@ -74,7 +74,7 @@ export const PortafolioDetailPage = ({ onClose }: Props) => {
       <button
         type="button"
         onClick={handleClose}
-        className="absolute top-4 right-4 sm:top-6 sm:right-6 p-1.5 sm:p-2 rounded-full bg-white/5 hover:bg-white/10 backdrop-blur-sm transition-all duration-200 z-50 text-stone-300 hover:text-white"
+        className="absolute top-4 right-4 sm:top-6 sm:right-6 p-1.5 sm:p-2 rounded-full bg-gray-100 hover:bg-gray-200 backdrop-blur-sm transition-all duration-200 z-50 text-gray-400 hover:text-gray-500"
         aria-label="Cerrar"
       >
         <svg width="14" height="14" className="sm:w-4 sm:h-4" viewBox="0 0 24 24" stroke="currentColor" fill="none" strokeWidth="1.5">
@@ -85,7 +85,7 @@ export const PortafolioDetailPage = ({ onClose }: Props) => {
       <button
         type="button"
         onClick={goPrev}
-        className="absolute top-1/2 -translate-y-1/2 left-2 sm:left-4 md:left-6 p-1.5 sm:p-2 rounded-full bg-white/5 hover:bg-white/10 backdrop-blur-sm transition-all duration-200 z-20 text-stone-300 hover:text-white"
+        className="absolute top-1/2 -translate-y-1/2 left-2 sm:left-4 md:left-6 p-1.5 sm:p-2 rounded-full bg-gray-100 hover:bg-gray-200 backdrop-blur-sm transition-all duration-200 z-20 text-gray-400 hover:text-gray-500"
         aria-label="Anterior"
       >
         <svg width="14" height="14" className="sm:w-4 sm:h-4" viewBox="0 0 24 24" stroke="currentColor" fill="none" strokeWidth="1.5">
@@ -96,7 +96,7 @@ export const PortafolioDetailPage = ({ onClose }: Props) => {
       <button
         type="button"
         onClick={goNext}
-        className="absolute top-1/2 -translate-y-1/2 right-2 sm:right-4 md:right-6 p-1.5 sm:p-2 rounded-full bg-white/5 hover:bg-white/10 backdrop-blur-sm transition-all duration-200 z-20 text-stone-300 hover:text-white"
+        className="absolute top-1/2 -translate-y-1/2 right-2 sm:right-4 md:right-6 p-1.5 sm:p-2 rounded-full bg-gray-100 hover:bg-gray-200 backdrop-blur-sm transition-all duration-200 z-20 text-gray-400 hover:text-gray-500"
         aria-label="Siguiente"
       >
         <svg width="14" height="14" className="sm:w-4 sm:h-4" viewBox="0 0 24 24" stroke="currentColor" fill="none" strokeWidth="1.5">
@@ -111,7 +111,7 @@ export const PortafolioDetailPage = ({ onClose }: Props) => {
         transition={{ duration: 0.5, delay: 0.1, ease: [0.16, 1, 0.3, 1] }}
       >
         {/* Imagen - 20% más pequeña: de 700px a 560px */}
-        <div className="relative w-full lg:w-auto lg:flex-shrink-0 overflow-hidden rounded-2xl bg-slate-800/30">
+        <div className="relative w-full lg:w-auto lg:flex-shrink-0 overflow-hidden rounded-2xl bg-gray-100/30">
           <motion.img
             key={data.primaryImage + currentIndex}
             src={data.primaryImage}
@@ -130,9 +130,9 @@ export const PortafolioDetailPage = ({ onClose }: Props) => {
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.5, delay: 0.2, ease: [0.16, 1, 0.3, 1] }}
         >
-          <h1 className="text-lg sm:text-xl lg:text-2xl font-medium text-stone-200 leading-tight">{data.name}</h1>
+          <h1 className="text-lg sm:text-xl lg:text-2xl font-medium text-gray-400 leading-tight">{data.name}</h1>
           {data.description && (
-            <p className="mt-3 sm:mt-4 text-sm lg:text-base leading-relaxed text-stone-300">
+            <p className="mt-3 sm:mt-4 text-sm lg:text-base leading-relaxed text-gray-400">
               {data.description}
             </p>
           )}

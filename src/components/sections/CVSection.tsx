@@ -1,5 +1,4 @@
 import { RefObject } from "react";
-import { AnimatedSection } from "../common/AnimatedSection";
 import { MainContent } from "../cv/MainContent";
 
 type Props = {
@@ -8,14 +7,14 @@ type Props = {
 
 export function CVSection({ sectionRef }: Props) {
   return (
-    <AnimatedSection
+    <section
       id="cv"
       ref={sectionRef}
-      viewportAmount={0.01}
+      className="min-h-screen px-0 scroll-mt-24"
     >
       <div className="w-full">
         <MainContent />
       </div>
-    </AnimatedSection>
+    </section>
   );
 }

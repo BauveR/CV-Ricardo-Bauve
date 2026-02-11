@@ -38,7 +38,7 @@ export function PortafolioModal() {
         transition={{ duration: 0.3 }}
       />
       <motion.div
-        className="relative max-w-[1640px] w-full max-h-[90vh] overflow-auto rounded-3xl bg-slate-900/30 backdrop-blur-2xl border border-white/10 shadow-xl shadow-black/20 ring-1 ring-white/5"
+        className="relative max-w-[1640px] w-full max-h-[90vh] overflow-auto rounded-3xl bg-white/80 backdrop-blur-2xl border border-gray-200 shadow-xl shadow-gray-200/20 ring-1 ring-gray-100"
         initial={{ scale: 0.95, opacity: 0, y: 20 }}
         animate={{ scale: 1, opacity: 1, y: 0 }}
         exit={{ scale: 0.95, opacity: 0, y: 20 }}

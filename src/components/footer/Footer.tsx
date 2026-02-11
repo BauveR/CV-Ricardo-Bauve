@@ -6,7 +6,7 @@ export const Footer = () => {
 
   return (
     <footer
-      className="relative z-40 w-full min-h-[70px] md:min-h-[80px] bg-gradient-to-t from-slate-900/90 to-slate-900/30 backdrop-blur-md"
+      className="relative z-40 w-full min-h-[70px] md:min-h-[80px] bg-gradient-to-t from-gray-100/90 to-gray-100/30 backdrop-blur-md"
       role="contentinfo"
     >
       <div className="w-full px-10 py-12">
@@ -16,7 +16,7 @@ export const Footer = () => {
             <span className="text-xs text-stone-400 font-semibold uppercase tracking-wider">Email</span>
             <a
               href={`mailto:${contact.email}`}
-              className="text-sm text-stone-200 hover:text-white transition-colors duration-300"
+              className="text-sm text-gray-400 hover:text-gray-500 transition-colors duration-300"
             >
               {contact.email}
             </a>
@@ -27,7 +27,7 @@ export const Footer = () => {
             <span className="text-xs text-stone-400 font-semibold uppercase tracking-wider">Teléfono</span>
             <a
               href={`tel:${contact.phone}`}
-              className="text-sm text-stone-200 hover:text-white transition-colors duration-300"
+              className="text-sm text-gray-400 hover:text-gray-500 transition-colors duration-300"
             >
               {contact.phone}
             </a>
@@ -40,7 +40,7 @@ export const Footer = () => {
               href={contact.linkedin}
               target="_blank"
               rel="noopener noreferrer"
-              className="text-sm text-stone-200 hover:text-white transition-colors duration-300"
+              className="text-sm text-gray-400 hover:text-gray-500 transition-colors duration-300"
             >
               {contact.linkedin.replace('https://', '')}
             </a>
@@ -53,7 +53,7 @@ export const Footer = () => {
               href={contact.github}
               target="_blank"
               rel="noopener noreferrer"
-              className="text-sm text-stone-200 hover:text-white transition-colors duration-300 flex items-center gap-2 justify-center md:justify-start"
+              className="text-sm text-gray-400 hover:text-gray-500 transition-colors duration-300 flex items-center gap-2 justify-center md:justify-start"
             >
               <FaGithub className="text-base" />
               <span>{contact.github.replace('https://', '')}</span>
@@ -62,7 +62,7 @@ export const Footer = () => {
         </div>
 
         {/* Copyright */}
-        <div className="mt-6 pt-6 border-t border-white/10 text-center">
+        <div className="mt-6 pt-6 border-t border-gray-200 text-center">
           <p className="text-xs text-stone-400">
             © {new Date().getFullYear()} Ricardo Bauve. Todos los derechos reservados.
           </p>

@@ -1,6 +1,3 @@
-import { motion } from "framer-motion";
-import { itemVariants } from "./motion";
-
 type Props = {
   children: React.ReactNode;
   className?: string;
@@ -8,11 +5,10 @@ type Props = {
 
 export default function SectionHeader({ children, className = "" }: Props) {
   return (
-    <motion.h2
-      className={["ms-8 text-3xl font-bold text-stone-400", className].join(" ")}
-      variants={itemVariants}
+    <h2
+      className={["ms-8 text-3xl font-bold text-blue-600", className].join(" ")}
     >
       {children}
-    </motion.h2>
+    </h2>
   );
 }

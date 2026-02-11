@@ -13,28 +13,29 @@ interface ButtonProps {
 
 const BUTTON_VARIANTS: Record<ButtonVariant, string> = {
   glass: `
-    bg-slate-900/30
+    bg-white/30
     backdrop-blur-2xl
-    shadow-xl shadow-black/20
-    border border-white/10
-    ring-1 ring-white/5
-    text-stone-100
-    hover:bg-slate-900/40
-    hover:border-white/15
+    shadow-xl shadow-gray-200/20
+    border border-gray-200
+    ring-1 ring-gray-100
+    text-gray-400
+    hover:bg-white/40
+    hover:border-gray-300
     duration-500
   `,
   blue: `
-    bg-slate-500
-    text-white
+    bg-gray-300
+    text-gray-400
     shadow-md
-    hover:bg-slate-400
+    hover:bg-gray-400
+    hover:text-gray-500
     duration-300
   `,
   default: `
-    bg-gray-600
-    text-white
+    bg-gray-200
+    text-gray-400
     shadow
-    hover:bg-gray-500
+    hover:bg-gray-300
     duration-200
   `,
 };
