@@ -60,13 +60,13 @@ export const Welcome = () => {
         </motion.div>
 
         {/* 2 columnas */}
-        <div className="w-full grid grid-cols-2 gap-12">
-          <p className="text-sm md:text-base tracking-[0.15em] text-gray-700 font-sans font-bold leading-relaxed">
+        <div className="w-full grid grid-cols-2 gap-12 relative z-10">
+          <p className="text-sm md:text-base tracking-[0.15em] text-white font-sans font-bold leading-relaxed">
             Diseñador y comunicador visual<br />
             Product owner jr.<br />
             Frontend Developer
           </p>
-          <p className="text-sm md:text-base text-gray-700 font-sans font-medium leading-relaxed">
+          <p className="text-sm md:text-base text-white font-sans font-medium leading-relaxed">
             Amante del arte, el mobiliario y los objetos únicos, coleccionista, reparador y constructor, me gusta analizar por que estos productos tienen permanencia en los referentes y conectan con muchos y como se nutren de nuevas ideas para reinventarse, sumar valor a su propuesta alineada con la forma mas auténtica de la marca.
           </p>
         </div>

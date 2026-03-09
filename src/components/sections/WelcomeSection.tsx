@@ -1,5 +1,4 @@
 import { RefObject } from "react";
-import { AnimatedSection } from "../common/AnimatedSection";
 import { Welcome } from "../welcome/Welcome";
 
 type Props = {
@@ -8,13 +7,12 @@ type Props = {
 
 export function WelcomeSection({ sectionRef }: Props) {
   return (
-    <AnimatedSection
+    <section
       id="welcome"
       ref={sectionRef}
-      viewportAmount={0.45}
-      className="!h-screen !min-h-screen overflow-hidden !p-0"
+      className="h-screen min-h-screen overflow-hidden p-0"
     >
       <Welcome />
-    </AnimatedSection>
+    </section>
   );
 }

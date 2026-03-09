@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { AnimatePresence, motion } from "framer-motion";
 import navLogo from "../../assets/title/CV 2025 harvard-08.png";
 
-type SectionId = "welcome" | "cv" | "portafolio";
+type SectionId = "welcome" | "projects" | "cv";
 
 type Props = {
   active: SectionId;
@@ -11,8 +11,8 @@ type Props = {
 
 const routes: { id: SectionId; label: string }[] = [
   { id: "welcome", label: "Inicio" },
+  { id: "projects", label: "Proyectos" },
   { id: "cv", label: "CV" },
-  { id: "portafolio", label: "Portafolio" },
 ];
 
 export default function NavbarSections({ active, onGo }: Props) {

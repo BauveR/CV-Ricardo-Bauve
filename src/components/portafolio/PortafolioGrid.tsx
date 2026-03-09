@@ -1,3 +1,4 @@
+import Autoplay from "embla-carousel-autoplay";
 import { PortafolioCard } from "./PortafolioCard";
 import { useValidProjects } from "../../hooks/useValidProjects";
 import {
@@ -6,10 +7,13 @@ import {
   CarouselItem,
   CarouselPrevious,
   CarouselNext,
-  CarouselDots,
 } from "../ui/Carousel";
 
-export const PortafolioGrid = () => {
+type Props = {
+  autoplay?: boolean;
+};
+
+export const PortafolioGrid = ({ autoplay = false }: Props) => {
   const validProjects = useValidProjects();
 
   const items = validProjects.map((project, displayIndex) => ({
@@ -22,40 +26,38 @@ export const PortafolioGrid = () => {
   }));
 
   return (
-    <div className="w-full pt-16 pb-12">
+    <div className="w-full">
       <Carousel
         opts={{
           align: "start",
           loop: true,
-          dragFree: false,
+          dragFree: true,
           slidesToScroll: 1,
         }}
+        plugins={autoplay ? [Autoplay({ delay: 2500, stopOnInteraction: false, stopOnMouseEnter: true })] : []}
         className="w-full"
       >
-        <CarouselContent className="gap-4 sm:gap-6 px-[1.05rem] sm:px-[1.575rem] lg:px-[2.1rem]">
+        <CarouselContent className="gap-4 sm:gap-6 px-[1.05rem] sm:px-[1.575rem] lg:px-[2.1rem] pb-10 pt-4">
           {items.map((p) => (
             <CarouselItem
               key={p.id}
               className="basis-[93.5%] sm:basis-[440px] md:basis-[581px]"
             >
-              <div className="h-[calc(93.5vw*1.67)] sm:h-[734px] md:h-[968px]">
-                <PortafolioCard
-                  id={p.id}
-                  index={p.index}
-                  name={p.name}
-                  description={p.description}
-                  primaryImage={p.primaryImage!}
-                  link={p.link}
-                  className="h-full w-full"
-                />
-              </div>
+              <PortafolioCard
+                id={p.id}
+                index={p.index}
+                name={p.name}
+                description={p.description}
+                primaryImage={p.primaryImage!}
+                link={p.link}
+                className="w-full"
+              />
             </CarouselItem>
           ))}
         </CarouselContent>
 
         <CarouselPrevious />
         <CarouselNext />
-        <CarouselDots />
       </Carousel>
 
       {items.length === 0 && (
