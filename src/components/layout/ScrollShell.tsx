@@ -6,6 +6,7 @@ import NavbarSections from "../navbar/NavBarSections";
 import { Footer } from "../footer/Footer";
 import { Divider } from "../common/Divider";
 import { WelcomeSection } from "../sections/WelcomeSection";
+import { ProjectsSection } from "../sections/ProjectsSection";
 import { CVSection } from "../sections/CVSection";
 import { PortfolioSection } from "../sections/PortfolioSection";
 import { PortafolioModal } from "../portafolio/PortafolioModal";
@@ -14,31 +15,30 @@ import { useScrollNavigation } from "../../hooks/useScrollNavigation";
 import { useScrollRestoration } from "../../hooks/useScrollRestoration";
 import { useInitialNavigation } from "../../hooks/useInitialNavigation";
 
-type SectionId = "welcome" | "cv" | "portafolio";
-const SECTION_IDS: SectionId[] = ["welcome", "cv", "portafolio"];
+type AppSectionId = "welcome" | "projects" | "cv" | "portafolio";
+const SECTION_IDS: AppSectionId[] = ["welcome", "projects", "cv", "portafolio"];
 
 export function ScrollShell() {
   const welcomeRef = useRef<HTMLElement | null>(null);
+  const projectsRef = useRef<HTMLElement | null>(null);
   const cvRef = useRef<HTMLElement | null>(null);
   const portafolioRef = useRef<HTMLElement | null>(null);
 
   const refs = useMemo(
-    () => ({ welcome: welcomeRef, cv: cvRef, portafolio: portafolioRef }) as const,
+    () => ({ welcome: welcomeRef, projects: projectsRef, cv: cvRef, portafolio: portafolioRef }) as const,
     []
   );
 
   const [showPortfolio, setShowPortfolio] = useState(false);
 
-  // Hooks personalizados para manejar scroll
   const activeSection = useScrollSections({ sectionIds: SECTION_IDS, sectionRefs: refs });
   const { scrollTo } = useScrollNavigation({ sectionIds: SECTION_IDS, sectionRefs: refs });
   useScrollRestoration();
 
-  // Navegación inicial
   useInitialNavigation(
     useCallback((section: string, shouldShowPortfolio?: boolean) => {
       if (shouldShowPortfolio) setShowPortfolio(true);
-      scrollTo(section as SectionId, true);
+      scrollTo(section as AppSectionId, true);
     }, [scrollTo])
   );
 
@@ -49,7 +49,8 @@ export function ScrollShell() {
       <NavbarSections active={activeSection} onGo={scrollTo} />
 
       <WelcomeSection sectionRef={welcomeRef} />
-      <Divider height="h-[27px] md:h-[67px]" />
+
+      <ProjectsSection sectionRef={projectsRef} triggerRef={welcomeRef} />
 
       <CVSection sectionRef={cvRef} />
       <Divider height="h-4 md:h-12" />
