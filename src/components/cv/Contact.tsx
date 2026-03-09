@@ -1,44 +1,33 @@
 import { contactItems } from "./data/cvData";
 import { GlassButton } from "../buttons/Button";
+import { FaLinkedin } from "react-icons/fa";
 
 type Props = { email: string; phone: string; linkedin: string; github: string; web: string; };
+
+const SHORT_LABELS: Record<number, string> = {
+  0: "linkedin",
+  1: "github",
+};
 
 export function Contact({ email, phone, linkedin, github, web }: Props) {
   const items = contactItems(email, phone, linkedin, github, web);
 
   return (
-    <div className="ms-0 flex flex-col gap-2 mt-0">
-      {/* Primera fila: LinkedIn, GitHub, Web */}
-      <div className="flex flex-col sm:flex-row flex-wrap justify-start gap-2">
-        {items.slice(0, 3).map((it, i) => (
+    <div className="mt-0">
+      <div className="flex flex-row flex-wrap justify-center gap-2">
+        {items.map((it, i) => (
           <a
             key={i}
             href={it.href}
             target="_blank"
             rel="noopener noreferrer"
-            className="w-full sm:w-auto transition-transform duration-200 hover:-translate-y-0.5 hover:scale-105"
+            className="transition-transform duration-200 hover:-translate-y-0.5 hover:scale-105"
           >
-            <GlassButton className="w-full sm:w-auto flex justify-center sm:justify-start items-center gap-3 text-base md:text-lg px-8 py-2 md:px-11 md:py-6 rounded-3xl">
-              <span className="font-semibold text-xl md:text-2xl">{it.label}</span>
-              <span>{it.value}</span>
-            </GlassButton>
-          </a>
-        ))}
-      </div>
-
-      {/* Segunda fila: Teléfono, Email, Descargar CV */}
-      <div className="flex flex-col sm:flex-row flex-wrap justify-start gap-2">
-        {items.slice(3).map((it, i) => (
-          <a
-            key={i + 3}
-            href={it.href}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="w-full sm:w-auto transition-transform duration-200 hover:-translate-y-0.5 hover:scale-105"
-          >
-            <GlassButton className="w-full sm:w-auto flex justify-center sm:justify-start items-center gap-3 text-base md:text-lg px-8 py-2 md:px-11 md:py-6 rounded-3xl">
-              <span className="font-semibold text-xl md:text-2xl">{it.label}</span>
-              <span>{it.value}</span>
+            <GlassButton className="flex items-center gap-1 text-sm px-3 py-1 md:px-4 md:py-2 rounded-3xl whitespace-nowrap">
+              <span className="font-semibold text-base md:text-lg">
+                {i === 0 ? <FaLinkedin className="text-base md:text-xl" /> : it.label}
+              </span>
+              <span>{SHORT_LABELS[i] ?? it.value}</span>
             </GlassButton>
           </a>
         ))}
@@ -46,10 +35,10 @@ export function Contact({ email, phone, linkedin, github, web }: Props) {
           href="https://drive.google.com/file/d/1WuUdmdsPKmKT1Gh0kngnyjo9FTJTUr_5/view?usp=sharing"
           target="_blank"
           rel="noopener noreferrer"
-          className="w-full sm:w-auto transition-transform duration-200 hover:-translate-y-0.5 hover:scale-105"
+          className="transition-transform duration-200 hover:-translate-y-0.5 hover:scale-105"
         >
-          <GlassButton className="w-full sm:w-auto flex justify-center sm:justify-start items-center gap-3 text-base md:text-lg px-8 py-2 md:px-11 md:py-6 rounded-3xl">
-            <span className="font-semibold text-xl md:text-2xl">📄</span>
+          <GlassButton className="flex items-center gap-1 text-sm px-3 py-1 md:px-4 md:py-2 rounded-3xl whitespace-nowrap">
+            <span className="font-semibold text-base md:text-lg">📄</span>
             <span>Descargar CV</span>
           </GlassButton>
         </a>

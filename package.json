@@ -19,6 +19,8 @@
     "embla-carousel-react": "^8.6.0",
     "framer-motion": "^12.23.12",
     "html2pdf.js": "^0.10.3",
+    "lightswind": "^3.1.21",
+    "lucide-react": "^0.577.0",
     "maath": "^0.10.8",
     "ogl": "^1.0.11",
     "react": "^19.1.0",

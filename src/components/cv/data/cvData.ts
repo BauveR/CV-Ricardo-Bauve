@@ -19,6 +19,7 @@ export const experienceList: ExperienceItem[] = [
   { title: "2017 - 2023  Product owner Jr.", place: "noox /t PIXKA SAPI de CV", desc: "CRM Development" },
   { title: "2015 - 2017  Chief Digital officer & designer", place: "noox, Ticopó, kankabal, Mühlberg Schloss", desc: "" },
   { title: "2013 - 2022  Art manager", place: "Grupo MYPSA SA DE CV", desc: "Pop-Up's Manager CDMX, Yucatán, Superfine (NYC, Berlín, Miami, Madrid, Chicago). 180 eventos realizados." },
+  { title: "2009 - 2013  Diseño y Comunicación Visual", place: "UNAM — Facultad de Artes y Diseño", desc: "" },
 ];
 
 export const contactItems = (email: string, phone: string, linkedin: string, github: string, web: string) => ([

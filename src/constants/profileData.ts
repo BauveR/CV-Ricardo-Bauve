@@ -19,7 +19,7 @@ export const PROFILE_DATA: ProfileData = {
   contact: {
     email: "rick.bauve@gmail.com",
     phone: "602 673 251",
-    linkedin: "linkedin.com/in/ricardo-bauve",
+    linkedin: "linkedin.com/in/ricardobauve",
     github: "https://github.com/BauveR",
     web: "bauve.tumblr.com",
   },

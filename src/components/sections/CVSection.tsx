@@ -10,9 +10,9 @@ export function CVSection({ sectionRef }: Props) {
     <section
       id="cv"
       ref={sectionRef}
-      className="min-h-screen px-0 scroll-mt-24"
+      className="min-h-screen px-0 scroll-mt-24 relative"
     >
-      <div className="w-full">
+      <div className="w-full relative z-10">
         <MainContent />
       </div>
     </section>
