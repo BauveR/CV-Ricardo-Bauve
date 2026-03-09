@@ -1,80 +1,76 @@
-import { motion } from "framer-motion";
-import titleImage from "../../assets/title/CV 2025 harvard-07.png";
-import LiquidEther from "../background/LiquidEther";
+import { useRef } from "react";
+import { motion, useScroll, useTransform, useSpring } from "framer-motion";
 
 export const Welcome = () => {
+  const sectionRef = useRef<HTMLElement>(null);
+
+  const { scrollYProgress } = useScroll({
+    target: sectionRef,
+    offset: ["start start", "end start"],
+  });
+
+  const rawX1 = useTransform(scrollYProgress, [0, 1], ["0vw", "-120vw"]);
+  const rawX2 = useTransform(scrollYProgress, [0, 1], ["0vw", "120vw"]);
+
+  const x1 = useSpring(rawX1, { stiffness: 60, damping: 20, mass: 0.5 });
+  const x2 = useSpring(rawX2, { stiffness: 60, damping: 20, mass: 0.5 });
+
+  const entranceTransition = {
+    opacity: { duration: 1.4, ease: "easeOut" as const },
+    filter: { duration: 1.4, ease: "easeOut" as const },
+    x: { duration: 1.4, ease: [0.16, 1, 0.3, 1] as const },
+  };
 
   return (
-    <section className="relative w-full h-[100svh] overflow-hidden isolate">
-      {/* Fondo animado LiquidEther */}
-      <div className="absolute inset-0 -z-10">
-        <LiquidEther
-          colors={['#0052f5', '#00b3ff', '#00ff59']}
-          mouseForce={20}
-          cursorSize={100}
-          isViscous
-          viscous={30}
-          iterationsViscous={32}
-          iterationsPoisson={32}
-          resolution={0.5}
-          isBounce={false}
-          autoDemo={false}
-        />
-      </div>
+    <section
+      ref={sectionRef}
+      className="relative w-full h-[100svh] overflow-hidden isolate flex items-center justify-center"
+      style={{ background: "linear-gradient(to top, #5249FF, #E3FFD9)" }}
+    >
+      <div className="w-[60%] flex flex-col items-center gap-8">
 
-      <motion.div
-        initial={{ opacity: 0, y: 10 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.5, ease: [0.22, 1, 0.36, 1] }}
-        className="relative z-10 h-full w-full max-w-[1920px] mx-auto px-6 sm:px-10 lg:px-20 grid grid-cols-1 md:grid-cols-[1.2fr_1fr] gap-0 md:gap-16 content-center pt-[30%] md:pt-0 items-start md:items-center"
-      >
-        {/* Columna izquierda: imagen + subtítulo */}
-        <div className="flex flex-col items-center md:items-start gap-0 md:pt-0">
-          <div className="w-[115%] md:w-full -translate-x-[5%] md:translate-x-0 overflow-hidden">
-            <img
-              src={titleImage}
-              alt="Ricardo Bautista Velázquez"
-              className="w-full h-auto"
-              style={{ marginTop: '-10%', marginBottom: '-10%' }}
-            />
-          </div>
-          <motion.p
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            transition={{ delay: 0.2, duration: 0.6 }}
-            className="mt-2 text-sm sm:text-base md:text-xl md:ms-35 tracking-[0.15em] sm:tracking-[0.2em] text-gray-500 font-sans font-bold text-center md:text-left"
-          >
+        {/* SVG 1: entrada desde derecha, scroll hacia izquierda */}
+        <motion.div
+          className="w-full"
+          initial={{ x: "100vw", opacity: 0, filter: "blur(20px)" }}
+          animate={{ x: 0, opacity: 0.85, filter: "blur(0px)" }}
+          transition={entranceTransition}
+        >
+          <motion.img
+            src="https://res.cloudinary.com/dmweipuof/image/upload/v1773017009/Ricardo_bauve_2026-03_gy4g97.svg"
+            alt="Ricardo Bauve"
+            className="w-full"
+            style={{ x: x1 }}
+          />
+        </motion.div>
+
+        {/* SVG 2: entrada desde izquierda, scroll hacia derecha */}
+        <motion.div
+          className="w-full"
+          initial={{ x: "-100vw", opacity: 0, filter: "blur(20px)" }}
+          animate={{ x: 0, opacity: 0.85, filter: "blur(0px)" }}
+          transition={entranceTransition}
+        >
+          <motion.img
+            src="https://res.cloudinary.com/dmweipuof/image/upload/v1773017005/Ricardo_bauve_2026-02_q1vtri.svg"
+            alt="Ricardo Bauve"
+            className="w-full"
+            style={{ x: x2 }}
+          />
+        </motion.div>
+
+        {/* 2 columnas */}
+        <div className="w-full grid grid-cols-2 gap-12">
+          <p className="text-sm md:text-base tracking-[0.15em] text-gray-700 font-sans font-bold leading-relaxed">
             Diseñador y comunicador visual<br />
             Product owner jr.<br />
             Frontend Developer
-          </motion.p>
+          </p>
+          <p className="text-sm md:text-base text-gray-700 font-sans font-medium leading-relaxed">
+            Amante del arte, el mobiliario y los objetos únicos, coleccionista, reparador y constructor, me gusta analizar por que estos productos tienen permanencia en los referentes y conectan con muchos y como se nutren de nuevas ideas para reinventarse, sumar valor a su propuesta alineada con la forma mas auténtica de la marca.
+          </p>
         </div>
-
-        {/* Columna derecha: texto + botón */}
-        <div className="flex flex-col items-center md:items-start gap-6 pt-4 md:pt-[25%]">
-          <motion.p
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            transition={{ delay: 0.3, duration: 0.6 }}
-            className="text-sm sm:text-base md:text-lg text-gray-500 font-sans font-medium leading-relaxed text-center md:text-left"
-          >
-            Diseñador y comunicador visual, Frontend developer y Product Owner Junior con experiencia en gestión de proyectos digitales y coordinación de equipos multidisciplinares. Especializado en automatización de procesos y gestión de backlog con metodologías ágiles. Experiencia práctica en priorización, roadmapping y colaboración con stakeholders para maximizar el valor del producto.
-          </motion.p>
-
-          <a href="/#cv">
-            <motion.button
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              transition={{ delay: 0.5, duration: 0.4 }}
-              className="px-6 py-3 rounded-3xl border border-gray-300 bg-gray-100 hover:bg-gray-200 active:bg-gray-300 text-gray-400 backdrop-blur-md tracking-wide text-xs sm:text-base"
-              whileHover={{ scale: 1.05 }}
-              whileTap={{ scale: 0.97 }}
-            >
-              Ver CV
-            </motion.button>
-          </a>
-        </div>
-      </motion.div>
+      </div>
     </section>
   );
 };

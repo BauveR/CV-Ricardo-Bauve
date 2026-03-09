@@ -18,6 +18,7 @@ export const PortafolioGrid = () => {
     name: project.text,
     description: project.longDescription,
     primaryImage: project.resolvedImage,
+    link: project.link,
   }));
 
   return (
@@ -44,6 +45,7 @@ export const PortafolioGrid = () => {
                   name={p.name}
                   description={p.description}
                   primaryImage={p.primaryImage!}
+                  link={p.link}
                   className="h-full w-full"
                 />
               </div>

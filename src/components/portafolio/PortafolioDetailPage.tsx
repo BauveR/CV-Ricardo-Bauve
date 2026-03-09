@@ -7,6 +7,7 @@ type PortafolioItemState = {
   name: string;
   description?: string;
   primaryImage: string;
+  link?: string;
 };
 
 type Props = {
@@ -41,6 +42,7 @@ export const PortafolioDetailPage = ({ onClose }: Props) => {
     name: itemFromState?.name ?? project?.text ?? "Proyecto",
     description: itemFromState?.description ?? project?.longDescription,
     primaryImage: itemFromState?.primaryImage ?? project?.resolvedImage ?? "",
+    link: itemFromState?.link ?? project?.link,
   };
 
   const goPrev = () => {
@@ -52,6 +54,7 @@ export const PortafolioDetailPage = ({ onClose }: Props) => {
         name: prevProject?.text,
         primaryImage: prevProject?.resolvedImage,
         description: prevProject?.longDescription,
+        link: prevProject?.link,
       },
     });
   };
@@ -65,6 +68,7 @@ export const PortafolioDetailPage = ({ onClose }: Props) => {
         name: nextProject?.text,
         primaryImage: nextProject?.resolvedImage,
         description: nextProject?.longDescription,
+        link: nextProject?.link,
       },
     });
   };
@@ -135,6 +139,21 @@ export const PortafolioDetailPage = ({ onClose }: Props) => {
             <p className="mt-3 sm:mt-4 text-sm lg:text-base leading-relaxed text-gray-400">
               {data.description}
             </p>
+          )}
+          {data.link && (
+            <a
+              href={data.link}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="mt-6 inline-flex items-center gap-2 px-5 py-2.5 rounded-2xl bg-gradient-to-r from-orange-500 to-orange-700 text-white text-sm font-medium shadow-lg shadow-orange-300/50 hover:shadow-orange-500/70 transition duration-300"
+            >
+              Visit project
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6" />
+                <polyline points="15 3 21 3 21 9" />
+                <line x1="10" y1="14" x2="21" y2="3" />
+              </svg>
+            </a>
           )}
         </motion.div>
       </motion.div>

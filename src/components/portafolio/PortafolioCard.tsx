@@ -8,6 +8,7 @@ export type PortafolioCardProps = {
   primaryImage: string;
   secondaryImage?: string;
   description?: string;
+  link?: string;
   className?: string;
 };
 
@@ -18,6 +19,7 @@ export const PortafolioCard = ({
   primaryImage,
   secondaryImage,
   description,
+  link,
   className = "",
 }: PortafolioCardProps) => {
   const navigate = useNavigate();
@@ -30,6 +32,7 @@ export const PortafolioCard = ({
         name,
         primaryImage,
         description,
+        link,
       },
     });
   };

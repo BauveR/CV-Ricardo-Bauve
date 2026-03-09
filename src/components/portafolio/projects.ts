@@ -3,9 +3,16 @@ export type ProjectItem = {
     src: string;          // ruta relativa en src/assets
     text: string;         // título corto
     longDescription: string; // descripción larga para el detalle
+    link?: string;        // enlace externo opcional
   };
   
   export const projects: ProjectItem[] = [
+    {
+      src: "src/assets/portafolio 2026-01.png",
+      text: "IT Academy education project",
+      longDescription:
+        "Este proyecto pertenece a la plataforma de educación de la IT Academy con microcredencial de la Universidad Politécnica de Barcelona. Hemos estado trabajando en el desarrollo de una plataforma comunitaria para compartir recursos, pruebas técnicas y retos para mejorar el aprovechamiento y desarrollo de los alumnos."
+    },
     {
       src: "src/assets/portafolio corpus colonia-01.png",
       text: "Corpus Colonia",
@@ -22,7 +29,8 @@ export type ProjectItem = {
       src: "src/assets/portafolio ricardo bautista-06.png",
       text: "CRM SYSTEM nooxCommunity Platform CHIEF DATA OFFICER (CDO)",
       longDescription:
-        "Core Competencies:\n- Strategic business alignment and optimization\n- Fintech solutions architecture\n- Private blockchain infrastructure development\n- Agile/Scrum development methodology\n- End-to-end platform implementation\n\nProject Scope:\nThis enterprise-level solution delivers an automated business infrastructure for streamlined acquisition of real estate properties and diversified financial assets. The platform leverages blockchain technology and advanced automation to maximize operational efficiency and create measurable business value through digital transformation."
+        "Core Competencies:\n- Strategic business alignment and optimization\n- Fintech solutions architecture\n- Private blockchain infrastructure development\n- Agile/Scrum development methodology\n- End-to-end platform implementation\n\nProject Scope:\nThis enterprise-level solution delivers an automated business infrastructure for streamlined acquisition of real estate properties and diversified financial assets. The platform leverages blockchain technology and advanced automation to maximize operational efficiency and create measurable business value through digital transformation.",
+      link: "https://nooxcommunity.com/auth/sign-in"
     },
     {
       src: "src/assets/portafolio ricardo bautista-04.png",
