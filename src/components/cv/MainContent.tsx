@@ -3,6 +3,7 @@ import { RightColumn } from "./layout/RightColumn";
 import { Contact } from "./Contact";
 import { PROFILE_DATA } from "../../constants/profileData";
 import { ScrollTimeline } from "../lightswind/scroll-timeline";
+import { SkillsLoop } from "./SkillsLoop";
 import { experienceList } from "./data/cvData";
 
 const ALIGNMENTS: ("left" | "right" | "both")[] = ["both", "both", "both", "right", "right", "left"];
@@ -67,6 +68,11 @@ export const MainContent = () => {
       {/* Barra de contacto centrada sobre el grid */}
       <div className="relative z-10 w-full flex justify-center px-4 py-3 mt-8">
         <Contact {...contact} />
+      </div>
+
+      {/* Loop de skills */}
+      <div className="relative z-10 w-full mt-10 px-4">
+        <SkillsLoop />
       </div>
 
       {/* Timeline de experiencia */}
