@@ -20,12 +20,28 @@ export interface TimelineEvent {
   icon?: React.ReactNode;
   color?: string;
   alignment?: "left" | "right" | "both";
+  href?: string;
+  iconUrl?: string;
+  noIcon?: boolean;
+  right?: {
+    year?: string;
+    title?: string;
+    subtitle?: string;
+    description?: string;
+    href?: string;
+    iconUrl?: string;
+    iconUrls?: string[];
+    icon?: React.ReactNode;
+    noIcon?: boolean;
+  };
 }
 
 export interface ScrollTimelineProps {
   events: TimelineEvent[];
   title?: string;
   subtitle?: string;
+  leftTitle?: string;
+  rightTitle?: string;
   animationOrder?: "sequential" | "staggered" | "simultaneous";
   cardAlignment?: "alternating" | "left" | "right";
   lineColor?: string;
@@ -68,12 +84,11 @@ const DEFAULT_EVENTS: TimelineEvent[] = [
 ];
 
 const TimelineItem = memo(function TimelineItem({
-  event, index, cardAlignment, dateFormat, timelineRefs,
+  event, index, cardAlignment, timelineRefs,
 }: {
   event: TimelineEvent;
   index: number;
   cardAlignment: string;
-  dateFormat: string;
   timelineRefs: React.RefObject<(HTMLDivElement | null)[]>;
 }) {
   const itemRef = useRef<HTMLDivElement>(null);
@@ -82,27 +97,46 @@ const TimelineItem = memo(function TimelineItem({
   const effectiveAlignment: "left" | "right" | "both" = event.alignment
     ?? (cardAlignment === "alternating" ? (index % 2 === 0 ? "left" : "right") : cardAlignment as "left" | "right");
 
-  const cardContent = (
-    <Card className="bg-background border">
-      <CardContent className="p-6">
-        {dateFormat === "badge" ? (
-          <div className="flex items-center mb-2">
-            {event.icon || <Calendar className="h-4 w-4 mr-2 text-primary" />}
-            <span className={cn("text-sm font-bold", event.color ? `text-${event.color}` : "text-primary")}>
-              {event.year}
-            </span>
+  const buildInner = (data: {
+    year?: string; title?: string; subtitle?: string;
+    description?: string; iconUrl?: string; iconUrls?: string[]; icon?: React.ReactNode; href?: string; noIcon?: boolean;
+  }) => {
+    const card = (
+      <Card className="bg-white/80 border border-gray-200">
+        <CardContent className="p-6">
+          <div className="flex flex-col gap-2 mb-2">
+            <span className="text-sm text-slate-800" style={{ fontFamily: "'Boldonse', sans-serif" }}>{data.year}</span>
+            {!data.noIcon && (
+              <div className="flex items-center gap-3">
+                {data.iconUrls
+                  ? data.iconUrls.map((url, i) => <img key={i} src={url} alt="" className="h-6 w-auto object-contain" />)
+                  : data.iconUrl
+                    ? <img src={data.iconUrl} alt="" className="h-5 w-auto object-contain" />
+                    : <Calendar className="h-4 w-4 text-slate-800" />
+                }
+              </div>
+            )}
           </div>
-        ) : (
-          <p className="text-lg font-bold text-primary mb-2">{event.year}</p>
-        )}
-        <h3 className="text-xl font-bold mb-1">{event.title}</h3>
-        {event.subtitle && <p className="text-muted-foreground font-medium mb-2">{event.subtitle}</p>}
-        <p className="text-muted-foreground">{event.description}</p>
-      </CardContent>
-    </Card>
-  );
+          <h3 className="text-base mb-1 text-gray-800" style={{ fontFamily: "'Boldonse', sans-serif" }}>{data.title}</h3>
+          {data.subtitle && <p className="text-gray-500 font-medium mb-2 text-sm">{data.subtitle}</p>}
+          {data.description && <p className="text-gray-400 text-sm">{data.description}</p>}
+        </CardContent>
+      </Card>
+    );
+    return data.href ? (
+      <a href={data.href} target="_blank" rel="noopener noreferrer" className="block hover:opacity-80 transition-opacity">
+        {card}
+      </a>
+    ) : card;
+  };
 
-  const cardClass = "relative z-30 rounded-lg bg-card/50 backdrop-blur border-2 border-primary/20 w-full lg:w-[calc(50%-40px)] mt-12 lg:mt-0";
+  const leftData = { year: event.year, title: event.title, subtitle: event.subtitle, description: event.description, iconUrl: event.iconUrl, icon: event.icon, href: event.href, noIcon: event.noIcon };
+  const rightData = event.right ? { ...leftData, iconUrls: undefined, ...event.right } : leftData;
+
+  const cardContent = buildInner(leftData);
+  const rightCardContent = buildInner(rightData);
+
+  const cardClass = "relative z-30 rounded-lg bg-card/50 backdrop-blur border-2 border-primary/20 w-full lg:w-[calc(50%-40px)] mt-6 lg:mt-0";
 
   const dot = (
     <div className="absolute top-1/2 transform -translate-y-1/2 z-30 left-1/2 -translate-x-1/2">
@@ -110,14 +144,14 @@ const TimelineItem = memo(function TimelineItem({
     </div>
   );
 
-  const cardMotion = (extraClass: string) => (
+  const cardMotion = (content: React.ReactNode, extraClass: string) => (
     <motion.div
       className={cn(cardClass, extraClass)}
       animate={{ opacity: isInView ? 1 : 0 }}
       transition={{ duration: 1.1, ease: "easeOut" }}
       style={{ opacity: 0 }}
     >
-      {cardContent}
+      {content}
     </motion.div>
   );
 
@@ -125,12 +159,12 @@ const TimelineItem = memo(function TimelineItem({
     return (
       <div
         ref={(el) => { timelineRefs.current[index] = el; }}
-        className="relative flex items-center mb-20 py-4 flex-col lg:flex-row lg:justify-between"
+        className="relative flex items-center mb-8 py-1 flex-col lg:flex-row lg:justify-between"
       >
         <div ref={itemRef} className="absolute inset-0 pointer-events-none" />
         {dot}
-        {cardMotion("lg:mr-[20px]")}
-        {cardMotion("lg:ml-[20px]")}
+        {cardMotion(cardContent, "lg:mr-[20px]")}
+        {cardMotion(rightCardContent, "lg:ml-[20px]")}
       </div>
     );
   }
@@ -139,13 +173,13 @@ const TimelineItem = memo(function TimelineItem({
     <div
       ref={(el) => { timelineRefs.current[index] = el; }}
       className={cn(
-        "relative flex items-center mb-20 py-4 flex-col lg:flex-row",
+        "relative flex items-center mb-8 py-1 flex-col lg:flex-row",
         effectiveAlignment === "left" ? "lg:justify-start" : "lg:flex-row-reverse lg:justify-start"
       )}
     >
       <div ref={itemRef} className="absolute inset-0 pointer-events-none" />
       {dot}
-      {cardMotion(effectiveAlignment === "left" ? "lg:mr-[calc(50%+20px)]" : "lg:ml-[calc(50%+20px)]")}
+      {cardMotion(cardContent, effectiveAlignment === "left" ? "lg:mr-[calc(50%+20px)]" : "lg:ml-[calc(50%+20px)]")}
     </div>
   );
 });
@@ -154,6 +188,8 @@ export const ScrollTimeline = ({
   events = DEFAULT_EVENTS,
   title = "Timeline",
   subtitle = "Scroll to explore the journey",
+  leftTitle,
+  rightTitle,
   animationOrder: _animationOrder = "sequential",
   cardAlignment = "alternating",
   lineColor = "bg-primary/30",
@@ -164,7 +200,7 @@ export const ScrollTimeline = ({
   parallaxIntensity: _parallaxIntensity = 0.2,
   progressLineWidth = 2,
   progressLineCap = "round",
-  dateFormat = "badge",
+  dateFormat: _dateFormat = "badge",
   revealAnimation: _revealAnimation = "fade",
   className = "",
   connectorStyle = "line",
@@ -220,14 +256,23 @@ export const ScrollTimeline = ({
         className
       )}
     >
-      <div className="text-center py-16 px-4">
-        <h2 className="text-3xl md:text-5xl font-bold mb-4">{title}</h2>
-        <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
-          {subtitle}
-        </p>
-      </div>
+      {leftTitle || rightTitle ? (
+        <div className="relative max-w-6xl mx-auto px-4 pt-8 pb-16 flex justify-between">
+          <div className="w-[calc(50%-40px)]">
+            {leftTitle && <h2 className="text-3xl md:text-4xl font-bold" style={{ fontFamily: "'Boldonse', sans-serif", color: "#686868" }}>{leftTitle}</h2>}
+          </div>
+          <div className="w-[calc(50%-40px)]">
+            {rightTitle && <h2 className="text-3xl md:text-4xl font-bold" style={{ fontFamily: "'Boldonse', sans-serif", color: "#686868" }}>{rightTitle}</h2>}
+          </div>
+        </div>
+      ) : (
+        <div className="text-center py-8 px-4">
+          <h2 className="text-3xl md:text-5xl font-bold mb-4">{title}</h2>
+          {subtitle && <p className="text-lg text-gray-500 max-w-2xl mx-auto">{subtitle}</p>}
+        </div>
+      )}
 
-      <div className="relative max-w-6xl mx-auto px-4 pb-24">
+      <div className="relative max-w-6xl mx-auto px-4 pb-12">
         <div className="relative mx-auto">
           <div
             className={cn(getConnectorClasses(), "h-full absolute top-0 z-10")}
@@ -298,7 +343,6 @@ export const ScrollTimeline = ({
                 event={event}
                 index={index}
                 cardAlignment={cardAlignment}
-                dateFormat={dateFormat}
                 timelineRefs={timelineRefs}
               />
             ))}

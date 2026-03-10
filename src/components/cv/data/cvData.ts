@@ -14,12 +14,12 @@ export type ExperienceItem = {
 };
 
 export const experienceList: ExperienceItem[] = [
-  { title: "2026  Website & design experience", place: "Corpus Colonia de la Universidad de Lleiden, Universidad de la laguna", desc: "" },
-  { title: "2023 - 2025  Freelance Graphic design", place: "Wow PR, Beeok, CreAI, Galgos Group, Prüne Chile y Guatemala", desc: "" },
-  { title: "2017 - 2023  Product owner Jr.", place: "noox /t PIXKA SAPI de CV", desc: "CRM Development" },
+  { title: "2025 - 2026  Bootcamp Frontend Developer IT ACADEMY", place: "Cibernarium Barcelona", desc: "" },
+  { title: "2023  MidJourney IA generativa", place: "S.O.D.A", desc: "" },
+  { title: "2019  Master en Chief Digital Officer", place: "Gray Matter CDMX", desc: "" },
   { title: "2015 - 2017  Chief Digital officer & designer", place: "noox, Ticopó, kankabal, Mühlberg Schloss", desc: "" },
   { title: "2013 - 2022  Art manager", place: "Grupo MYPSA SA DE CV", desc: "Pop-Up's Manager CDMX, Yucatán, Superfine (NYC, Berlín, Miami, Madrid, Chicago). 180 eventos realizados." },
-  { title: "2009 - 2013  Diseño y Comunicación Visual", place: "UNAM — Facultad de Artes y Diseño", desc: "" },
+  { title: "2009 - 2013  Diseño y Comunicación Visual - Facultad de Artes y Diseño", place: "UNIVERSIDAD NACIONAL AUTÓNOMA DE MÉXICO", desc: "" },
 ];
 
 export const contactItems = (email: string, phone: string, linkedin: string, github: string, web: string) => ([
