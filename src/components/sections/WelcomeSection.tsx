@@ -10,7 +10,7 @@ export function WelcomeSection({ sectionRef }: Props) {
     <section
       id="welcome"
       ref={sectionRef}
-      className="h-screen min-h-screen overflow-hidden p-0"
+      className="h-auto min-h-screen md:h-screen md:overflow-hidden p-0 relative"
     >
       <Welcome />
     </section>

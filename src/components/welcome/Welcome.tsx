@@ -1,5 +1,6 @@
 import { useRef } from "react";
 import { motion, useScroll, useTransform, useSpring, useMotionValue } from "framer-motion";
+import { ScrollReveal } from "../ui/ScrollReveal";
 
 export const Welcome = () => {
   const sectionRef = useRef<HTMLElement>(null);
@@ -39,29 +40,49 @@ export const Welcome = () => {
   return (
     <section
       ref={sectionRef}
-      className="relative w-full h-[100svh] overflow-hidden isolate flex items-center"
-      style={{ background: "linear-gradient(to top, #5249FF, #E3FFD9)" }}
+      className="relative w-full h-auto min-h-[100svh] md:h-[100svh] overflow-visible md:overflow-hidden flex items-center"
       onMouseMove={handleMouseMove}
       onMouseLeave={handleMouseLeave}
     >
+      {/* Fondo — capa propia por debajo del orb */}
+      <div className="absolute inset-0 z-0" style={{ background: "linear-gradient(to top, #5249FF, #E3FFD9)" }} />
+
       {/* PNG grande izquierda — desborda el borde izquierdo */}
       <motion.div
-        className="absolute top-[17%] h-full pointer-events-none z-0"
-        style={{ left: "-10%" }}
+        className="hidden md:block absolute top-[17%] h-full pointer-events-none z-20"
+        style={{ left: "-40%" }}
         initial={{ x: "-100vw", opacity: 0, filter: "blur(20px)" }}
         animate={{ x: 0, opacity: 1, filter: "blur(0px)" }}
         transition={entranceTransition}
       >
         <motion.img
-          src="https://res.cloudinary.com/dmweipuof/image/upload/v1773766079/cute_bauve3_koppbd.png"
+          src="https://res.cloudinary.com/dmweipuof/image/upload/f_auto,q_auto,w_900/v1773766079/cute_bauve3_koppbd.png"
           alt="Ricardo Bauve ilustración"
           className="h-[70%] w-auto object-contain"
           style={{ x: imgX, translateX: mouseX }}
+          fetchPriority="high"
+          decoding="async"
         />
       </motion.div>
 
       {/* Contenido derecho */}
-      <div className="ml-auto w-[63%] pr-10 flex flex-col items-start gap-8 relative z-10">
+      <div className="ml-auto w-full md:w-[63%] px-6 md:px-0 md:pr-10 flex flex-col items-start gap-8 relative z-20">
+
+        {/* PNG — solo mobile, entra desde la izquierda */}
+        <motion.div
+          className="block md:hidden w-full flex justify-center"
+          initial={{ x: "-100vw", opacity: 0, filter: "blur(20px)" }}
+          animate={{ x: 0, opacity: 1, filter: "blur(0px)" }}
+          transition={entranceTransition}
+        >
+          <img
+            src="https://res.cloudinary.com/dmweipuof/image/upload/f_auto,q_auto,w_400/v1773766079/cute_bauve3_koppbd.png"
+            alt="Ricardo Bauve ilustración"
+            className="h-24 w-auto object-contain mx-auto mt-16"
+            fetchPriority="high"
+            decoding="async"
+          />
+        </motion.div>
 
         {/* SVG 1: entrada desde derecha, scroll hacia izquierda */}
         <motion.div
@@ -94,15 +115,32 @@ export const Welcome = () => {
         </motion.div>
 
         {/* 2 columnas */}
-        <div className="w-[80%] grid grid-cols-2 gap-12 relative z-10">
-          <p className="text-xs md:text-sm tracking-[0.15em] text-white font-sans font-bold leading-relaxed">
+        <div className="w-full md:w-[80%] grid grid-cols-1 md:grid-cols-[1fr_2fr] gap-8 md:gap-12 relative z-10">
+          <p className="text-[10px] md:text-sm tracking-[0.05em] md:tracking-[0.15em] text-white font-sans font-bold leading-relaxed">
             Diseñador y comunicador visual<br />
             Product owner jr.<br />
             Frontend Developer
           </p>
-          <p className="text-xs md:text-sm text-white font-sans font-medium leading-relaxed">
-            Amante del arte, el mobiliario y los objetos únicos, coleccionista, reparador y constructor, me gusta analizar por que estos productos tienen permanencia en los referentes y conectan con muchos y como se nutren de nuevas ideas para reinventarse, sumar valor a su propuesta alineada con la forma mas auténtica de la marca.
-          </p>
+          <div className="flex flex-col gap-4">
+            <ScrollReveal
+              textClassName="text-xs md:text-sm text-white font-sans font-medium"
+              staggerDelay={0.05}
+              blurStrength={6}
+              threshold={0.3}
+              baseRotation={2}
+            >
+              Coleccionista, reparador, constructor. Me muevo entre objetos que tienen algo que decir: piezas que acumulan tiempo en su superficie, que guardan en su materia una forma de conocimiento que el ojo solo aprende tocando. Me pregunto por qué ciertos productos permanecen, por qué conectan con tantos a través de las décadas, cómo una marca puede reinventarse y seguir siendo, en el fondo, ella misma. En un mundo donde los límites entre lo humano, lo material y lo tecnológico se disuelven y rehacen sin descanso, creo que la autenticidad no es un origen fijo sino un gesto que se repite, que se hereda y se transforma.
+            </ScrollReveal>
+            <ScrollReveal
+              textClassName="text-xs md:text-sm text-white/70 font-sans font-medium italic"
+              staggerDelay={0.05}
+              blurStrength={6}
+              threshold={0.3}
+              baseRotation={0}
+            >
+              "Las tecnologías que usamos nos modelan constantemente, igual que nosotros las modelamos a ellas." — N. Katherine Hayles
+            </ScrollReveal>
+          </div>
         </div>
       </div>
     </section>

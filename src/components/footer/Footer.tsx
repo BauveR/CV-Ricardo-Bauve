@@ -6,10 +6,14 @@ export const Footer = () => {
 
   return (
     <footer
-      className="relative z-40 w-full min-h-[70px] md:min-h-[80px] bg-gradient-to-t from-gray-100/90 to-gray-100/30 backdrop-blur-md"
+      className="relative w-full min-h-[70px] md:min-h-[80px]"
       role="contentinfo"
     >
-      <div className="w-full px-10 py-12">
+      {/* Fondo verde — capa propia para que el orb pueda quedar encima */}
+      <div className="absolute inset-0 z-10" style={{ background: "#A7F689" }} />
+
+      {/* Contenido — por encima del orb */}
+      <div className="relative z-20 w-full px-10 py-12">
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-6 items-center text-center md:text-left">
           {/* Email */}
           <div className="flex flex-col gap-2">
@@ -62,7 +66,7 @@ export const Footer = () => {
         </div>
 
         {/* Copyright */}
-        <div className="mt-6 pt-6 border-t border-gray-200 text-center">
+        <div className="mt-6 pt-6 text-center">
           <p className="text-xs text-stone-400">
             © {new Date().getFullYear()} Ricardo Bauve. Todos los derechos reservados.
           </p>

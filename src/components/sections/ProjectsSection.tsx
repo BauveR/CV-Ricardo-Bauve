@@ -3,6 +3,7 @@ import { motion, useScroll, useTransform, useSpring } from "framer-motion";
 import { ScrollOrb } from "../common/ScrollOrb";
 import { LogoRow } from "../projects/LogoRow";
 import { PortafolioGrid } from "../portafolio/PortafolioGrid";
+import { useIsMobile } from "../../hooks/useIsMobile";
 
 type Props = {
   sectionRef: RefObject<HTMLElement | null>;
@@ -11,6 +12,8 @@ type Props = {
 };
 
 export function ProjectsSection({ sectionRef, triggerRef, cvRef }: Props) {
+  const isMobile = useIsMobile();
+
   const { scrollYProgress } = useScroll({
     target: sectionRef,
     offset: ["start 150%", "end start"],
@@ -82,12 +85,12 @@ export function ProjectsSection({ sectionRef, triggerRef, cvRef }: Props) {
       </motion.div>
 
       {/* Grid de portafolio con entrada y parallax */}
-      <div style={{ paddingTop: "39%", position: "relative", zIndex: 2, marginBottom: "-40vh" }}>
+      <div style={{ paddingTop: isMobile ? "55%" : "39%", position: "relative", zIndex: 20, marginBottom: isMobile ? 0 : "-40vh" }}>
         <div style={{ overflow: "visible" }}>
 
           {/* Wrapper entrada: desliza desde derecha con blur */}
           <motion.div
-            style={{ marginLeft: "20%", width: "500%", pointerEvents: "none" }}
+            style={{ marginLeft: isMobile ? 0 : "20%", width: isMobile ? "100%" : "500%", pointerEvents: "none" }}
             initial={{ x: "100vw", opacity: 0, filter: "blur(20px)" }}
             animate={{ x: 0, opacity: 1, filter: "blur(0px)" }}
             transition={{
@@ -97,8 +100,8 @@ export function ProjectsSection({ sectionRef, triggerRef, cvRef }: Props) {
             }}
           >
             {/* Wrapper parallax scroll: se mueve hacia la izquierda */}
-            <motion.div style={{ x, pointerEvents: "none" }}>
-              <div style={{ transform: "scale(0.581)", transformOrigin: "top left", pointerEvents: "auto" }}>
+            <motion.div style={{ x: isMobile ? 0 : x, pointerEvents: "none" }}>
+              <div style={{ transform: isMobile ? "none" : "scale(0.581)", transformOrigin: "top left", pointerEvents: "auto" }}>
                 <PortafolioGrid />
               </div>
             </motion.div>

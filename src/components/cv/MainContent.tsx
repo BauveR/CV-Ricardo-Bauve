@@ -1,7 +1,10 @@
+import { motion, useInView } from "framer-motion";
+import { useRef } from "react";
 import { Contact } from "./Contact";
+import { ScrollReveal } from "../ui/ScrollReveal";
 import { PROFILE_DATA } from "../../constants/profileData";
 import { ScrollTimeline } from "../lightswind/scroll-timeline";
-import { SkillsLoop } from "./SkillsLoop";
+import { OrbitingSkills } from "./OrbitingSkills";
 import { experienceList } from "./data/cvData";
 
 const ALIGNMENTS: ("left" | "right" | "both")[] = ["both", "both", "both", "right", "right", "left"];
@@ -57,6 +60,8 @@ const timelineEvents = experienceList.map((exp, i) => ({
 
 export const MainContent = () => {
   const { contact } = PROFILE_DATA;
+  const skillsRef = useRef<HTMLDivElement>(null);
+  const skillsInView = useInView(skillsRef, { once: true, amount: 0.1 });
 
   return (
     <section className="relative w-full min-h-[100svh] overflow-x-hidden" style={{ background: "linear-gradient(to bottom, transparent, #A7F689)" }}>
@@ -64,7 +69,7 @@ export const MainContent = () => {
       <div className="h-4 md:h-0" />
 
       {/* Timeline de experiencia */}
-      <div className="relative z-10 w-full max-w-4xl mx-auto mt-12">
+      <div className="relative z-20 w-full max-w-4xl mx-auto mt-12">
         <ScrollTimeline
           events={timelineEvents}
           leftTitle="Estudios"
@@ -80,7 +85,7 @@ export const MainContent = () => {
       </div>
 
       {/* Barra de contacto centrada sobre el grid */}
-      <div className="relative z-10 w-full mt-32 px-4">
+      <div className="relative z-20 w-full mt-32 px-4">
         <h2
           className="text-center text-white mb-4"
           style={{ fontFamily: "'Boldonse', sans-serif", fontSize: "clamp(0.87rem, 1.96vw, 2.18rem)" }}
@@ -93,21 +98,21 @@ export const MainContent = () => {
       </div>
 
       {/* Loop de skills */}
-      <div className="relative z-10 w-full mt-36 px-4">
+      <div className="relative z-20 w-full mt-36 px-4">
         <h2
           className="text-center text-white mb-8"
           style={{ fontFamily: "'Boldonse', sans-serif", fontSize: "clamp(0.87rem, 1.96vw, 2.18rem)" }}
         >
           Tecnologías y programas
         </h2>
-        <SkillsLoop />
+        <OrbitingSkills />
       </div>
 
       {/* Skills + Sobre mí */}
-      <div className="relative z-10 w-[60vw] mx-auto pb-20 mt-28 grid grid-cols-2 gap-x-[5vw]">
+      <div className="relative z-20 w-[90vw] md:w-[60vw] mx-auto pb-20 mt-28 grid grid-cols-1 md:grid-cols-2 gap-x-[5vw] gap-y-12">
 
         {/* Columna izquierda: Skills */}
-        <div className="flex flex-col items-end text-right">
+        <div className="flex flex-col items-start text-left md:items-end md:text-right">
           <h2
             className="mb-6"
             style={{
@@ -124,7 +129,8 @@ export const MainContent = () => {
           >
             Habilidades
           </h2>
-          <ul className="space-y-1.5 text-white/80 text-sm leading-relaxed" style={{ fontFamily: "'Boldonse', sans-serif" }}>
+          <div ref={skillsRef} />
+          <ul className="space-y-1.5 text-white/80 leading-relaxed" style={{ fontFamily: "'Boldonse', sans-serif", fontSize: "calc(0.875rem * 1.2)" }}>
             {[
               "Liderazgo de equipos creativos y tecnológicos",
               "Gestión de personal multidisciplinario",
@@ -146,7 +152,17 @@ export const MainContent = () => {
               "Gestión de proyectos digitales",
               "Storytelling con datos y tecnología",
             ].map((skill, i) => (
-              <li key={i}>{skill}</li>
+              <motion.li
+                key={i}
+                animate={skillsInView ? { x: 0, opacity: 1 } : { x: "-100vw", opacity: 0 }}
+                initial={{ x: "-100vw", opacity: 0 }}
+                transition={{
+                  x: { duration: 0.9, ease: [0.16, 1, 0.3, 1], delay: i * 0.18 },
+                  opacity: { duration: 0.6, delay: i * 0.18 },
+                }}
+              >
+                {skill}
+              </motion.li>
             ))}
           </ul>
         </div>
@@ -159,7 +175,7 @@ export const MainContent = () => {
           >
             Sobre mí
           </h2>
-          <div className="space-y-4 text-white/80 text-sm leading-relaxed">
+          <div className="space-y-4 text-white/80 leading-relaxed font-bold" style={{ fontSize: "calc(0.875rem * 1.1)" }}>
             <p>
               Con más de 10 años de experiencia en diseño, gestión de productos y recién graduado del bootcamp de frontend developer en la IT Academy de Barcelona, me he dedicado a la coordinación de equipos de desarrollo y optimización de plataformas, así como a diseñar materiales fijos, vídeo, webs y ejecutar estrategias digitales. Tengo experiencia como Chief Digital Officer en el sector p2p, realizando campañas de Facebook, Google Ads y TikTok y como Art Manager encargado de festivales, exposiciones y eventos.
             </p>

@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { AnimatePresence, motion } from "framer-motion";
-import navLogo from "../../assets/title/CV 2025 harvard-08.png";
+const navLogo = "https://res.cloudinary.com/dmweipuof/image/upload/v1773016274/Ricardo_bauve_2026-02_br99sv.svg";
 
 type SectionId = "welcome" | "projects" | "cv";
 
@@ -77,14 +77,17 @@ export default function NavbarSections({ active, onGo }: Props) {
   return (
     <>
       <header
-  className={[
-    "fixed top-0 left-0 right-0 z-50 transition-colors",
-    scrolled
-      ? "bg-gradient-to-b from-white/90 to-white/30 backdrop-blur-md "
-      : "bg-gradient-to-b from-white/60 to-white/0 backdrop-blur-md ",
-  ].join(" ")}
+  className="fixed top-0 left-0 right-0 z-50"
   role="banner"
 >
+  {/* Fondo difuminado con gradiente vertical */}
+  <div
+    className="absolute inset-0 backdrop-blur-md pointer-events-none"
+    style={{
+      WebkitMaskImage: "linear-gradient(to bottom, black 0%, transparent 100%)",
+      maskImage: "linear-gradient(to bottom, black 0%, transparent 100%)",
+    }}
+  />
 
 
         <nav className="w-full px-10">
@@ -104,24 +107,23 @@ export default function NavbarSections({ active, onGo }: Props) {
               </button>
             </div>
 
-            {/* CENTER: logo / marca o títulos CV */}
-            <div className="flex items-center justify-center h-14 md:h-16 relative overflow-hidden">
-              <motion.div
-                className="absolute w-full max-w-xs md:max-w-md px-2 md:px-4"
-                initial={{ opacity: 0 }}
-                animate={{
-                  opacity: showTitles ? 1 : 0
-                }}
-                transition={{ duration: 0.5, ease: [0.22, 1, 0.36, 1] }}
-                style={{ pointerEvents: showTitles ? "auto" : "none" }}
-              >
-                <img
-                  src={navLogo}
-                  alt="Ricardo Bautista Velázquez"
-                  className="h-[40px] md:h-[48px] w-auto object-contain"
-                />
-              </motion.div>
-            </div>
+            {/* CENTER: logo centrado absolutamente en el header */}
+            <div />
+
+            <motion.div
+              className="absolute left-1/2 -translate-x-1/2 flex items-center"
+              style={{ top: 0, bottom: 0, pointerEvents: showTitles ? "auto" : "none" }}
+              initial={{ opacity: 0 }}
+              animate={{ opacity: showTitles ? 1 : 0 }}
+              transition={{ duration: 0.5, ease: [0.22, 1, 0.36, 1] }}
+            >
+              <img
+                src={navLogo}
+                alt="Ricardo Bautista Velázquez"
+                className="h-[36px] md:h-[43px] w-auto object-contain"
+                style={{ opacity: 0.6 }}
+              />
+            </motion.div>
 
             {/* RIGHT: Links (desktop) */}
             <div className="flex items-center justify-end pr-16">

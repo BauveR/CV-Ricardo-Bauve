@@ -8,7 +8,8 @@ type Props = {
   cvRef?: React.RefObject<HTMLElement | null>;
 };
 
-const ORB_SIZE = 480;
+const ORB_SIZE_DESKTOP = 480;
+const ORB_SIZE_MOBILE  = 260;
 
 export const ScrollOrb = ({ triggerRef, sectionRef, cvRef }: Props) => {
   const [dims, setDims] = useState({ w: window.innerWidth, h: window.innerHeight });
@@ -19,67 +20,76 @@ export const ScrollOrb = ({ triggerRef, sectionRef, cvRef }: Props) => {
     return () => window.removeEventListener("resize", onResize);
   }, []);
 
-  // Fase 1 & 2: animación ligada al scroll de la sección welcome
+  const isMobile = dims.w < 768;
+  const ORB_SIZE = isMobile ? ORB_SIZE_MOBILE : ORB_SIZE_DESKTOP;
+  // En mobile: centra el orb verticalmente en la sección welcome
+  // El orb vive en ProjectsSection (que empieza en dims.h desde el top de la página)
+  // Para que el centro del orb quede en dims.h * 0.5 (centro del welcome):
+  //   top_relativo_a_projects = dims.h * 0.5 - dims.h - ORB_SIZE / 2
+  const orbTop = isMobile ? -(dims.h * 0.5 + ORB_SIZE / 2) : -240;
+
   const { scrollYProgress: welcomeProgress } = useScroll({
     target: triggerRef,
     offset: ["0.6 start", "end start"],
   });
 
-  // Fase 3: crecimiento ligado al scroll de la sección projects
   const { scrollYProgress: projectsProgress } = useScroll({
     target: sectionRef,
     offset: ["start start", "end start"],
   });
 
-  // Fase 4: CV section (skills & sobre mí)
   const { scrollYProgress: cvProgress } = useScroll({
     target: cvRef,
     offset: ["start start", "end start"],
   });
 
-  // Posición:
-  //  - welcome 0→0.1 : baja hasta dims.h * 0.5
-  //  - projects 0→1  : sigue bajando dims.h más hasta el inicio de la siguiente sección
-  const rawX = useTransform(welcomeProgress, [0, 0.1], [0, 0]);
   const rawY = useTransform(
     [welcomeProgress, projectsProgress, cvProgress] as const,
     ([wp, pp, cp]: readonly number[]) => {
-      const phase1 = Math.min(wp / 0.1, 1) * (dims.h * 0.5);
+      const phase1 = Math.min(wp / 0.1, 1) * (dims.h * 1.2);
       const ppNorm = Math.min(Math.max((pp - 0.25) / 0.35, 0), 1);
       const phase3 = ppNorm * dims.h * 1.5;
-      // Fase 4: sigue bajando hasta mitad de la sección CV (cp 0→0.5)
-      const cpNorm = Math.min(Math.max(cp / 0.5, 0), 1);
-      const phase4 = cpNorm * dims.h * 2.1;
-      return phase1 + phase3 + phase4;
+      // Fase 4: baja hasta cp=0.5
+      const cpNorm4 = Math.min(Math.max(cp / 0.5, 0), 1);
+      const phase4 = cpNorm4 * dims.h * 2.1;
+      // Fase 5 (hold cp 0.5→0.6, luego baja lento cp 0.6→1.0)
+      const cpNorm5 = Math.min(Math.max((cp - 0.6) / 0.4, 0), 1);
+      const phase5 = cpNorm5 * dims.h * 1.5;
+      return phase1 + phase3 + phase4 + phase5;
     }
   );
 
-  // Blur durante el movimiento
   const rawBlur = useTransform(welcomeProgress, [0, 0.05, 0.1], [0, 45, 18]);
   const filter  = useTransform(rawBlur, (v) => `blur(${v}px)`);
 
-  // Escala:
-  //  - welcome 0→0.1 : 1 → 0.65  (se achica al llegar a posición 1)
-  //  - projects 0.25→0.60: 0.65 → 2.0 (crece mientras baja a posición 2)
-  //  - projects 0.60→1  : se mantiene en 2.0
+  const rawX = useTransform(welcomeProgress, [0, 0.1], [0, 0]);
+
   const rawScale = useTransform(
     [welcomeProgress, projectsProgress, cvProgress] as const,
     ([wp, pp, cp]: readonly number[]) => {
-      if (wp < 0.1) return 1 - (wp / 0.1) * 0.35; // 1 → 0.65
+      if (wp < 0.1) return 1 - (wp / 0.1) * 0.35;
       const ppNorm = Math.min(Math.max((pp - 0.15) / 0.25, 0), 1);
-      const scaleAfterPhase3 = 0.65 + ppNorm * 1.85; // 0.65 → 2.5
-      // Fase 4: crece un poco más hasta cp=0.5
-      const cpNorm = Math.min(Math.max(cp / 0.5, 0), 1);
-      return scaleAfterPhase3 + cpNorm * (scaleAfterPhase3 * 0.20); // +20% extra
+      const scaleAfterPhase3 = 0.65 + ppNorm * 1.85;
+      // Fase 4: +20% hasta cp=0.5
+      const cpNorm4 = Math.min(Math.max(cp / 0.5, 0), 1);
+      const scaleAfterPhase4 = scaleAfterPhase3 + cpNorm4 * (scaleAfterPhase3 * 0.20);
+      // Fase 5 (hold cp 0.5→0.6, luego +30% cp 0.6→1.0)
+      const cpNorm5 = Math.min(Math.max((cp - 0.6) / 0.4, 0), 1);
+      return scaleAfterPhase4 + cpNorm5 * (scaleAfterPhase4 * 0.30);
     }
   );
 
-  // Cross-fade: naranja → amarillo (welcome 0.1 → 0.2)
-  const orangeOpacity = useTransform(welcomeProgress, [0.1, 0.2], [1, 0]);
-  const yellowOpacity = useTransform(welcomeProgress, [0.1, 0.2], [0, 1]);
-  // Cross-fade: amarillo → azul (cv 0 → 0.2)
-  const blueOpacity = useTransform(cvProgress, [0, 0.2], [0, 1]);
-  const yellowFadeOut = useTransform(cvProgress, [0, 0.2], [1, 0]);
+  // Cross-fade: naranja → amarillo (welcome 0.1→0.2)
+  const orangeOpacity  = useTransform(welcomeProgress, [0.1, 0.2], [1, 0]);
+  const yellowOpacity  = useTransform(welcomeProgress, [0.1, 0.2], [0, 1]);
+  const yellowFadeOut  = useTransform(cvProgress, [0, 0.2], [1, 0]);
+
+  // #5249FF aparece cv 0→0.2, se mantiene, desvanece cv 0.6→0.8
+  const purpleBlueIn   = useTransform(cvProgress, [0, 0.2], [0, 1]);
+  const purpleBlueFade = useTransform(cvProgress, [0.6, 0.8], [1, 0]);
+
+  // #0000FF aparece cv 0.6→0.8
+  const deepBlueOpacity = useTransform(cvProgress, [0.6, 0.8], [0, 1]);
 
   const x     = useSpring(rawX,     { stiffness: 35, damping: 18 });
   const y     = useSpring(rawY,     { stiffness: 35, damping: 18 });
@@ -89,28 +99,28 @@ export const ScrollOrb = ({ triggerRef, sectionRef, cvRef }: Props) => {
     <div
       style={{
         position: "absolute",
-        top: -240,
+        top: orbTop,
         left: 0,
         right: 0,
         display: "flex",
         justifyContent: "center",
         pointerEvents: "none",
-        zIndex: 1,
+        zIndex: 15,
       }}
     >
       <motion.div
         style={{ x, y, scale, filter, width: ORB_SIZE, height: ORB_SIZE, position: "relative" }}
       >
-        {/* Orb naranja → se desvanece al llegar a projects */}
         <motion.div style={{ opacity: orangeOpacity, position: "absolute", inset: 0 }}>
           <PulseOrb size={ORB_SIZE} color="#FF9925" />
         </motion.div>
-        {/* Orb amarillo → se desvanece al llegar a CV */}
         <motion.div style={{ opacity: useTransform([yellowOpacity, yellowFadeOut] as const, ([y, f]: readonly number[]) => y * f), position: "absolute", inset: 0 }}>
           <PulseOrb size={ORB_SIZE} color="#FFCE25" />
         </motion.div>
-        {/* Orb azul → aparece en la sección CV */}
-        <motion.div style={{ opacity: blueOpacity, position: "absolute", inset: 0 }}>
+        <motion.div style={{ opacity: useTransform([purpleBlueIn, purpleBlueFade] as const, ([a, b]: readonly number[]) => a * b), position: "absolute", inset: 0 }}>
+          <PulseOrb size={ORB_SIZE} color="#5249FF" />
+        </motion.div>
+        <motion.div style={{ opacity: deepBlueOpacity, position: "absolute", inset: 0 }}>
           <PulseOrb size={ORB_SIZE} color="#0000FF" />
         </motion.div>
       </motion.div>
