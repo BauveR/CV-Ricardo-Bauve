@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { useIsMobile } from "../../hooks/useIsMobile";
+import { useIsTablet } from "../../hooks/useIsTablet";
 
 const SMALL_LOGOS = new Set([
   "https://res.cloudinary.com/dmweipuof/image/upload/f_auto,q_auto,w_150/v1773073983/Ricardo_bauve_2026-14_hztqvh.svg",
@@ -41,7 +42,8 @@ const pickNext = (excluded: number[]): number[] => {
 
 export const LogoRow = () => {
   const isMobile = useIsMobile();
-  const logoHeight = isMobile ? 141 : 94;
+  const isTablet = useIsTablet();
+  const logoHeight = isMobile ? 226 : isTablet ? 150 : 72;
 
   const [indices, setIndices] = useState([0, 1, 2]);
   const [cycleKey, setCycleKey] = useState(0);
@@ -55,11 +57,12 @@ export const LogoRow = () => {
   }, []);
 
   return (
-    <div className="flex gap-8 justify-center items-center w-full" style={{ height: logoHeight }}>
+    <div className="flex justify-center items-center w-full" style={{ height: logoHeight, gap: isMobile || isTablet ? "2rem" : "1rem" }}>
       {indices.map((logoIndex, slot) => (
         <div
           key={slot}
-          className="relative flex-1 h-full flex items-center justify-center"
+          className="relative h-full flex items-center justify-center"
+          style={{ width: isMobile || isTablet ? undefined : logoHeight * 1.5 }}
         >
           <AnimatePresence mode="sync">
             <motion.img

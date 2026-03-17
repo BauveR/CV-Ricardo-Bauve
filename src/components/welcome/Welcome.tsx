@@ -1,9 +1,14 @@
 import { useRef } from "react";
 import { motion, useScroll, useTransform, useSpring, useMotionValue } from "framer-motion";
 import { ScrollReveal } from "../ui/ScrollReveal";
+import { useIsTablet } from "../../hooks/useIsTablet";
+import { useIsMobile } from "../../hooks/useIsMobile";
 
 export const Welcome = () => {
   const sectionRef = useRef<HTMLElement>(null);
+  const isTablet = useIsTablet();
+  const isMobile = useIsMobile();
+  const isDesktop = !isMobile && !isTablet;
 
   const { scrollYProgress } = useScroll({
     target: sectionRef,
@@ -37,56 +42,90 @@ export const Welcome = () => {
     x: { duration: 1.4, ease: [0.16, 1, 0.3, 1] as const },
   };
 
+  // Estilos por breakpoint — una sola fuente de verdad por elemento
+  const pngStyle = {
+    top: isTablet ? "23%" : "17%",
+    height: isTablet ? "50%" : "70%",
+  };
+
+  const contentStyle = isDesktop
+    ? { width: "63%", paddingRight: "2.5rem", marginLeft: "auto" }
+    : isTablet
+    ? { width: "100%", padding: "0 2rem" }
+    : { width: "100%", padding: "0 1.5rem" };
+
+  const svg1WrapperStyle = isTablet
+    ? { marginTop: "-30rem", marginLeft: "0rem" }
+    : undefined;
+
+  const svg2WrapperStyle = isTablet
+    ? { marginLeft: "0rem" }
+    : undefined;
+
+  const svgWidth = isTablet ? "62%" : "80%";
+
+  const textGridStyle = isTablet
+    ? { position: "absolute" as const, bottom: "-32rem", left: "8%", width: "90vw", display: "grid", gridTemplateColumns: "1fr 2fr", gap: "2rem" }
+    : isDesktop
+    ? { width: "80%", display: "grid", gridTemplateColumns: "1fr 2fr", gap: "3rem" }
+    : { display: "grid", gridTemplateColumns: "1fr", gap: "0.75rem" };
+
   return (
     <section
       ref={sectionRef}
-      className="relative w-full h-auto min-h-[100svh] md:h-[100svh] overflow-visible md:overflow-hidden flex items-center"
+      className="relative w-full min-h-[100svh] flex items-center"
+      style={{ overflow: isMobile ? "visible" : "hidden" }}
       onMouseMove={handleMouseMove}
       onMouseLeave={handleMouseLeave}
     >
-      {/* Fondo — capa propia por debajo del orb */}
+      {/* Fondo */}
       <div className="absolute inset-0 z-0" style={{ background: "linear-gradient(to top, #5249FF, #E3FFD9)" }} />
 
-      {/* PNG grande izquierda — desborda el borde izquierdo */}
-      <motion.div
-        className="hidden md:block absolute top-[17%] h-full pointer-events-none z-20"
-        style={{ left: "-10%" }}
-        initial={{ x: "-100vw", opacity: 0, filter: "blur(20px)" }}
-        animate={{ x: 0, opacity: 1, filter: "blur(0px)" }}
-        transition={entranceTransition}
-      >
-        <motion.img
-          src="https://res.cloudinary.com/dmweipuof/image/upload/f_auto,q_auto,w_900/v1773766079/cute_bauve3_koppbd.png"
-          alt="Ricardo Bauve ilustración"
-          className="h-[70%] w-auto object-contain"
-          style={{ x: imgX, translateX: mouseX }}
-          fetchPriority="high"
-          decoding="async"
-        />
-      </motion.div>
-
-      {/* Contenido derecho */}
-      <div className="ml-auto w-full md:w-[63%] px-6 md:px-0 md:pr-10 flex flex-col items-start gap-8 relative z-20">
-
-        {/* PNG — solo mobile, entra desde la izquierda */}
+      {/* PNG — desktop & tablet, absoluto respecto a la sección */}
+      {!isMobile && (
         <motion.div
-          className="block md:hidden w-full flex justify-start"
+          className="absolute h-full pointer-events-none z-20"
+          style={{ left: "-10%", top: pngStyle.top }}
           initial={{ x: "-100vw", opacity: 0, filter: "blur(20px)" }}
-          animate={{ x: "-30vw", opacity: 1, filter: "blur(0px)" }}
+          animate={{ x: 0, opacity: 1, filter: "blur(0px)" }}
           transition={entranceTransition}
         >
-          <img
-            src="https://res.cloudinary.com/dmweipuof/image/upload/f_auto,q_auto,w_400/v1773766079/cute_bauve3_koppbd.png"
+          <motion.img
+            src="https://res.cloudinary.com/dmweipuof/image/upload/f_auto,q_auto,w_700/v1773766079/cute_bauve3_koppbd.png"
             alt="Ricardo Bauve ilustración"
-            className="h-24 w-auto object-contain mx-auto mt-16"
+            className="w-auto object-contain"
+            style={{ x: imgX, translateX: mouseX, height: pngStyle.height }}
             fetchPriority="high"
             decoding="async"
           />
         </motion.div>
+      )}
 
-        {/* SVG 1: entrada desde derecha, scroll hacia izquierda */}
+      {/* Contenido principal */}
+      <div className="relative z-20 flex flex-col items-start gap-8" style={contentStyle}>
+
+        {/* PNG — solo mobile */}
+        {isMobile && (
+          <motion.div
+            className="w-full flex justify-start"
+            initial={{ x: "-100vw", opacity: 0, filter: "blur(20px)" }}
+            animate={{ x: "-30vw", opacity: 1, filter: "blur(0px)" }}
+            transition={entranceTransition}
+          >
+            <img
+              src="https://res.cloudinary.com/dmweipuof/image/upload/f_auto,q_auto,w_400/v1773766079/cute_bauve3_koppbd.png"
+              alt="Ricardo Bauve ilustración"
+              className="h-24 w-auto object-contain mx-auto mt-16"
+              fetchPriority="high"
+              decoding="async"
+            />
+          </motion.div>
+        )}
+
+        {/* SVG 1 — entra desde derecha, scroll hacia izquierda */}
         <motion.div
           className="w-full"
+          style={svg1WrapperStyle}
           initial={{ x: "100vw", opacity: 0, filter: "blur(20px)" }}
           animate={{ x: 0, opacity: 0.85, filter: "blur(0px)" }}
           transition={entranceTransition}
@@ -94,14 +133,14 @@ export const Welcome = () => {
           <motion.img
             src="https://res.cloudinary.com/dmweipuof/image/upload/f_auto,q_auto/v1773017009/Ricardo_bauve_2026-03_gy4g97.svg"
             alt="Ricardo Bauve"
-            className="w-[80%]"
-            style={{ x: x1 }}
+            style={{ x: x1, width: svgWidth }}
           />
         </motion.div>
 
-        {/* SVG 2: entrada desde izquierda, scroll hacia derecha */}
+        {/* SVG 2 — entra desde izquierda, scroll hacia derecha */}
         <motion.div
-          className="w-full -mt-4 md:mt-0"
+          className="w-full"
+          style={svg2WrapperStyle}
           initial={{ x: "-100vw", opacity: 0, filter: "blur(20px)" }}
           animate={{ x: 0, opacity: 0.85, filter: "blur(0px)" }}
           transition={entranceTransition}
@@ -109,14 +148,16 @@ export const Welcome = () => {
           <motion.img
             src="https://res.cloudinary.com/dmweipuof/image/upload/f_auto,q_auto/v1773017005/Ricardo_bauve_2026-02_q1vtri.svg"
             alt="Ricardo Bauve"
-            className="w-[80%]"
-            style={{ x: x2 }}
+            style={{ x: x2, width: svgWidth }}
           />
         </motion.div>
 
-        {/* 2 columnas */}
-        <div className="w-full md:w-[80%] grid grid-cols-1 md:grid-cols-[1fr_2fr] gap-3 md:gap-12 relative z-10">
-          <p className="text-[17px] md:text-sm tracking-[0.05em] md:tracking-[0.15em] text-white font-sans font-bold leading-relaxed">
+        {/* Grid de texto — 2 columnas en desktop/tablet, 1 en mobile */}
+        <div className="relative z-10" style={textGridStyle}>
+          <p
+            className="tracking-[0.05em] text-white font-sans font-bold leading-relaxed"
+            style={{ fontSize: isDesktop ? "0.875rem" : isTablet ? "1.14rem" : "1.0625rem", letterSpacing: isDesktop ? "0.15em" : undefined }}
+          >
             Diseñador y comunicador visual<br />
             Product owner jr.<br />
             Frontend Developer
@@ -124,9 +165,9 @@ export const Welcome = () => {
           <div className="flex flex-col gap-4">
             <ScrollReveal
               textClassName="text-xs md:text-sm text-white font-sans font-medium"
-              staggerDelay={0.05}
-              blurStrength={6}
-              threshold={0.3}
+              staggerDelay={0.02}
+              blurStrength={4}
+              threshold={0.05}
               baseRotation={2}
             >
               Coleccionista, reparador, constructor. Me muevo entre objetos que tienen algo que decir: piezas que acumulan tiempo en su superficie, que guardan en su materia una forma de conocimiento que el ojo solo aprende tocando. Me pregunto por qué ciertos productos permanecen, por qué conectan con tantos a través de las décadas, cómo una marca puede reinventarse y seguir siendo, en el fondo, ella misma. En un mundo donde los límites entre lo humano, lo material y lo tecnológico se disuelven y rehacen sin descanso, creo que la autenticidad no es un origen fijo sino un gesto que se repite, que se hereda y se transforma.

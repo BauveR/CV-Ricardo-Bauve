@@ -21,6 +21,7 @@ export const ScrollOrb = ({ triggerRef, sectionRef, cvRef }: Props) => {
   }, []);
 
   const isMobile = dims.w < 768;
+  const isTablet = dims.w >= 768 && dims.w < 1024;
   const ORB_SIZE = isMobile ? ORB_SIZE_MOBILE : ORB_SIZE_DESKTOP;
   // En mobile: centra el orb verticalmente en la sección welcome
   // El orb vive en ProjectsSection (que empieza en dims.h desde el top de la página)
@@ -46,9 +47,9 @@ export const ScrollOrb = ({ triggerRef, sectionRef, cvRef }: Props) => {
   const rawY = useTransform(
     [welcomeProgress, projectsProgress, cvProgress] as const,
     ([wp, pp, cp]: readonly number[]) => {
-      const phase1 = Math.min(wp / 0.1, 1) * (isMobile ? dims.h * 0.5 : dims.h * 0.5);
+      const phase1 = Math.min(wp / 0.1, 1) * (isMobile ? dims.h * 0.5 : isTablet ? dims.h * 0.3 : dims.h * 0.5);
       const ppNorm = Math.min(Math.max((pp - 0.25) / 0.35, 0), 1);
-      const phase3 = ppNorm * (isMobile ? dims.h * 1.1 : dims.h * 1.5);
+      const phase3 = ppNorm * (isMobile ? dims.h * 1.1 : isTablet ? dims.h * 0.9 : dims.h * 1.5);
       // Fase 4: baja hasta cp=0.5 (desktop) / cp=0.35 (mobile)
       const cpNorm4 = isMobile
         ? Math.min(Math.max(cp / 0.35, 0), 1)

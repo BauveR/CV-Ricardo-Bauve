@@ -4,6 +4,7 @@ import { ScrollOrb } from "../common/ScrollOrb";
 import { LogoRow } from "../projects/LogoRow";
 import { PortafolioGrid } from "../portafolio/PortafolioGrid";
 import { useIsMobile } from "../../hooks/useIsMobile";
+import { useIsTablet } from "../../hooks/useIsTablet";
 
 type Props = {
   sectionRef: RefObject<HTMLElement | null>;
@@ -13,6 +14,7 @@ type Props = {
 
 export function ProjectsSection({ sectionRef, triggerRef, cvRef }: Props) {
   const isMobile = useIsMobile();
+  const isTablet = useIsTablet();
 
   const { scrollYProgress } = useScroll({
     target: sectionRef,
@@ -38,7 +40,7 @@ export function ProjectsSection({ sectionRef, triggerRef, cvRef }: Props) {
       <ScrollOrb triggerRef={triggerRef} sectionRef={sectionRef} cvRef={cvRef} />
 
       {/* Logos */}
-      <div className="absolute left-1/2 -translate-x-1/2" style={{ top: isMobile ? "2%" : "10%", width: isMobile ? "70vw" : "28%", zIndex: 20, pointerEvents: "none", overflow: "hidden" }}>
+      <div className="absolute left-1/2 -translate-x-1/2" style={{ top: isMobile ? "2%" : "3%", width: isMobile ? "90vw" : "56%", zIndex: 20, pointerEvents: "none", overflow: "visible" }}>
         <LogoRow />
       </div>
 
@@ -85,7 +87,7 @@ export function ProjectsSection({ sectionRef, triggerRef, cvRef }: Props) {
       </motion.div>
 
       {/* Grid de portafolio con entrada y parallax */}
-      <div style={{ paddingTop: isMobile ? "48vh" : "49%", position: "relative", zIndex: 20, marginBottom: isMobile ? 0 : "-40vh" }}>
+      <div style={{ paddingTop: isMobile ? "48vh" : isTablet ? "65%" : "38%", position: "relative", zIndex: 20, marginBottom: isMobile ? 0 : "-40vh" }}>
         <div style={{ overflow: "visible" }}>
 
           {/* Wrapper entrada: desliza desde derecha con blur */}
@@ -101,7 +103,7 @@ export function ProjectsSection({ sectionRef, triggerRef, cvRef }: Props) {
           >
             {/* Wrapper parallax scroll: se mueve hacia la izquierda */}
             <motion.div style={{ x: isMobile ? 0 : x, pointerEvents: "none" }}>
-              <div style={{ transform: isMobile ? "none" : "scale(0.465)", transformOrigin: "top left", pointerEvents: "auto" }}>
+              <div style={{ transform: isMobile ? "none" : "scale(0.558)", transformOrigin: "top left", pointerEvents: "auto" }}>
                 <PortafolioGrid />
               </div>
             </motion.div>
