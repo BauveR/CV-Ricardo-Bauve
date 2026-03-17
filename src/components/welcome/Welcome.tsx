@@ -87,7 +87,7 @@ export const Welcome = () => {
           style={{
             left: 0, right: 0,
             bottom: "calc(-4rem - env(safe-area-inset-bottom))",
-            height: "calc(4rem + env(safe-area-inset-bottom))",
+            height: "calc(4rem + env(safe-area-inset-bottom) + 2px)",
             background: "#5249FF",
           }}
         />
