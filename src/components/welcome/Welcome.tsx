@@ -79,7 +79,14 @@ export const Welcome = () => {
       onMouseLeave={handleMouseLeave}
     >
       {/* Fondo */}
-      <div className="absolute inset-0 z-0" style={{ background: "linear-gradient(to top, #5249FF, #E3FFD9)" }} />
+      <div
+        className="absolute z-0"
+        style={{
+          inset: 0,
+          bottom: isMobile ? "calc(-4rem - env(safe-area-inset-bottom))" : 0,
+          background: "linear-gradient(to top, #5249FF, #E3FFD9)",
+        }}
+      />
 
       {/* PNG — desktop & tablet, absoluto respecto a la sección */}
       {!isMobile && (
