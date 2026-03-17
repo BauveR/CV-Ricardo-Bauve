@@ -162,7 +162,8 @@ export default function NavbarSections({ active, onGo }: Props) {
               onClick={() => setMobileOpen(false)}
             />
             <motion.aside
-              className="fixed left-0 top-0 z-50 h-screen w-[86vw] max-w-[270px] bg-white/80 text-gray-400 shadow-xl p-4"
+              className="fixed left-0 top-0 z-50 h-screen w-[86vw] max-w-[270px] shadow-xl p-4"
+              style={{ background: "linear-gradient(to right, #5249FF, rgba(82,73,255,0.5))", color: "white" }}
               initial={{ x: -24, opacity: 0 }}
               animate={{ x: 0, opacity: 1 }}
               exit={{ x: -24, opacity: 0 }}
@@ -173,7 +174,7 @@ export default function NavbarSections({ active, onGo }: Props) {
               <div className="flex items-center justify-between h-12">
                 <span className="text-lg tracking-wide"></span>
                 <button
-                  className="p-2 rounded-md hover:bg-gray-100"
+                  className="p-2 rounded-md hover:bg-white/20"
                   aria-label="Cerrar menú"
                   onClick={() => setMobileOpen(false)}
                 >
@@ -189,10 +190,10 @@ export default function NavbarSections({ active, onGo }: Props) {
                     key={r.id}
                     onClick={() => go(r.id)}
                     className={[
-                      "py-3 text-base border-b border-gray-200 text-left transition-all duration-300",
+                      "py-3 text-base border-b border-white/20 text-left transition-all duration-300",
                       active === r.id
-                        ? "text-gray-400 font-bold blur-none"
-                        : "text-gray-300 hover:text-gray-400 blur-[0.8px] hover:blur-none font-normal",
+                        ? "text-white font-bold"
+                        : "text-white/70 hover:text-white font-normal",
                     ].join(" ")}
                     aria-current={active === r.id ? "page" : undefined}
                   >
@@ -200,6 +201,12 @@ export default function NavbarSections({ active, onGo }: Props) {
                   </button>
                 ))}
               </div>
+
+              <img
+                src="https://res.cloudinary.com/dmweipuof/image/upload/f_auto,q_auto,w_200/v1773765020/cute_bauve_tblam7.png"
+                alt=""
+                className="absolute bottom-0 left-0 w-full object-contain pointer-events-none"
+              />
             </motion.aside>
           </>
         )}
