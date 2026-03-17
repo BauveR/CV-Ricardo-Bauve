@@ -62,7 +62,7 @@ export const LogoRow = () => {
         <div
           key={slot}
           className="relative h-full flex items-center justify-center"
-          style={{ width: isMobile || isTablet ? undefined : logoHeight * 1.5 }}
+          style={{ width: isMobile || isTablet ? "33%" : logoHeight * 1.5 }}
         >
           <AnimatePresence mode="sync">
             <motion.img

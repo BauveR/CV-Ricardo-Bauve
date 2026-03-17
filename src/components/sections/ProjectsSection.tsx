@@ -40,7 +40,7 @@ export function ProjectsSection({ sectionRef, triggerRef, cvRef }: Props) {
       <ScrollOrb triggerRef={triggerRef} sectionRef={sectionRef} cvRef={cvRef} />
 
       {/* Logos */}
-      <div className="absolute left-1/2 -translate-x-1/2" style={{ top: isMobile ? "2%" : "3%", width: isMobile ? "90vw" : "56%", zIndex: 20, pointerEvents: "none", overflow: "visible" }}>
+      <div className="absolute left-1/2 -translate-x-1/2" style={{ top: isMobile ? "2%" : "3%", width: isMobile ? "90vw" : "56%", zIndex: 30, pointerEvents: "none", overflow: "visible" }}>
         <LogoRow />
       </div>
 
