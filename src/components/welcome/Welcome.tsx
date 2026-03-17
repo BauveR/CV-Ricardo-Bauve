@@ -79,14 +79,19 @@ export const Welcome = () => {
       onMouseLeave={handleMouseLeave}
     >
       {/* Fondo */}
-      <div
-        className="absolute z-0"
-        style={{
-          inset: 0,
-          bottom: isMobile ? "calc(-4rem - env(safe-area-inset-bottom))" : 0,
-          background: "linear-gradient(to top, #5249FF, #E3FFD9)",
-        }}
-      />
+      <div className="absolute inset-0 z-0" style={{ background: "linear-gradient(to top, #5249FF, #E3FFD9)" }} />
+      {/* Buffer móvil: extiende el color base para absorber el salto de Safari */}
+      {isMobile && (
+        <div
+          className="absolute z-0"
+          style={{
+            left: 0, right: 0,
+            bottom: "calc(-4rem - env(safe-area-inset-bottom))",
+            height: "calc(4rem + env(safe-area-inset-bottom))",
+            background: "#5249FF",
+          }}
+        />
+      )}
 
       {/* PNG — desktop & tablet, absoluto respecto a la sección */}
       {!isMobile && (
