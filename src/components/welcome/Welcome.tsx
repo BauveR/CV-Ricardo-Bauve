@@ -50,7 +50,7 @@ export const Welcome = () => {
       {/* PNG grande izquierda — desborda el borde izquierdo */}
       <motion.div
         className="hidden md:block absolute top-[17%] h-full pointer-events-none z-20"
-        style={{ left: "-40%" }}
+        style={{ left: "-10%" }}
         initial={{ x: "-100vw", opacity: 0, filter: "blur(20px)" }}
         animate={{ x: 0, opacity: 1, filter: "blur(0px)" }}
         transition={entranceTransition}
@@ -70,9 +70,9 @@ export const Welcome = () => {
 
         {/* PNG — solo mobile, entra desde la izquierda */}
         <motion.div
-          className="block md:hidden w-full flex justify-center"
+          className="block md:hidden w-full flex justify-start"
           initial={{ x: "-100vw", opacity: 0, filter: "blur(20px)" }}
-          animate={{ x: 0, opacity: 1, filter: "blur(0px)" }}
+          animate={{ x: "-30vw", opacity: 1, filter: "blur(0px)" }}
           transition={entranceTransition}
         >
           <img
@@ -92,7 +92,7 @@ export const Welcome = () => {
           transition={entranceTransition}
         >
           <motion.img
-            src="https://res.cloudinary.com/dmweipuof/image/upload/v1773017009/Ricardo_bauve_2026-03_gy4g97.svg"
+            src="https://res.cloudinary.com/dmweipuof/image/upload/f_auto,q_auto/v1773017009/Ricardo_bauve_2026-03_gy4g97.svg"
             alt="Ricardo Bauve"
             className="w-[80%]"
             style={{ x: x1 }}
@@ -101,13 +101,13 @@ export const Welcome = () => {
 
         {/* SVG 2: entrada desde izquierda, scroll hacia derecha */}
         <motion.div
-          className="w-full"
+          className="w-full -mt-4 md:mt-0"
           initial={{ x: "-100vw", opacity: 0, filter: "blur(20px)" }}
           animate={{ x: 0, opacity: 0.85, filter: "blur(0px)" }}
           transition={entranceTransition}
         >
           <motion.img
-            src="https://res.cloudinary.com/dmweipuof/image/upload/v1773017005/Ricardo_bauve_2026-02_q1vtri.svg"
+            src="https://res.cloudinary.com/dmweipuof/image/upload/f_auto,q_auto/v1773017005/Ricardo_bauve_2026-02_q1vtri.svg"
             alt="Ricardo Bauve"
             className="w-[80%]"
             style={{ x: x2 }}
@@ -115,8 +115,8 @@ export const Welcome = () => {
         </motion.div>
 
         {/* 2 columnas */}
-        <div className="w-full md:w-[80%] grid grid-cols-1 md:grid-cols-[1fr_2fr] gap-8 md:gap-12 relative z-10">
-          <p className="text-[10px] md:text-sm tracking-[0.05em] md:tracking-[0.15em] text-white font-sans font-bold leading-relaxed">
+        <div className="w-full md:w-[80%] grid grid-cols-1 md:grid-cols-[1fr_2fr] gap-3 md:gap-12 relative z-10">
+          <p className="text-[17px] md:text-sm tracking-[0.05em] md:tracking-[0.15em] text-white font-sans font-bold leading-relaxed">
             Diseñador y comunicador visual<br />
             Product owner jr.<br />
             Frontend Developer

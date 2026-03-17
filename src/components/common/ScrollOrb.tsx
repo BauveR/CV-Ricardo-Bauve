@@ -26,7 +26,7 @@ export const ScrollOrb = ({ triggerRef, sectionRef, cvRef }: Props) => {
   // El orb vive en ProjectsSection (que empieza en dims.h desde el top de la página)
   // Para que el centro del orb quede en dims.h * 0.5 (centro del welcome):
   //   top_relativo_a_projects = dims.h * 0.5 - dims.h - ORB_SIZE / 2
-  const orbTop = isMobile ? -(dims.h * 0.5 + ORB_SIZE / 2) : -240;
+  const orbTop = isMobile ? -(dims.h * 0.1 + ORB_SIZE / 2) : -240;
 
   const { scrollYProgress: welcomeProgress } = useScroll({
     target: triggerRef,
@@ -46,16 +46,23 @@ export const ScrollOrb = ({ triggerRef, sectionRef, cvRef }: Props) => {
   const rawY = useTransform(
     [welcomeProgress, projectsProgress, cvProgress] as const,
     ([wp, pp, cp]: readonly number[]) => {
-      const phase1 = Math.min(wp / 0.1, 1) * (dims.h * 1.2);
+      const phase1 = Math.min(wp / 0.1, 1) * (isMobile ? dims.h * 0.5 : dims.h * 1.2);
       const ppNorm = Math.min(Math.max((pp - 0.25) / 0.35, 0), 1);
-      const phase3 = ppNorm * dims.h * 1.5;
-      // Fase 4: baja hasta cp=0.5
-      const cpNorm4 = Math.min(Math.max(cp / 0.5, 0), 1);
-      const phase4 = cpNorm4 * dims.h * 2.1;
-      // Fase 5 (hold cp 0.5→0.6, luego baja lento cp 0.6→1.0)
-      const cpNorm5 = Math.min(Math.max((cp - 0.6) / 0.4, 0), 1);
-      const phase5 = cpNorm5 * dims.h * 1.5;
-      return phase1 + phase3 + phase4 + phase5;
+      const phase3 = ppNorm * (isMobile ? dims.h * 1.1 : dims.h * 1.5);
+      // Fase 4: baja hasta cp=0.5 (desktop) / cp=0.35 (mobile)
+      const cpNorm4 = isMobile
+        ? Math.min(Math.max(cp / 0.35, 0), 1)
+        : Math.min(Math.max(cp / 0.5, 0), 1);
+      const phase4 = cpNorm4 * (isMobile ? dims.h * 2.8 : dims.h * 2.1);
+      // Fase 5 — hold: desktop cp 0.5→0.6 / mobile cp 0.35→0.7, luego baja
+      const cpNorm5 = isMobile
+        ? Math.min(Math.max((cp - 0.4) / 0.1, 0), 1)
+        : Math.min(Math.max((cp - 0.6) / 0.4, 0), 1);
+      const phase5 = cpNorm5 * (isMobile ? dims.h * 0.7 : dims.h * 1.5);
+      // Fase 6 mobile: baja a la par del scroll hasta justo antes del footer
+      const cpNorm6 = isMobile ? Math.min(Math.max((cp - 0.5) / 0.45, 0), 1) : 0;
+      const phase6 = cpNorm6 * (isMobile ? dims.h * 1.5 : 0);
+      return phase1 + phase3 + phase4 + phase5 + phase6;
     }
   );
 
@@ -92,7 +99,7 @@ export const ScrollOrb = ({ triggerRef, sectionRef, cvRef }: Props) => {
   const deepBlueOpacity = useTransform(cvProgress, [0.6, 0.8], [0, 1]);
 
   const x     = useSpring(rawX,     { stiffness: 35, damping: 18 });
-  const y     = useSpring(rawY,     { stiffness: 35, damping: 18 });
+  const y     = useSpring(rawY,     { stiffness: isMobile ? 180 : 35, damping: isMobile ? 28 : 18 });
   const scale = useSpring(rawScale, { stiffness: 35, damping: 18 });
 
   return (

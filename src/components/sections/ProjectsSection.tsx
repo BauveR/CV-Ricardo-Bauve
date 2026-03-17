@@ -38,7 +38,7 @@ export function ProjectsSection({ sectionRef, triggerRef, cvRef }: Props) {
       <ScrollOrb triggerRef={triggerRef} sectionRef={sectionRef} cvRef={cvRef} />
 
       {/* Logos */}
-      <div className="absolute left-1/2 -translate-x-1/2" style={{ top: "10%", width: "28%", zIndex: 20 }}>
+      <div className="absolute left-1/2 -translate-x-1/2" style={{ top: isMobile ? "2%" : "10%", width: isMobile ? "70vw" : "28%", zIndex: 20, pointerEvents: "none", overflow: "hidden" }}>
         <LogoRow />
       </div>
 
@@ -54,16 +54,16 @@ export function ProjectsSection({ sectionRef, triggerRef, cvRef }: Props) {
         }}
       >
         <motion.img
-          src="https://res.cloudinary.com/dmweipuof/image/upload/v1773766074/cute_bauve4_puoexc.png"
+          src="https://res.cloudinary.com/dmweipuof/image/upload/f_auto,q_auto,w_300/v1773766074/cute_bauve4_puoexc.png"
           alt=""
-          style={{ x: imgScrollX, width: "clamp(80px, 12vw, 160px)" }}
+          style={{ x: imgScrollX, width: "clamp(120px, 18vw, 240px)" }}
         />
       </motion.div>
 
       {/* Título — entra desde la derecha, parallax scroll hacia derecha */}
       <motion.div
         className="absolute left-1/2 -translate-x-1/2"
-        style={{ top: "25%", zIndex: 20 }}
+        style={{ top: "28%", zIndex: 20 }}
         initial={{ opacity: 0, filter: "blur(20px)" }}
         animate={{ opacity: 1, filter: "blur(0px)" }}
         transition={{
@@ -76,7 +76,7 @@ export function ProjectsSection({ sectionRef, triggerRef, cvRef }: Props) {
           style={{
             x: titleScrollX,
             fontFamily: "'Boldonse', sans-serif",
-            fontSize: "clamp(0.87rem, 1.96vw, 2.18rem)",
+            fontSize: "clamp(1.305rem, 2.94vw, 3.27rem)",
             whiteSpace: "nowrap",
           }}
         >
@@ -85,7 +85,7 @@ export function ProjectsSection({ sectionRef, triggerRef, cvRef }: Props) {
       </motion.div>
 
       {/* Grid de portafolio con entrada y parallax */}
-      <div style={{ paddingTop: isMobile ? "55%" : "39%", position: "relative", zIndex: 20, marginBottom: isMobile ? 0 : "-40vh" }}>
+      <div style={{ paddingTop: isMobile ? "48vh" : "49%", position: "relative", zIndex: 20, marginBottom: isMobile ? 0 : "-40vh" }}>
         <div style={{ overflow: "visible" }}>
 
           {/* Wrapper entrada: desliza desde derecha con blur */}
@@ -101,7 +101,7 @@ export function ProjectsSection({ sectionRef, triggerRef, cvRef }: Props) {
           >
             {/* Wrapper parallax scroll: se mueve hacia la izquierda */}
             <motion.div style={{ x: isMobile ? 0 : x, pointerEvents: "none" }}>
-              <div style={{ transform: isMobile ? "none" : "scale(0.581)", transformOrigin: "top left", pointerEvents: "auto" }}>
+              <div style={{ transform: isMobile ? "none" : "scale(0.465)", transformOrigin: "top left", pointerEvents: "auto" }}>
                 <PortafolioGrid />
               </div>
             </motion.div>

@@ -103,7 +103,7 @@ const TimelineItem = memo(function TimelineItem({
   }) => {
     const card = (
       <Card className="bg-white/80 border border-gray-200">
-        <CardContent className="p-6">
+        <CardContent className="p-3 md:p-6">
           <div className="flex flex-col gap-2 mb-2">
             <span className="text-sm text-slate-800" style={{ fontFamily: "'Boldonse', sans-serif" }}>{data.year}</span>
             {!data.noIcon && (
@@ -136,7 +136,7 @@ const TimelineItem = memo(function TimelineItem({
   const cardContent = buildInner(leftData);
   const rightCardContent = buildInner(rightData);
 
-  const cardClass = "relative z-30 rounded-lg bg-card/50 backdrop-blur border-2 border-primary/20 w-full lg:w-[calc(50%-40px)] mt-6 lg:mt-0";
+  const cardClass = "relative z-30 rounded-lg bg-card/50 backdrop-blur border-2 border-primary/20 w-[calc(50%-12px)] mt-0";
 
   const dot = (
     <div className="absolute top-1/2 transform -translate-y-1/2 z-30 left-1/2 -translate-x-1/2">
@@ -159,12 +159,12 @@ const TimelineItem = memo(function TimelineItem({
     return (
       <div
         ref={(el) => { timelineRefs.current[index] = el; }}
-        className="relative flex items-center mb-8 py-1 flex-col lg:flex-row lg:justify-between"
+        className="relative flex items-center mb-8 py-1 flex-row justify-between"
       >
         <div ref={itemRef} className="absolute inset-0 pointer-events-none" />
         {dot}
-        {cardMotion(cardContent, "lg:mr-[20px]")}
-        {cardMotion(rightCardContent, "lg:ml-[20px]")}
+        {cardMotion(cardContent, "mr-[12px]")}
+        {cardMotion(rightCardContent, "ml-[12px]")}
       </div>
     );
   }
@@ -173,13 +173,13 @@ const TimelineItem = memo(function TimelineItem({
     <div
       ref={(el) => { timelineRefs.current[index] = el; }}
       className={cn(
-        "relative flex items-center mb-8 py-1 flex-col lg:flex-row",
-        effectiveAlignment === "left" ? "lg:justify-start" : "lg:flex-row-reverse lg:justify-start"
+        "relative flex items-center mb-8 py-1 flex-row",
+        effectiveAlignment === "left" ? "justify-start" : "flex-row-reverse justify-start"
       )}
     >
       <div ref={itemRef} className="absolute inset-0 pointer-events-none" />
       {dot}
-      {cardMotion(cardContent, effectiveAlignment === "left" ? "lg:mr-[calc(50%+20px)]" : "lg:ml-[calc(50%+20px)]")}
+      {cardMotion(cardContent, effectiveAlignment === "left" ? "mr-[calc(50%+12px)]" : "ml-[calc(50%+12px)]")}
     </div>
   );
 });
@@ -259,15 +259,15 @@ export const ScrollTimeline = ({
       {leftTitle || rightTitle ? (
         <div className="relative max-w-6xl mx-auto px-4 pt-8 pb-16 flex justify-between">
           <div className="w-[calc(50%-40px)]">
-            {leftTitle && <h2 className="text-3xl md:text-4xl font-bold" style={{ fontFamily: "'Boldonse', sans-serif", color: "#ffffff", fontSize: "clamp(0.87rem, 1.96vw, 2.18rem)" }}>{leftTitle}</h2>}
+            {leftTitle && <h2 className="text-3xl md:text-4xl font-bold" style={{ fontFamily: "'Boldonse', sans-serif", color: "#ffffff", fontSize: "clamp(1.305rem, 2.94vw, 3.27rem)" }}>{leftTitle}</h2>}
           </div>
-          <div className="w-[calc(50%-40px)]">
+          <div className="w-[calc(50%+20px)]" style={{ marginLeft: "-0.5rem" }}>
             {rightTitle && (
               <h2
                 className="font-bold"
                 style={{
                   fontFamily: "'Boldonse', sans-serif",
-                  fontSize: "clamp(0.87rem, 1.96vw, 2.18rem)",
+                  fontSize: "clamp(1.305rem, 2.94vw, 3.27rem)",
                   background: "linear-gradient(135deg, #22c55e, #ffffff, #a855f7, #22c55e)",
                   backgroundSize: "300% 300%",
                   WebkitBackgroundClip: "text",

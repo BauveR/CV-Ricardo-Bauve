@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { AnimatePresence, motion } from "framer-motion";
-const navLogo = "https://res.cloudinary.com/dmweipuof/image/upload/v1773016274/Ricardo_bauve_2026-02_br99sv.svg";
+const navLogo = "https://res.cloudinary.com/dmweipuof/image/upload/f_auto,q_auto/v1773016274/Ricardo_bauve_2026-02_br99sv.svg";
 
 type SectionId = "welcome" | "projects" | "cv";
 

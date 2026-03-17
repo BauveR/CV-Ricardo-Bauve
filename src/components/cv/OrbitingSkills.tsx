@@ -125,7 +125,7 @@ const OrbitItem = memo(({ config, angle }: { config: SkillConfig; angle: number 
         }}
       >
         {icon}
-        <div className="absolute left-1/2 -translate-x-1/2 whitespace-nowrap pointer-events-none text-white font-bold" style={{ top: "100%", marginTop: 4, fontSize: 9 }}>
+        <div className="absolute left-1/2 -translate-x-1/2 whitespace-nowrap pointer-events-none text-white font-bold" style={{ top: "100%", marginTop: 4, fontSize: 12 }}>
           {label}
         </div>
       </div>
@@ -139,12 +139,17 @@ const INNER = 700;
 export function OrbitingSkills() {
   const [time, setTime] = useState(0);
   const [paused, setPaused] = useState(false);
+  const calcSize = (w: number) => {
+    const base = Math.min(w - 40, INNER);
+    return w < 768 ? Math.min(base * 1.3, INNER) : base;
+  };
+
   const [size, setSize] = useState(() =>
-    typeof window !== "undefined" ? Math.min(window.innerWidth - 40, INNER) : INNER
+    typeof window !== "undefined" ? calcSize(window.innerWidth) : INNER
   );
 
   useEffect(() => {
-    const onResize = () => setSize(Math.min(window.innerWidth - 40, INNER));
+    const onResize = () => setSize(calcSize(window.innerWidth));
     window.addEventListener("resize", onResize, { passive: true });
     return () => window.removeEventListener("resize", onResize);
   }, []);

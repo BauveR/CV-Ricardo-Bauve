@@ -1,5 +1,5 @@
-import { motion, useInView } from "framer-motion";
-import { useRef } from "react";
+import { motion } from "framer-motion";
+import { useRef, useState, useEffect } from "react";
 import { Contact } from "./Contact";
 import { ScrollReveal } from "../ui/ScrollReveal";
 import { PROFILE_DATA } from "../../constants/profileData";
@@ -11,7 +11,7 @@ const ALIGNMENTS: ("left" | "right" | "both")[] = ["both", "both", "both", "righ
 
 const ITEM_EXTRAS: Record<number, { iconUrl?: string; href?: string; noIcon?: boolean; right?: object }> = {
   0: {
-    iconUrl: "https://res.cloudinary.com/dmweipuof/image/upload/v1773087621/logo_1_litytg.png",
+    iconUrl: "https://res.cloudinary.com/dmweipuof/image/upload/f_auto,q_auto,w_120/v1773087621/logo_1_litytg.png",
     href: "https://www.barcelonactiva.cat/es/itacademy",
     right: {
       year: "2026",
@@ -19,8 +19,8 @@ const ITEM_EXTRAS: Record<number, { iconUrl?: string; href?: string; noIcon?: bo
       subtitle: "Corpus Colonia de la Universidad de Lleiden, Universidad de la laguna",
       description: "",
       iconUrls: [
-        "https://res.cloudinary.com/dmweipuof/image/upload/v1773088478/marca-universidad-de-la-laguna-original_n71civ.svg",
-        "https://res.cloudinary.com/dmweipuof/image/upload/v1773088485/UniversiteitLeidenLogo_lwaolc.svg",
+        "https://res.cloudinary.com/dmweipuof/image/upload/f_auto,q_auto,w_200/v1773088478/marca-universidad-de-la-laguna-original_n71civ.svg",
+        "https://res.cloudinary.com/dmweipuof/image/upload/f_auto,q_auto,w_200/v1773088485/UniversiteitLeidenLogo_lwaolc.svg",
       ],
     },
   },
@@ -61,10 +61,22 @@ const timelineEvents = experienceList.map((exp, i) => ({
 export const MainContent = () => {
   const { contact } = PROFILE_DATA;
   const skillsRef = useRef<HTMLDivElement>(null);
-  const skillsInView = useInView(skillsRef, { once: true, amount: 0.1 });
+  const [skillsInView, setSkillsInView] = useState(false);
+
+  useEffect(() => {
+    if (skillsInView) return;
+    const check = () => {
+      if (!skillsRef.current) return;
+      const rect = skillsRef.current.getBoundingClientRect();
+      if (rect.top < window.innerHeight * 0.85) setSkillsInView(true);
+    };
+    window.addEventListener("scroll", check, { passive: true });
+    check();
+    return () => window.removeEventListener("scroll", check);
+  }, [skillsInView]);
 
   return (
-    <section className="relative w-full min-h-[100svh] overflow-x-hidden" style={{ background: "linear-gradient(to bottom, transparent, #A7F689)" }}>
+    <section className="relative w-full min-h-[100svh] [overflow-x:clip]" style={{ background: "linear-gradient(to bottom, transparent, #A7F689)" }}>
       {/* separador por el menú fijo del App */}
       <div className="h-4 md:h-0" />
 
@@ -88,7 +100,7 @@ export const MainContent = () => {
       <div className="relative z-20 w-full mt-32 px-4">
         <h2
           className="text-center text-white mb-4"
-          style={{ fontFamily: "'Boldonse', sans-serif", fontSize: "clamp(0.87rem, 1.96vw, 2.18rem)" }}
+          style={{ fontFamily: "'Boldonse', sans-serif", fontSize: "clamp(1.305rem, 2.94vw, 3.27rem)" }}
         >
           Contacto
         </h2>
@@ -101,7 +113,7 @@ export const MainContent = () => {
       <div className="relative z-20 w-full mt-36 px-4">
         <h2
           className="text-center text-white mb-8"
-          style={{ fontFamily: "'Boldonse', sans-serif", fontSize: "clamp(0.87rem, 1.96vw, 2.18rem)" }}
+          style={{ fontFamily: "'Boldonse', sans-serif", fontSize: "clamp(1.305rem, 2.94vw, 3.27rem)" }}
         >
           Tecnologías y programas
         </h2>
@@ -117,7 +129,7 @@ export const MainContent = () => {
             className="mb-6"
             style={{
               fontFamily: "'Boldonse', sans-serif",
-              fontSize: "clamp(0.87rem, 1.96vw, 2.18rem)",
+              fontSize: "clamp(1.305rem, 2.94vw, 3.27rem)",
               background: "linear-gradient(135deg, #22c55e, #ffffff, #a855f7, #22c55e)",
               backgroundSize: "300% 300%",
               WebkitBackgroundClip: "text",
@@ -130,7 +142,7 @@ export const MainContent = () => {
             Habilidades
           </h2>
           <div ref={skillsRef} />
-          <ul className="space-y-1.5 text-white/80 leading-relaxed" style={{ fontFamily: "'Boldonse', sans-serif", fontSize: "calc(0.875rem * 1.2)" }}>
+          <ul className="space-y-1.5 text-white/80 leading-relaxed" style={{ fontFamily: "'Boldonse', sans-serif", fontSize: "calc(0.875rem * 0.72)" }}>
             {[
               "Liderazgo de equipos creativos y tecnológicos",
               "Gestión de personal multidisciplinario",
@@ -171,7 +183,7 @@ export const MainContent = () => {
         <div className="flex flex-col items-start text-left">
           <h2
             className="mb-6 text-white"
-            style={{ fontFamily: "'Boldonse', sans-serif", fontSize: "clamp(0.87rem, 1.96vw, 2.18rem)" }}
+            style={{ fontFamily: "'Boldonse', sans-serif", fontSize: "clamp(1.305rem, 2.94vw, 3.27rem)" }}
           >
             Sobre mí
           </h2>

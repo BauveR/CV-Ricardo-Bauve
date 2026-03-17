@@ -1,31 +1,32 @@
 import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
+import { useIsMobile } from "../../hooks/useIsMobile";
 
 const SMALL_LOGOS = new Set([
-  "https://res.cloudinary.com/dmweipuof/image/upload/v1773073983/Ricardo_bauve_2026-14_hztqvh.svg",
+  "https://res.cloudinary.com/dmweipuof/image/upload/f_auto,q_auto,w_150/v1773073983/Ricardo_bauve_2026-14_hztqvh.svg",
 ]);
 
 const LOGOS = [
-  "https://res.cloudinary.com/dmweipuof/image/upload/v1773073260/Ricardo_bauve_2026-05_udee3u.svg",
-  "https://res.cloudinary.com/dmweipuof/image/upload/v1773073261/Ricardo_bauve_2026-06_mo02cm.svg",
-  "https://res.cloudinary.com/dmweipuof/image/upload/v1773073260/Ricardo_bauve_2026-04_dck7az.svg",
-  "https://res.cloudinary.com/dmweipuof/image/upload/v1773073981/Ricardo_bauve_2026-08_jfzx2g.svg",
-  "https://res.cloudinary.com/dmweipuof/image/upload/v1773073981/Ricardo_bauve_2026-09_n14frl.svg",
-  "https://res.cloudinary.com/dmweipuof/image/upload/v1773073981/Ricardo_bauve_2026-10_zmcrea.svg",
-  "https://res.cloudinary.com/dmweipuof/image/upload/v1773073982/Ricardo_bauve_2026-12_wteh07.svg",
-  "https://res.cloudinary.com/dmweipuof/image/upload/v1773073982/Ricardo_bauve_2026-11_esi9nl.svg",
-  "https://res.cloudinary.com/dmweipuof/image/upload/v1773073983/Ricardo_bauve_2026-13_tkdchm.svg",
-  "https://res.cloudinary.com/dmweipuof/image/upload/v1773073983/Ricardo_bauve_2026-14_hztqvh.svg",
-  "https://res.cloudinary.com/dmweipuof/image/upload/v1773073983/Ricardo_bauve_2026-15_aryqeg.svg",
-  "https://res.cloudinary.com/dmweipuof/image/upload/v1773073983/Ricardo_bauve_2026-16_cqefcn.svg",
-  "https://res.cloudinary.com/dmweipuof/image/upload/v1773073984/Ricardo_bauve_2026-19_fn5fgi.svg",
-  "https://res.cloudinary.com/dmweipuof/image/upload/v1773073985/Ricardo_bauve_2026-22_mjizs6.svg",
-  "https://res.cloudinary.com/dmweipuof/image/upload/v1773073983/Ricardo_bauve_2026-17_ktcuzs.svg",
-  "https://res.cloudinary.com/dmweipuof/image/upload/v1773073985/Ricardo_bauve_2026-21_hqazhu.svg",
-  "https://res.cloudinary.com/dmweipuof/image/upload/v1773073986/Ricardo_bauve_2026-24_ngutot.svg",
-  "https://res.cloudinary.com/dmweipuof/image/upload/v1773073986/Ricardo_bauve_2026-23_w0shxr.svg",
-  "https://res.cloudinary.com/dmweipuof/image/upload/v1773073984/Ricardo_bauve_2026-18_hdb8q7.svg",
-  "https://res.cloudinary.com/dmweipuof/image/upload/v1773073985/Ricardo_bauve_2026-20_o8uhg4.svg",
+  "https://res.cloudinary.com/dmweipuof/image/upload/f_auto,q_auto,w_150/v1773073260/Ricardo_bauve_2026-05_udee3u.svg",
+  "https://res.cloudinary.com/dmweipuof/image/upload/f_auto,q_auto,w_150/v1773073261/Ricardo_bauve_2026-06_mo02cm.svg",
+  "https://res.cloudinary.com/dmweipuof/image/upload/f_auto,q_auto,w_150/v1773073260/Ricardo_bauve_2026-04_dck7az.svg",
+  "https://res.cloudinary.com/dmweipuof/image/upload/f_auto,q_auto,w_150/v1773073981/Ricardo_bauve_2026-08_jfzx2g.svg",
+  "https://res.cloudinary.com/dmweipuof/image/upload/f_auto,q_auto,w_150/v1773073981/Ricardo_bauve_2026-09_n14frl.svg",
+  "https://res.cloudinary.com/dmweipuof/image/upload/f_auto,q_auto,w_150/v1773073981/Ricardo_bauve_2026-10_zmcrea.svg",
+  "https://res.cloudinary.com/dmweipuof/image/upload/f_auto,q_auto,w_150/v1773073982/Ricardo_bauve_2026-12_wteh07.svg",
+  "https://res.cloudinary.com/dmweipuof/image/upload/f_auto,q_auto,w_150/v1773073982/Ricardo_bauve_2026-11_esi9nl.svg",
+  "https://res.cloudinary.com/dmweipuof/image/upload/f_auto,q_auto,w_150/v1773073983/Ricardo_bauve_2026-13_tkdchm.svg",
+  "https://res.cloudinary.com/dmweipuof/image/upload/f_auto,q_auto,w_150/v1773073983/Ricardo_bauve_2026-14_hztqvh.svg",
+  "https://res.cloudinary.com/dmweipuof/image/upload/f_auto,q_auto,w_150/v1773073983/Ricardo_bauve_2026-15_aryqeg.svg",
+  "https://res.cloudinary.com/dmweipuof/image/upload/f_auto,q_auto,w_150/v1773073983/Ricardo_bauve_2026-16_cqefcn.svg",
+  "https://res.cloudinary.com/dmweipuof/image/upload/f_auto,q_auto,w_150/v1773073984/Ricardo_bauve_2026-19_fn5fgi.svg",
+  "https://res.cloudinary.com/dmweipuof/image/upload/f_auto,q_auto,w_150/v1773073985/Ricardo_bauve_2026-22_mjizs6.svg",
+  "https://res.cloudinary.com/dmweipuof/image/upload/f_auto,q_auto,w_150/v1773073983/Ricardo_bauve_2026-17_ktcuzs.svg",
+  "https://res.cloudinary.com/dmweipuof/image/upload/f_auto,q_auto,w_150/v1773073985/Ricardo_bauve_2026-21_hqazhu.svg",
+  "https://res.cloudinary.com/dmweipuof/image/upload/f_auto,q_auto,w_150/v1773073986/Ricardo_bauve_2026-24_ngutot.svg",
+  "https://res.cloudinary.com/dmweipuof/image/upload/f_auto,q_auto,w_150/v1773073986/Ricardo_bauve_2026-23_w0shxr.svg",
+  "https://res.cloudinary.com/dmweipuof/image/upload/f_auto,q_auto,w_150/v1773073984/Ricardo_bauve_2026-18_hdb8q7.svg",
+  "https://res.cloudinary.com/dmweipuof/image/upload/f_auto,q_auto,w_150/v1773073985/Ricardo_bauve_2026-20_o8uhg4.svg",
 ];
 
 // Orden de aparición: centro (1) → derecha (2) → izquierda (0)
@@ -39,6 +40,9 @@ const pickNext = (excluded: number[]): number[] => {
 };
 
 export const LogoRow = () => {
+  const isMobile = useIsMobile();
+  const logoHeight = isMobile ? 141 : 94;
+
   const [indices, setIndices] = useState([0, 1, 2]);
   const [cycleKey, setCycleKey] = useState(0);
 
@@ -51,7 +55,7 @@ export const LogoRow = () => {
   }, []);
 
   return (
-    <div className="flex gap-8 justify-center items-center w-full" style={{ height: 48 }}>
+    <div className="flex gap-8 justify-center items-center w-full" style={{ height: logoHeight }}>
       {indices.map((logoIndex, slot) => (
         <div
           key={slot}
