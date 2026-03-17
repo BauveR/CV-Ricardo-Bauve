@@ -16,7 +16,6 @@ const routes: { id: SectionId; label: string }[] = [
 ];
 
 export default function NavbarSections({ active, onGo }: Props) {
-  const [scrolled, setScrolled] = useState(false);
   const [mobileOpen, setMobileOpen] = useState(false);
   const [showTitles, setShowTitles] = useState(false);
 
@@ -36,13 +35,6 @@ export default function NavbarSections({ active, onGo }: Props) {
   }, [active]);
 
   // Cambia estilo al hacer scroll
-  useEffect(() => {
-    const onScroll = () => setScrolled(window.scrollY > 8);
-    onScroll();
-    window.addEventListener("scroll", onScroll, { passive: true });
-    return () => window.removeEventListener("scroll", onScroll);
-  }, []);
-
   // Cerrar con ESC
   useEffect(() => {
     const onKey = (e: KeyboardEvent) => {

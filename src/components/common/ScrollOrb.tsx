@@ -46,7 +46,7 @@ export const ScrollOrb = ({ triggerRef, sectionRef, cvRef }: Props) => {
   const rawY = useTransform(
     [welcomeProgress, projectsProgress, cvProgress] as const,
     ([wp, pp, cp]: readonly number[]) => {
-      const phase1 = Math.min(wp / 0.1, 1) * (isMobile ? dims.h * 0.5 : dims.h * 1.2);
+      const phase1 = Math.min(wp / 0.1, 1) * (isMobile ? dims.h * 0.5 : dims.h * 0.6);
       const ppNorm = Math.min(Math.max((pp - 0.25) / 0.35, 0), 1);
       const phase3 = ppNorm * (isMobile ? dims.h * 1.1 : dims.h * 1.5);
       // Fase 4: baja hasta cp=0.5 (desktop) / cp=0.35 (mobile)

@@ -17,7 +17,7 @@ interface UseScrollSectionsOptions<T extends SectionId> {
 export function useScrollSections<T extends SectionId>({
   sectionIds,
   sectionRefs,
-  rootMargin = "0px 0px -40% 0px",
+  rootMargin: _rootMargin = "0px 0px -40% 0px",
 }: UseScrollSectionsOptions<T>) {
   const [activeSection, setActiveSection] = useState<T>(sectionIds[0]);
 

@@ -1,7 +1,6 @@
 import { motion } from "framer-motion";
 import { useRef, useState, useEffect } from "react";
 import { Contact } from "./Contact";
-import { ScrollReveal } from "../ui/ScrollReveal";
 import { PROFILE_DATA } from "../../constants/profileData";
 import { ScrollTimeline } from "../lightswind/scroll-timeline";
 import { OrbitingSkills } from "./OrbitingSkills";

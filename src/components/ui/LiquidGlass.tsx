@@ -187,7 +187,7 @@ const Glass: React.FC<GlassProps> = (rawProps) => {
   }, [v.width, v.height]);
 
   const [svgFilterSupported, setSvgFilterSupported] = useState(true);
-  const [backdropFilterSupported, setBackdropFilterSupported] = useState(true);
+  const [_backdropFilterSupported, setBackdropFilterSupported] = useState(true);
 
   useEffect(() => {
     const isWebkit = /Safari/.test(navigator.userAgent) && !/Chrome/.test(navigator.userAgent);
