@@ -259,10 +259,27 @@ export const ScrollTimeline = ({
       {leftTitle || rightTitle ? (
         <div className="relative max-w-6xl mx-auto px-4 pt-8 pb-16 flex justify-between">
           <div className="w-[calc(50%-40px)]">
-            {leftTitle && <h2 className="text-3xl md:text-4xl font-bold" style={{ fontFamily: "'Boldonse', sans-serif", color: "#686868" }}>{leftTitle}</h2>}
+            {leftTitle && <h2 className="text-3xl md:text-4xl font-bold" style={{ fontFamily: "'Boldonse', sans-serif", color: "#ffffff", fontSize: "clamp(0.87rem, 1.96vw, 2.18rem)" }}>{leftTitle}</h2>}
           </div>
           <div className="w-[calc(50%-40px)]">
-            {rightTitle && <h2 className="text-3xl md:text-4xl font-bold" style={{ fontFamily: "'Boldonse', sans-serif", color: "#686868" }}>{rightTitle}</h2>}
+            {rightTitle && (
+              <h2
+                className="font-bold"
+                style={{
+                  fontFamily: "'Boldonse', sans-serif",
+                  fontSize: "clamp(0.87rem, 1.96vw, 2.18rem)",
+                  background: "linear-gradient(135deg, #22c55e, #ffffff, #a855f7, #22c55e)",
+                  backgroundSize: "300% 300%",
+                  WebkitBackgroundClip: "text",
+                  backgroundClip: "text",
+                  WebkitTextFillColor: "transparent",
+                  color: "transparent",
+                  animation: "aurora-text 5s ease infinite",
+                }}
+              >
+                {rightTitle}
+              </h2>
+            )}
           </div>
         </div>
       ) : (

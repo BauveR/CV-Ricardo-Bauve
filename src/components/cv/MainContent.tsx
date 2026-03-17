@@ -1,5 +1,3 @@
-import { LeftColumn } from "./layout/LeftColumn";
-import { RightColumn } from "./layout/RightColumn";
 import { Contact } from "./Contact";
 import { PROFILE_DATA } from "../../constants/profileData";
 import { ScrollTimeline } from "../lightswind/scroll-timeline";
@@ -61,26 +59,16 @@ export const MainContent = () => {
   const { contact } = PROFILE_DATA;
 
   return (
-    <section className="relative isolate w-full min-h-[100svh] overflow-x-hidden" style={{ background: "linear-gradient(to bottom, transparent, #A7F689)" }}>
+    <section className="relative w-full min-h-[100svh] overflow-x-hidden" style={{ background: "linear-gradient(to bottom, transparent, #A7F689)" }}>
       {/* separador por el menú fijo del App */}
       <div className="h-4 md:h-0" />
-
-      {/* Barra de contacto centrada sobre el grid */}
-      <div className="relative z-10 w-full flex justify-center px-4 py-3 mt-8">
-        <Contact {...contact} />
-      </div>
-
-      {/* Loop de skills */}
-      <div className="relative z-10 w-full mt-10 px-4">
-        <SkillsLoop />
-      </div>
 
       {/* Timeline de experiencia */}
       <div className="relative z-10 w-full max-w-4xl mx-auto mt-12">
         <ScrollTimeline
           events={timelineEvents}
-          leftTitle="estudios"
-          rightTitle="experiencia"
+          leftTitle="Estudios"
+          rightTitle="Experiencia"
           cardAlignment="alternating"
           revealAnimation="fade"
           cardVariant="outlined"
@@ -91,11 +79,94 @@ export const MainContent = () => {
         />
       </div>
 
-      {/* Contenido a pantalla completa */}
-      <div className="relative z-10 w-full max-w-full px-4 sm:px-6 lg:px-8 pb-12 overflow-x-hidden">
-        <div className="grid grid-cols-1 lg:grid-cols-[1.1fr_1fr] gap-4 sm:gap-6 lg:gap-10 lg:items-start max-w-full">
-          <LeftColumn />
-          <RightColumn />
+      {/* Barra de contacto centrada sobre el grid */}
+      <div className="relative z-10 w-full mt-32 px-4">
+        <h2
+          className="text-center text-white mb-4"
+          style={{ fontFamily: "'Boldonse', sans-serif", fontSize: "clamp(0.87rem, 1.96vw, 2.18rem)" }}
+        >
+          Contacto
+        </h2>
+        <div className="flex justify-center py-3">
+          <Contact {...contact} />
+        </div>
+      </div>
+
+      {/* Loop de skills */}
+      <div className="relative z-10 w-full mt-36 px-4">
+        <h2
+          className="text-center text-white mb-8"
+          style={{ fontFamily: "'Boldonse', sans-serif", fontSize: "clamp(0.87rem, 1.96vw, 2.18rem)" }}
+        >
+          Tecnologías y programas
+        </h2>
+        <SkillsLoop />
+      </div>
+
+      {/* Skills + Sobre mí */}
+      <div className="relative z-10 w-[60vw] mx-auto pb-20 mt-28 grid grid-cols-2 gap-x-[5vw]">
+
+        {/* Columna izquierda: Skills */}
+        <div className="flex flex-col items-end text-right">
+          <h2
+            className="mb-6"
+            style={{
+              fontFamily: "'Boldonse', sans-serif",
+              fontSize: "clamp(0.87rem, 1.96vw, 2.18rem)",
+              background: "linear-gradient(135deg, #22c55e, #ffffff, #a855f7, #22c55e)",
+              backgroundSize: "300% 300%",
+              WebkitBackgroundClip: "text",
+              backgroundClip: "text",
+              WebkitTextFillColor: "transparent",
+              color: "transparent",
+              animation: "aurora-text 5s ease infinite",
+            }}
+          >
+            Habilidades
+          </h2>
+          <ul className="space-y-1.5 text-white/80 text-sm leading-relaxed" style={{ fontFamily: "'Boldonse', sans-serif" }}>
+            {[
+              "Liderazgo de equipos creativos y tecnológicos",
+              "Gestión de personal multidisciplinario",
+              "Implementación de estrategias digitales",
+              "Manejo de crisis internas",
+              "Coordinación de eventos y proyectos",
+              "Gestión de producto digital y roadmapping",
+              "Definición de backlog, épicas e historias de usuario",
+              "Metodologías ágiles: Scrum, Kanban",
+              "Gestión de stakeholders",
+              "Integración de IA con herramientas creativas en tiempo real",
+              "Prompting y uso estratégico de IA",
+              "Integración de APIs de IA en flujos de trabajo",
+              "Frontend development: React, Javascript, Typescript",
+              "Creatividad y dirección de arte digital",
+              "UX/UI Design y prototipado",
+              "Diseño generativo con IA",
+              "Visualización de datos y motion graphics",
+              "Gestión de proyectos digitales",
+              "Storytelling con datos y tecnología",
+            ].map((skill, i) => (
+              <li key={i}>{skill}</li>
+            ))}
+          </ul>
+        </div>
+
+        {/* Columna derecha: Sobre mí */}
+        <div className="flex flex-col items-start text-left">
+          <h2
+            className="mb-6 text-white"
+            style={{ fontFamily: "'Boldonse', sans-serif", fontSize: "clamp(0.87rem, 1.96vw, 2.18rem)" }}
+          >
+            Sobre mí
+          </h2>
+          <div className="space-y-4 text-white/80 text-sm leading-relaxed">
+            <p>
+              Con más de 10 años de experiencia en diseño, gestión de productos y recién graduado del bootcamp de frontend developer en la IT Academy de Barcelona, me he dedicado a la coordinación de equipos de desarrollo y optimización de plataformas, así como a diseñar materiales fijos, vídeo, webs y ejecutar estrategias digitales. Tengo experiencia como Chief Digital Officer en el sector p2p, realizando campañas de Facebook, Google Ads y TikTok y como Art Manager encargado de festivales, exposiciones y eventos.
+            </p>
+            <p>
+              He colaborado en entornos ágiles en proyectos de comunicación y digitales complejos, coordinando y diseñando campañas digitales y analizando su impacto mediante KPIs y métricas de producto. Mi enfoque en entregas iterativas y MVP me ha permitido optimizar procesos y resolver incidencias de manera asertiva y rápida.
+            </p>
+          </div>
         </div>
       </div>
     </section>

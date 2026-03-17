@@ -1,5 +1,5 @@
 import { contactItems } from "./data/cvData";
-import { GlassButton } from "../buttons/Button";
+import { LiquidGlassButton } from "../ui/LiquidGlass";
 import { FaLinkedin } from "react-icons/fa";
 
 type Props = { email: string; phone: string; linkedin: string; github: string; web: string; };
@@ -23,12 +23,18 @@ export function Contact({ email, phone, linkedin, github, web }: Props) {
             rel="noopener noreferrer"
             className="transition-transform duration-200 hover:-translate-y-0.5 hover:scale-105"
           >
-            <GlassButton className="flex items-center gap-1 text-sm px-3 py-1 md:px-4 md:py-2 rounded-3xl whitespace-nowrap">
+            <LiquidGlassButton
+              variant="default"
+              size="sm"
+              borderRadius={24}
+              className="whitespace-nowrap"
+              textClassName="flex items-center gap-1.5 text-white font-medium text-sm"
+            >
               <span className="font-semibold text-base md:text-lg">
                 {i === 0 ? <FaLinkedin className="text-base md:text-xl" /> : it.label}
               </span>
               <span>{SHORT_LABELS[i] ?? it.value}</span>
-            </GlassButton>
+            </LiquidGlassButton>
           </a>
         ))}
         <a
@@ -37,10 +43,16 @@ export function Contact({ email, phone, linkedin, github, web }: Props) {
           rel="noopener noreferrer"
           className="transition-transform duration-200 hover:-translate-y-0.5 hover:scale-105"
         >
-          <GlassButton className="flex items-center gap-1 text-sm px-3 py-1 md:px-4 md:py-2 rounded-3xl whitespace-nowrap">
+          <LiquidGlassButton
+            variant="default"
+            size="sm"
+            borderRadius={24}
+            className="whitespace-nowrap"
+            textClassName="flex items-center gap-1.5 text-white font-medium text-sm"
+          >
             <span className="font-semibold text-base md:text-lg">📄</span>
             <span>Descargar CV</span>
-          </GlassButton>
+          </LiquidGlassButton>
         </a>
       </div>
     </div>

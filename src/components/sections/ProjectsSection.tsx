@@ -7,16 +7,23 @@ import { PortafolioGrid } from "../portafolio/PortafolioGrid";
 type Props = {
   sectionRef: RefObject<HTMLElement | null>;
   triggerRef: RefObject<HTMLElement | null>;
+  cvRef: RefObject<HTMLElement | null>;
 };
 
-export function ProjectsSection({ sectionRef, triggerRef }: Props) {
+export function ProjectsSection({ sectionRef, triggerRef, cvRef }: Props) {
   const { scrollYProgress } = useScroll({
     target: sectionRef,
-    offset: ["start end", "end start"],
+    offset: ["start 150%", "end start"],
   });
 
   const rawX = useTransform(scrollYProgress, [0, 1], ["80vw", "-120vw"]);
   const x = useSpring(rawX, { stiffness: 40, damping: 20 });
+
+  const rawImgX = useTransform(scrollYProgress, [0, 0.2], ["-120vw", "0vw"]);
+  const imgScrollX = useSpring(rawImgX, { stiffness: 80, damping: 20, mass: 0.3 });
+
+  const rawTitleX = useTransform(scrollYProgress, [0, 0.2], ["120vw", "0vw"]);
+  const titleScrollX = useSpring(rawTitleX, { stiffness: 80, damping: 20, mass: 0.3 });
 
   return (
     <section
@@ -25,26 +32,54 @@ export function ProjectsSection({ sectionRef, triggerRef }: Props) {
       className="relative w-full"
       style={{ background: "linear-gradient(to bottom, #5249FF, #ffffff)", minHeight: "80vh" }}
     >
-      <ScrollOrb triggerRef={triggerRef} sectionRef={sectionRef} />
+      <ScrollOrb triggerRef={triggerRef} sectionRef={sectionRef} cvRef={cvRef} />
 
       {/* Logos */}
       <div className="absolute left-1/2 -translate-x-1/2" style={{ top: "10%", width: "28%", zIndex: 20 }}>
         <LogoRow />
       </div>
 
-      {/* Título */}
-      <p
-        className="absolute left-1/2 -translate-x-1/2 text-white select-none"
-        style={{
-          top: "25%",
-          zIndex: 20,
-          fontFamily: "'Boldonse', sans-serif",
-          fontSize: "clamp(0.67rem, 1.51vw, 1.68rem)",
-          whiteSpace: "nowrap",
+      {/* Imagen decorativa — entra desde la izquierda, parallax scroll hacia izquierda */}
+      <motion.div
+        className="absolute left-1/2 -translate-x-1/2 pointer-events-none select-none"
+        style={{ top: "18%", zIndex: 20 }}
+        initial={{ opacity: 0, filter: "blur(20px)" }}
+        animate={{ opacity: 1, filter: "blur(0px)" }}
+        transition={{
+          opacity: { duration: 1.4, ease: "easeOut" },
+          filter: { duration: 1.4, ease: "easeOut" },
         }}
       >
-        proyectos
-      </p>
+        <motion.img
+          src="https://res.cloudinary.com/dmweipuof/image/upload/v1773766074/cute_bauve4_puoexc.png"
+          alt=""
+          style={{ x: imgScrollX, width: "clamp(80px, 12vw, 160px)" }}
+        />
+      </motion.div>
+
+      {/* Título — entra desde la derecha, parallax scroll hacia derecha */}
+      <motion.div
+        className="absolute left-1/2 -translate-x-1/2"
+        style={{ top: "25%", zIndex: 20 }}
+        initial={{ opacity: 0, filter: "blur(20px)" }}
+        animate={{ opacity: 1, filter: "blur(0px)" }}
+        transition={{
+          opacity: { duration: 1.4, ease: "easeOut" },
+          filter: { duration: 1.4, ease: "easeOut" },
+        }}
+      >
+        <motion.p
+          className="text-white select-none"
+          style={{
+            x: titleScrollX,
+            fontFamily: "'Boldonse', sans-serif",
+            fontSize: "clamp(0.87rem, 1.96vw, 2.18rem)",
+            whiteSpace: "nowrap",
+          }}
+        >
+          Proyectos
+        </motion.p>
+      </motion.div>
 
       {/* Grid de portafolio con entrada y parallax */}
       <div style={{ paddingTop: "39%", position: "relative", zIndex: 2, marginBottom: "-40vh" }}>
