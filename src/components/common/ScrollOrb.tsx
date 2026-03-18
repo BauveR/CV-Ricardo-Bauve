@@ -55,7 +55,7 @@ export const ScrollOrb = ({ triggerRef, sectionRef, cvRef }: Props) => {
       const phase1 = norm(wp, 0, 0.1) * (isMobile ? dims.h * 0.5 : isTablet ? dims.h * 0.3 : dims.h * 0.5);
       const phase3 = norm(pp, 0.25, 0.60) * (isMobile ? dims.h * 1.1 : isTablet ? dims.h * 0.9 : dims.h * 1.5);
       // Fase 4: baja hasta cp=0.5 (desktop) / cp=0.35 (mobile)
-      const phase4 = norm(cp, 0, isMobile ? 0.35 : 0.5) * (isMobile ? dims.h * 2.8 : dims.h * 2.1);
+      const phase4 = norm(cp, 0, isMobile ? 0.35 : 0.5) * (isMobile ? dims.h * 2.1 : dims.h * 2.1);
       // Fase 5 — solo desktop/tablet
       const phase5 = !isMobile ? norm(cp, 0.6, 1.0) * dims.h * 1.5 : 0;
       // Fase 6 mobile: baja desde fase 4 hasta justo antes del footer
