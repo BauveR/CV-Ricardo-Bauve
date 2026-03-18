@@ -78,6 +78,11 @@ export const ScrollOrb = ({ triggerRef, sectionRef, cvRef }: Props) => {
       // Fase 4: +20% hasta cp=0.5
       const cpNorm4 = Math.min(Math.max(cp / 0.5, 0), 1);
       const scaleAfterPhase4 = scaleAfterPhase3 + cpNorm4 * (scaleAfterPhase3 * 0.20);
+      // Mobile: crece más en transición fase 4→6 (cp 0.35→0.95)
+      if (isMobile) {
+        const cpNorm6 = Math.min(Math.max((cp - 0.35) / 0.6, 0), 1);
+        return scaleAfterPhase4 + cpNorm6 * (scaleAfterPhase4 * 0.80);
+      }
       // Fase 5 (hold cp 0.5→0.6, luego +30% cp 0.6→1.0)
       const cpNorm5 = Math.min(Math.max((cp - 0.6) / 0.4, 0), 1);
       return scaleAfterPhase4 + cpNorm5 * (scaleAfterPhase4 * 0.30);

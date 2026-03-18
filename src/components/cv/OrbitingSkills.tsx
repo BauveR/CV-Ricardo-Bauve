@@ -138,7 +138,7 @@ const INNER = 700;
 
 export function OrbitingSkills() {
   const [time, setTime] = useState(0);
-  const [paused, setPaused] = useState(false);
+  const paused = false;
   const [inView, setInView] = useState(false);
   const containerRef = React.useRef<HTMLDivElement>(null);
 
@@ -198,8 +198,6 @@ export function OrbitingSkills() {
     >
       <div
         style={{ width: INNER, height: INNER, transform: `scale(${scale})`, transformOrigin: "center" }}
-        onMouseEnter={() => setPaused(true)}
-        onMouseLeave={() => setPaused(false)}
       >
         <div className="relative w-full h-full flex items-center justify-center">
 
