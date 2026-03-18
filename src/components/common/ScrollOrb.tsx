@@ -48,6 +48,9 @@ export const ScrollOrb = ({ triggerRef, sectionRef, cvRef }: Props) => {
   const smoothstep = (x: number) => x * x * (3 - 2 * x);
   const norm = (v: number, min: number, max: number) =>
     smoothstep(Math.min(Math.max((v - min) / (max - min), 0), 1));
+  // Interpolación lineal — sin derivada cero en extremos, ida y vuelta simétricas
+  const lerp = (v: number, min: number, max: number) =>
+    Math.min(Math.max((v - min) / (max - min), 0), 1);
 
   const rawY = useTransform(
     [welcomeProgress, projectsProgress, cvProgress] as const,
@@ -55,11 +58,11 @@ export const ScrollOrb = ({ triggerRef, sectionRef, cvRef }: Props) => {
       const phase1 = norm(wp, 0, 0.1) * (isMobile ? dims.h * 0.5 : isTablet ? dims.h * 0.3 : dims.h * 0.5);
       const phase3 = norm(pp, 0.25, 0.60) * (isMobile ? dims.h * 1.1 : isTablet ? dims.h * 0.9 : dims.h * 1.5);
       // Fase 4: baja hasta cp=0.5 (desktop) / cp=0.35 (mobile)
-      const phase4 = norm(cp, 0, isMobile ? 0.35 : 0.5) * (isMobile ? dims.h * 2.5 : dims.h * 2.1);
+      const phase4 = (isMobile ? lerp(cp, 0, 0.35) : norm(cp, 0, 0.5)) * (isMobile ? dims.h * 2.5 : dims.h * 2.1);
       // Fase 5 — solo desktop/tablet
       const phase5 = !isMobile ? norm(cp, 0.6, 1.0) * dims.h * 1.5 : 0;
-      // Fase 6 mobile: baja desde fase 4 hasta justo antes del footer
-      const phase6 = isMobile ? norm(cp, 0.35, 0.95) * dims.h * 2.7 : 0;
+      // Fase 6 mobile: lineal para ida/vuelta simétrica
+      const phase6 = isMobile ? lerp(cp, 0.35, 0.95) * dims.h * 2.7 : 0;
       return phase1 + phase3 + phase4 + phase5 + phase6;
     }
   );
