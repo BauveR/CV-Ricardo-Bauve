@@ -62,7 +62,7 @@ export const ScrollOrb = ({ triggerRef, sectionRef, cvRef }: Props) => {
       // Fase 5 — solo desktop/tablet
       const phase5 = !isMobile ? norm(cp, 0.6, 1.0) * dims.h * 1.5 : 0;
       // Fase 6 mobile: lineal para ida/vuelta simétrica
-      const phase6 = isMobile ? lerp(cp, 0.35, 0.95) * dims.h * 2.7 : 0;
+      const phase6 = isMobile ? lerp(cp, 0.35, 1.2) * dims.h * 2.7 : 0;
       return phase1 + phase3 + phase4 + phase5 + phase6;
     }
   );
