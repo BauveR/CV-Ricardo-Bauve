@@ -139,6 +139,20 @@ const INNER = 700;
 export function OrbitingSkills() {
   const [time, setTime] = useState(0);
   const [paused, setPaused] = useState(false);
+  const [inView, setInView] = useState(false);
+  const containerRef = React.useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    const el = containerRef.current;
+    if (!el) return;
+    const observer = new IntersectionObserver(
+      ([entry]) => setInView(entry.isIntersecting),
+      { threshold: 0.05 }
+    );
+    observer.observe(el);
+    return () => observer.disconnect();
+  }, []);
+
   const calcSize = (w: number) => {
     const base = Math.min(w - 40, INNER);
     return w < 768 ? Math.min(base * 1.3, INNER) : base;
@@ -155,7 +169,7 @@ export function OrbitingSkills() {
   }, []);
 
   useEffect(() => {
-    if (paused) return;
+    if (paused || !inView) return;
     let rafId: number;
     let last = performance.now();
     const tick = (now: number) => {
@@ -165,7 +179,7 @@ export function OrbitingSkills() {
     };
     rafId = requestAnimationFrame(tick);
     return () => cancelAnimationFrame(rafId);
-  }, [paused]);
+  }, [paused, inView]);
 
   const scale = size / INNER;
 
@@ -178,6 +192,7 @@ export function OrbitingSkills() {
 
   return (
     <div
+      ref={containerRef}
       className="flex items-center justify-center w-full"
       style={{ height: size }}
     >
