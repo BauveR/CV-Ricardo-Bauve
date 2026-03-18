@@ -64,7 +64,7 @@ export const ScrollOrb = ({ triggerRef, sectionRef, cvRef }: Props) => {
     }
   );
 
-  const rawBlur = useTransform(welcomeProgress, [0, 0.05, 0.1], [0, 45, 18]);
+  const rawBlur = useTransform(welcomeProgress, [0, 0.05, 0.1], [0, isMobile ? 20 : 45, isMobile ? 8 : 18]);
   const filter  = useTransform(rawBlur, (v) => `blur(${v}px)`);
 
   const rawX = useTransform(welcomeProgress, [0, 0.1], [0, 0]);
