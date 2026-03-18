@@ -203,9 +203,12 @@ export default function NavbarSections({ active, onGo }: Props) {
               </div>
 
               <img
-                src="https://res.cloudinary.com/dmweipuof/image/upload/f_auto,q_auto,w_200/v1773765020/cute_bauve_tblam7.png"
+                src="https://res.cloudinary.com/dmweipuof/image/upload/f_auto,q_auto,w_240/v1773765020/cute_bauve_tblam7.png"
                 alt=""
-                className="absolute bottom-0 left-0 w-full object-contain pointer-events-none"
+                className="absolute left-0 w-full object-contain pointer-events-none"
+                style={{ bottom: "4rem" }}
+                loading="lazy"
+                decoding="async"
               />
             </motion.aside>
           </>
