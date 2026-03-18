@@ -17,10 +17,10 @@ export const Footer = () => {
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-6 items-center text-center md:text-left">
           {/* Email */}
           <div className="flex flex-col gap-2">
-            <span className="text-xs text-stone-400 font-semibold uppercase tracking-wider">Email</span>
+            <span className="text-xs text-white font-bold uppercase tracking-wider">Email</span>
             <a
               href={`mailto:${contact.email}`}
-              className="text-sm text-gray-400 hover:text-gray-500 transition-colors duration-300"
+              className="text-sm text-white font-bold hover:text-white/80 transition-colors duration-300"
             >
               {contact.email}
             </a>
@@ -28,10 +28,10 @@ export const Footer = () => {
 
           {/* Teléfono */}
           <div className="flex flex-col gap-2">
-            <span className="text-xs text-stone-400 font-semibold uppercase tracking-wider">Teléfono</span>
+            <span className="text-xs text-white font-bold uppercase tracking-wider">Teléfono</span>
             <a
               href={`tel:${contact.phone}`}
-              className="text-sm text-gray-400 hover:text-gray-500 transition-colors duration-300"
+              className="text-sm text-white font-bold hover:text-white/80 transition-colors duration-300"
             >
               {contact.phone}
             </a>
@@ -39,12 +39,12 @@ export const Footer = () => {
 
           {/* LinkedIn */}
           <div className="flex flex-col gap-2">
-            <span className="text-xs text-stone-400 font-semibold uppercase tracking-wider">LinkedIn</span>
+            <span className="text-xs text-white font-bold uppercase tracking-wider">LinkedIn</span>
             <a
               href={contact.linkedin}
               target="_blank"
               rel="noopener noreferrer"
-              className="text-sm text-gray-400 hover:text-gray-500 transition-colors duration-300"
+              className="text-sm text-white font-bold hover:text-white/80 transition-colors duration-300"
             >
               {contact.linkedin.replace('https://', '')}
             </a>
@@ -52,12 +52,12 @@ export const Footer = () => {
 
           {/* GitHub */}
           <div className="flex flex-col gap-2">
-            <span className="text-xs text-stone-400 font-semibold uppercase tracking-wider">GitHub</span>
+            <span className="text-xs text-white font-bold uppercase tracking-wider">GitHub</span>
             <a
               href={contact.github}
               target="_blank"
               rel="noopener noreferrer"
-              className="text-sm text-gray-400 hover:text-gray-500 transition-colors duration-300 flex items-center gap-2 justify-center md:justify-start"
+              className="text-sm text-white font-bold hover:text-white/80 transition-colors duration-300 flex items-center gap-2 justify-center md:justify-start"
             >
               <FaGithub className="text-base" />
               <span>{contact.github.replace('https://', '')}</span>
@@ -67,7 +67,7 @@ export const Footer = () => {
 
         {/* Copyright */}
         <div className="mt-6 pt-6 text-center">
-          <p className="text-xs text-stone-400">
+          <p className="text-xs text-white font-bold">
             © {new Date().getFullYear()} Ricardo Bauve. Todos los derechos reservados.
           </p>
         </div>
