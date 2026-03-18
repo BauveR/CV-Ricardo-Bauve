@@ -146,8 +146,11 @@ export function OrbitingSkills() {
     const el = containerRef.current;
     if (!el) return;
     const observer = new IntersectionObserver(
-      ([entry]) => setInView(entry.isIntersecting),
-      { threshold: 0.05 }
+      ([entry]) => {
+        if (entry.intersectionRatio >= 0.4) setInView(true);
+        else if (entry.intersectionRatio < 0.1) setInView(false);
+      },
+      { threshold: [0.1, 0.4] }
     );
     observer.observe(el);
     return () => observer.disconnect();
