@@ -62,15 +62,13 @@ export const ScrollOrb = ({ triggerRef, sectionRef, cvRef }: Props) => {
       // Fase 5 — solo desktop/tablet
       const phase5 = !isMobile ? norm(cp, 0.6, 1.0) * dims.h * 1.5 : 0;
       // Fase 6 mobile: lineal para ida/vuelta simétrica
-      const phase6 = isMobile ? lerp(cp, 0.35, 1.2) * dims.h * 3.1 : 0;
+      const phase6 = isMobile ? lerp(cp, 0.35, 1.2) * dims.h * 4.2 : 0;
       return phase1 + phase3 + phase4 + phase5 + phase6;
     }
   );
 
-  const rawBlur = useTransform(welcomeProgress, [0, 0.05, 0.1], [0, isMobile ? 20 : 45, isMobile ? 8 : 18]);
+  const rawBlur = useTransform(welcomeProgress, [0, 0.05, 0.1], [0, 45, 18]);
   const filter  = useTransform(rawBlur, (v) => `blur(${v}px)`);
-
-  const rawX = useTransform(welcomeProgress, [0, 0.1], [0, 0]);
 
   const rawScale = useTransform(
     [welcomeProgress, projectsProgress, cvProgress] as const,
@@ -104,9 +102,8 @@ export const ScrollOrb = ({ triggerRef, sectionRef, cvRef }: Props) => {
   // #0000FF aparece cv 0.6→0.8
   const deepBlueOpacity = useTransform(cvProgress, [0.6, 0.8], [0, 1]);
 
-  const x     = useSpring(rawX,     { stiffness: 35, damping: 18 });
-  const y     = useSpring(rawY,     { stiffness: isMobile ? 180 : 35, damping: isMobile ? 40 : 18, restDelta: isMobile ? 0.5 : 0.01, restSpeed: isMobile ? 0.5 : 0.01 });
-  const scale = useSpring(rawScale, { stiffness: 35, damping: 18 });
+  const y     = useSpring(rawY,     { stiffness: isMobile ? 180 : 35, damping: isMobile ? 40 : 18, restDelta: isMobile ? 0.5 : 2, restSpeed: isMobile ? 0.5 : 2 });
+  const scale = useSpring(rawScale, { stiffness: 35, damping: 18, restDelta: 2, restSpeed: 2 });
 
   return (
     <div
@@ -122,7 +119,7 @@ export const ScrollOrb = ({ triggerRef, sectionRef, cvRef }: Props) => {
       }}
     >
       <motion.div
-        style={{ x, y, scale, filter, width: ORB_SIZE, height: ORB_SIZE, position: "relative" }}
+        style={{ y, scale, ...(isMobile ? {} : { filter }), width: ORB_SIZE, height: ORB_SIZE, position: "relative" }}
       >
         <motion.div style={{ opacity: orangeOpacity, position: "absolute", inset: 0 }}>
           <PulseOrb size={ORB_SIZE} color="#FF9925" />

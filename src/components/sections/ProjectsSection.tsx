@@ -22,13 +22,13 @@ export function ProjectsSection({ sectionRef, triggerRef, cvRef }: Props) {
   });
 
   const rawX = useTransform(scrollYProgress, [0, 1], ["80vw", "-120vw"]);
-  const x = useSpring(rawX, { stiffness: 40, damping: 20 });
+  const x = useSpring(rawX, { stiffness: 40, damping: 20, restDelta: 2, restSpeed: 2 });
 
   const rawImgX = useTransform(scrollYProgress, [0, 0.2], ["-120vw", "0vw"]);
-  const imgScrollX = useSpring(rawImgX, { stiffness: 80, damping: 20, mass: 0.3 });
+  const imgScrollX = useSpring(rawImgX, { stiffness: 80, damping: 20, mass: 0.3, restDelta: 2, restSpeed: 2 });
 
   const rawTitleX = useTransform(scrollYProgress, [0, 0.2], ["120vw", "0vw"]);
-  const titleScrollX = useSpring(rawTitleX, { stiffness: 80, damping: 20, mass: 0.3 });
+  const titleScrollX = useSpring(rawTitleX, { stiffness: 80, damping: 20, mass: 0.3, restDelta: 2, restSpeed: 2 });
 
   return (
     <section

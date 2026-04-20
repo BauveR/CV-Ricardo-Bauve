@@ -8,13 +8,15 @@ type Props = {
 export const PulseOrb = ({ size = 120, color = "#FF9925" }: Props) => {
   return (
     <motion.div
-      style={{ width: size, height: size, borderRadius: "50%" }}
+      style={{
+        width: size,
+        height: size,
+        borderRadius: "50%",
+        background: `radial-gradient(circle, ${color} 0%, ${color}00 65%)`,
+      }}
       animate={{
-        background: [
-          `radial-gradient(circle, ${color} 0%, ${color}00 55%)`,
-          `radial-gradient(circle, ${color} 25%, ${color}00 75%)`,
-          `radial-gradient(circle, ${color} 0%, ${color}00 55%)`,
-        ],
+        scale: [0.88, 1.08, 0.88],
+        opacity: [0.85, 1, 0.85],
       }}
       transition={{
         duration: 2.8,
