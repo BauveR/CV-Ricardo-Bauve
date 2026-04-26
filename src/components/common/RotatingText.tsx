@@ -1,8 +1,14 @@
 import { forwardRef, useCallback, useEffect, useImperativeHandle, useMemo, useState } from "react";
-import { motion, AnimatePresence, type Transition, type Target } from "framer-motion";
+import {
+  motion,
+  AnimatePresence,
+  type Transition,
+  type TargetAndTransition,
+  type VariantLabels,
+} from "framer-motion";
 import "./RotatingText.css";
 
-function cn(...classes: (string | undefined | false)[]) {
+function cn(...classes: (string | undefined | false | null)[]) {
   return classes.filter(Boolean).join(" ");
 }
 
@@ -13,12 +19,16 @@ export type RotatingTextRef = {
   reset: () => void;
 };
 
+type WordObj = { characters: string[]; needsSpace: boolean };
+
+type AnimationTarget = TargetAndTransition | VariantLabels;
+
 type Props = {
   texts: string[];
   rotationInterval?: number;
-  initial?: Target;
-  animate?: Target;
-  exit?: Target;
+  initial?: AnimationTarget;
+  animate?: AnimationTarget;
+  exit?: AnimationTarget;
   animatePresenceMode?: "wait" | "sync" | "popLayout";
   animatePresenceInitial?: boolean;
   staggerDuration?: number;
@@ -31,7 +41,6 @@ type Props = {
   mainClassName?: string;
   splitLevelClassName?: string;
   elementLevelClassName?: string;
-  [key: string]: unknown;
 };
 
 const RotatingText = forwardRef<RotatingTextRef, Props>((props, ref) => {
@@ -53,7 +62,6 @@ const RotatingText = forwardRef<RotatingTextRef, Props>((props, ref) => {
     mainClassName,
     splitLevelClassName,
     elementLevelClassName,
-    ...rest
   } = props;
 
   const [currentTextIndex, setCurrentTextIndex] = useState(0);
@@ -66,13 +74,12 @@ const RotatingText = forwardRef<RotatingTextRef, Props>((props, ref) => {
     return Array.from(text);
   };
 
-  const elements = useMemo(() => {
+  const elements = useMemo((): WordObj[] => {
     const currentText = texts[currentTextIndex];
     if (splitBy === "characters") {
-      const words = currentText.split(" ");
-      return words.map((word, i) => ({
+      return currentText.split(" ").map((word, i, arr) => ({
         characters: splitIntoCharacters(word),
-        needsSpace: i !== words.length - 1,
+        needsSpace: i !== arr.length - 1,
       }));
     }
     if (splitBy === "words") {
@@ -94,7 +101,7 @@ const RotatingText = forwardRef<RotatingTextRef, Props>((props, ref) => {
   }, [texts, currentTextIndex, splitBy]);
 
   const getStaggerDelay = useCallback(
-    (index: number, totalChars: number) => {
+    (index: number, totalChars: number): number => {
       if (staggerFrom === "first") return index * staggerDuration;
       if (staggerFrom === "last") return (totalChars - 1 - index) * staggerDuration;
       if (staggerFrom === "center") {
@@ -146,7 +153,9 @@ const RotatingText = forwardRef<RotatingTextRef, Props>((props, ref) => {
     if (currentTextIndex !== 0) handleIndexChange(0);
   }, [currentTextIndex, handleIndexChange]);
 
-  useImperativeHandle(ref, () => ({ next, previous, jumpTo, reset }), [next, previous, jumpTo, reset]);
+  useImperativeHandle(ref, () => ({ next, previous, jumpTo, reset }), [
+    next, previous, jumpTo, reset,
+  ]);
 
   useEffect(() => {
     if (!auto) return;
@@ -155,7 +164,11 @@ const RotatingText = forwardRef<RotatingTextRef, Props>((props, ref) => {
   }, [next, rotationInterval, auto]);
 
   return (
-    <motion.span className={cn("text-rotate", mainClassName)} {...(rest as object)} layout transition={transition}>
+    <motion.span
+      className={cn("text-rotate", mainClassName)}
+      layout
+      transition={transition}
+    >
       <span className="text-rotate-sr-only">{texts[currentTextIndex]}</span>
       <AnimatePresence mode={animatePresenceMode} initial={animatePresenceInitial}>
         <motion.span
@@ -174,9 +187,9 @@ const RotatingText = forwardRef<RotatingTextRef, Props>((props, ref) => {
                 {wordObj.characters.map((char, charIndex) => (
                   <motion.span
                     key={charIndex}
-                    initial={initial as object}
-                    animate={animate as object}
-                    exit={exit as object}
+                    initial={initial as TargetAndTransition}
+                    animate={animate as TargetAndTransition}
+                    exit={exit as TargetAndTransition}
                     transition={{
                       ...(transition as object),
                       delay: getStaggerDelay(previousCharsCount + charIndex, totalChars),
