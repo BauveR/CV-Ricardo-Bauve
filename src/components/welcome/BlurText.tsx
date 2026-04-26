@@ -1,15 +1,18 @@
-import { motion } from 'framer-motion';
+import { motion, type TargetAndTransition } from 'framer-motion';
 import { useEffect, useRef, useState, useMemo } from 'react';
 
 type AnimationSnapshot = { filter?: string; opacity?: number; y?: number };
 
-const buildKeyframes = (from: AnimationSnapshot, steps: AnimationSnapshot[]) => {
+const buildKeyframes = (from: AnimationSnapshot, steps: AnimationSnapshot[]): TargetAndTransition => {
   const keys = new Set([...Object.keys(from), ...steps.flatMap(s => Object.keys(s))]);
-  const keyframes: Record<string, unknown[]> = {};
+  const keyframes: Record<string, (string | number | undefined)[]> = {};
   keys.forEach(k => {
-    keyframes[k] = [(from as Record<string, unknown>)[k], ...steps.map(s => (s as Record<string, unknown>)[k])];
+    keyframes[k] = [
+      (from as Record<string, string | number | undefined>)[k],
+      ...steps.map(s => (s as Record<string, string | number | undefined>)[k]),
+    ];
   });
-  return keyframes;
+  return keyframes as TargetAndTransition;
 };
 
 interface BlurTextProps {
