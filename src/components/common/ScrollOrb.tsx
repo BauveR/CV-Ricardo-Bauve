@@ -115,7 +115,7 @@ export const ScrollOrb = ({ triggerRef, sectionRef, cvRef }: Props) => {
         display: "flex",
         justifyContent: "center",
         pointerEvents: "none",
-        zIndex: 15,
+        zIndex: 5,
       }}
     >
       <motion.div

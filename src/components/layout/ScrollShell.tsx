@@ -39,7 +39,7 @@ export function ScrollShell() {
   const portafolioMatch = useMatch("/portafolio/:id");
 
   return (
-    <div className="relative min-h-screen bg-white max-w-full" style={{ overflowY: "clip" }}>
+    <div className="relative min-h-screen max-w-full" style={{ overflowY: "clip", background: "#5249FF" }}>
       <NavbarSections active={activeSection} onGo={(id) => scrollTo(id as AppSectionId)} />
 
       <WelcomeSection sectionRef={welcomeRef} />

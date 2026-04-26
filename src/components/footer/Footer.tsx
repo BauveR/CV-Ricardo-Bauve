@@ -10,7 +10,7 @@ export const Footer = () => {
       role="contentinfo"
     >
       {/* Fondo verde — capa propia para que el orb pueda quedar encima */}
-      <div className="absolute inset-0 z-10" style={{ background: "#0f172a" }} />
+      <div className="absolute inset-0 z-[2]" style={{ background: "#0f172a" }} />
 
       {/* Contenido — por encima del orb */}
       <div className="relative z-20 w-full max-w-screen-2xl mx-auto px-10 py-12">
