@@ -8,9 +8,12 @@ import { experienceList } from "./data/cvData";
 
 const ALIGNMENTS: ("left" | "right" | "both")[] = ["both", "both", "both", "right", "right", "left"];
 
-const ITEM_EXTRAS: Record<number, { iconUrl?: string; href?: string; noIcon?: boolean; right?: object }> = {
+const ITEM_EXTRAS: Record<number, { iconUrl?: string; iconUrls?: string[]; href?: string; noIcon?: boolean; right?: object }> = {
   0: {
-    iconUrl: "https://res.cloudinary.com/dmweipuof/image/upload/f_auto,q_auto,w_120/v1773087621/logo_1_litytg.png",
+    iconUrls: [
+      "https://res.cloudinary.com/dmweipuof/image/upload/f_auto,q_auto,w_120/v1773087621/logo_1_litytg.png",
+      "https://www.upc.edu/++theme++homeupc/assets/images/Logo.svg",
+    ],
     href: "https://www.barcelonactiva.cat/es/itacademy",
     right: {
       year: "2026",
@@ -75,7 +78,8 @@ export const MainContent = () => {
   }, [skillsInView]);
 
   return (
-    <section className="relative w-full min-h-[100svh] [overflow-x:clip]" style={{ background: "linear-gradient(to bottom, transparent, #A7F689)" }}>
+    <section className="relative w-full min-h-[100svh] [overflow-x:clip]" style={{ background: "linear-gradient(to bottom, #5249FF, #0f172a)" }}>
+      <div className="w-full max-w-screen-2xl mx-auto">
       {/* separador por el menú fijo del App */}
       <div className="h-4 md:h-0" />
 
@@ -98,8 +102,8 @@ export const MainContent = () => {
       {/* Barra de contacto centrada sobre el grid */}
       <div className="relative z-20 w-full mt-32 px-4">
         <h2
-          className="text-center text-white mb-4"
-          style={{ fontFamily: "'Boldonse', sans-serif", fontSize: "clamp(1.305rem, 2.94vw, 3.27rem)" }}
+          className="text-center text-zinc-200 mb-4"
+          style={{ fontFamily: "'Boldonse', sans-serif", fontSize: "clamp(0.87rem, 1.96vw, 2.18rem)" }}
         >
           Contacto
         </h2>
@@ -111,8 +115,8 @@ export const MainContent = () => {
       {/* Loop de skills */}
       <div className="relative z-20 w-full mt-36 px-4">
         <h2
-          className="text-center text-white mb-8"
-          style={{ fontFamily: "'Boldonse', sans-serif", fontSize: "clamp(1.305rem, 2.94vw, 3.27rem)" }}
+          className="text-center text-zinc-200 mb-8"
+          style={{ fontFamily: "'Boldonse', sans-serif", fontSize: "clamp(0.87rem, 1.96vw, 2.18rem)" }}
         >
           Tecnologías y programas
         </h2>
@@ -120,7 +124,7 @@ export const MainContent = () => {
       </div>
 
       {/* Skills + Sobre mí */}
-      <div className="relative z-20 w-[90vw] md:w-[60vw] mx-auto pb-20 mt-28 grid grid-cols-1 md:grid-cols-2 gap-x-[5vw] gap-y-12">
+      <div className="relative z-20 w-[90vw] md:w-[60vw] max-w-4xl mx-auto pb-20 mt-28 grid grid-cols-1 md:grid-cols-2 gap-x-[5vw] gap-y-12">
 
         {/* Columna izquierda: Skills */}
         <div className="flex flex-col items-start text-left md:items-end md:text-right">
@@ -128,7 +132,7 @@ export const MainContent = () => {
             className="mb-6"
             style={{
               fontFamily: "'Boldonse', sans-serif",
-              fontSize: "clamp(1.305rem, 2.94vw, 3.27rem)",
+              fontSize: "clamp(0.87rem, 1.96vw, 2.18rem)",
               background: "linear-gradient(135deg, #22c55e, #ffffff, #a855f7, #22c55e)",
               backgroundSize: "300% 300%",
               WebkitBackgroundClip: "text",
@@ -141,7 +145,7 @@ export const MainContent = () => {
             Habilidades
           </h2>
           <div ref={skillsRef} />
-          <ul className="space-y-1.5 text-white/80 leading-relaxed" style={{ fontFamily: "'Boldonse', sans-serif", fontSize: "calc(0.875rem * 0.72)" }}>
+          <ul className="space-y-1.5 text-zinc-200/80 leading-relaxed" style={{ fontFamily: "'Boldonse', sans-serif", fontSize: "calc(0.875rem * 0.72)" }}>
             {[
               "Liderazgo de equipos creativos y tecnológicos",
               "Gestión de personal multidisciplinario",
@@ -181,12 +185,12 @@ export const MainContent = () => {
         {/* Columna derecha: Sobre mí */}
         <div className="flex flex-col items-start text-left">
           <h2
-            className="mb-6 text-white"
-            style={{ fontFamily: "'Boldonse', sans-serif", fontSize: "clamp(1.305rem, 2.94vw, 3.27rem)" }}
+            className="mb-6 text-zinc-200"
+            style={{ fontFamily: "'Boldonse', sans-serif", fontSize: "clamp(0.87rem, 1.96vw, 2.18rem)" }}
           >
             Sobre mí
           </h2>
-          <div className="space-y-4 text-white/80 leading-relaxed font-bold" style={{ fontSize: "calc(0.875rem * 1.1)" }}>
+          <div className="space-y-4 text-zinc-200/80 leading-relaxed font-normal" style={{ fontSize: "calc(0.875rem * 1.1)" }}>
             <p>
               Con más de 10 años de experiencia en diseño, gestión de productos y recién graduado del bootcamp de frontend developer en la IT Academy de Barcelona, me he dedicado a la coordinación de equipos de desarrollo y optimización de plataformas, así como a diseñar materiales fijos, vídeo, webs y ejecutar estrategias digitales. Tengo experiencia como Chief Digital Officer en el sector p2p, realizando campañas de Facebook, Google Ads y TikTok y como Art Manager encargado de festivales, exposiciones y eventos.
             </p>
@@ -195,6 +199,7 @@ export const MainContent = () => {
             </p>
           </div>
         </div>
+      </div>
       </div>
     </section>
   );

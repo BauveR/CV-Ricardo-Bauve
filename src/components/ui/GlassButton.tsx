@@ -18,10 +18,9 @@ const glassButtonVariants = cva(
     variants: {
       variant: {
         primary: [
-          "bg-gradient-to-r from-cyan-500/80 via-blue-500/80 to-purple-500/80",
-          "border-white/30 text-white",
-          "shadow-[0_4px_20px_rgba(59,130,246,0.4)]",
-          "hover:shadow-[0_6px_28px_rgba(59,130,246,0.6)]",
+          "bg-white/5 border-white/10 text-white/50",
+          "hover:bg-white/15 hover:text-white",
+          "shadow-none",
         ],
         secondary: [
           "bg-white/10",

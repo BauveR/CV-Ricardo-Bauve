@@ -11,6 +11,7 @@ export function CVSection({ sectionRef }: Props) {
       id="cv"
       ref={sectionRef}
       className="min-h-screen px-0 scroll-mt-24 relative"
+      style={{ background: "#5249FF" }}
     >
       <div className="w-full relative">
         <MainContent />

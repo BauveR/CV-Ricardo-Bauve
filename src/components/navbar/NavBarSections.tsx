@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { AnimatePresence, motion } from "framer-motion";
-const navLogo = "https://res.cloudinary.com/dmweipuof/image/upload/f_auto,q_auto/v1773016274/Ricardo_bauve_2026-02_br99sv.svg";
+const navLogo = "https://res.cloudinary.com/dmweipuof/image/upload/v1777212823/Ricardo_bauve_barcelona_designer_frontend-27_w9oajj.png";
 
 type SectionId = "welcome" | "projects" | "cv";
 
@@ -83,6 +83,7 @@ export default function NavbarSections({ active, onGo }: Props) {
 
 
         <nav className="w-full px-10">
+          <div className="relative max-w-screen-2xl mx-auto">
           <div className="grid grid-cols-3 items-center h-14 md:h-16">
             {/* LEFT: Burger (móvil) */}
             <div className="flex items-center gap-3">
@@ -99,11 +100,12 @@ export default function NavbarSections({ active, onGo }: Props) {
               </button>
             </div>
 
-            {/* CENTER: logo centrado absolutamente en el header */}
+            {/* CENTER: vacío */}
             <div />
 
+            {/* Logo — absolute dentro del contenedor max-width */}
             <motion.div
-              className="absolute left-1/2 -translate-x-1/2 flex items-center"
+              className="absolute left-0 flex items-center pl-4"
               style={{ top: 0, bottom: 0, pointerEvents: showTitles ? "auto" : "none" }}
               initial={{ opacity: 0 }}
               animate={{ opacity: showTitles ? 1 : 0 }}
@@ -147,6 +149,7 @@ export default function NavbarSections({ active, onGo }: Props) {
               </div>
             </div>
           </div>
+          </div>
         </nav>
       </header>
 
@@ -163,7 +166,7 @@ export default function NavbarSections({ active, onGo }: Props) {
             />
             <motion.aside
               className="fixed left-0 top-0 z-50 h-screen w-[86vw] max-w-[270px] shadow-xl p-4"
-              style={{ background: "linear-gradient(to right, #5249FF, rgba(82,73,255,0.5))", color: "white" }}
+              style={{ background: "linear-gradient(to right, #5249FF, rgba(82,73,255,0.5))", color: "#e4e4e7" }}
               initial={{ x: -24, opacity: 0 }}
               animate={{ x: 0, opacity: 1 }}
               exit={{ x: -24, opacity: 0 }}
@@ -192,8 +195,8 @@ export default function NavbarSections({ active, onGo }: Props) {
                     className={[
                       "py-3 text-base border-b border-white/20 text-left transition-all duration-300",
                       active === r.id
-                        ? "text-white font-bold"
-                        : "text-white/70 hover:text-white font-normal",
+                        ? "text-zinc-200 font-bold"
+                        : "text-zinc-200/70 hover:text-zinc-200 font-normal",
                     ].join(" ")}
                     aria-current={active === r.id ? "page" : undefined}
                   >

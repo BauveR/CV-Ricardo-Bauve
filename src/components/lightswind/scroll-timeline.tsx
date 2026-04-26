@@ -22,6 +22,7 @@ export interface TimelineEvent {
   alignment?: "left" | "right" | "both";
   href?: string;
   iconUrl?: string;
+  iconUrls?: string[];
   noIcon?: boolean;
   right?: {
     year?: string;
@@ -100,12 +101,12 @@ const TimelineItem = memo(function TimelineItem({
   const buildInner = (data: {
     year?: string; title?: string; subtitle?: string;
     description?: string; iconUrl?: string; iconUrls?: string[]; icon?: React.ReactNode; href?: string; noIcon?: boolean;
-  }) => {
+  }, isLeft = false) => {
     const card = (
       <Card className="bg-white/80 border border-gray-200">
         <CardContent className="p-3 md:p-6">
           <div className="flex flex-col gap-2 mb-2">
-            <span className="text-sm text-slate-800" style={{ fontFamily: "'Boldonse', sans-serif" }}>{data.year}</span>
+            <span className="text-sm text-zinc-400" style={{ fontFamily: "'Boldonse', sans-serif" }}>{data.year}</span>
             {!data.noIcon && (
               <div className="flex items-center gap-3">
                 {data.iconUrls
@@ -117,7 +118,7 @@ const TimelineItem = memo(function TimelineItem({
               </div>
             )}
           </div>
-          <h3 className="text-base mb-1 text-gray-800" style={{ fontFamily: "'Boldonse', sans-serif" }}>{data.title}</h3>
+          <h3 className={`text-base mb-1 ${isLeft ? "text-zinc-600" : "text-blue-800"}`} style={{ fontFamily: "'Boldonse', sans-serif" }}>{data.title}</h3>
           {data.subtitle && <p className="text-gray-500 font-medium mb-2 text-sm">{data.subtitle}</p>}
           {data.description && <p className="text-gray-400 text-sm">{data.description}</p>}
         </CardContent>
@@ -130,11 +131,12 @@ const TimelineItem = memo(function TimelineItem({
     ) : card;
   };
 
-  const leftData = { year: event.year, title: event.title, subtitle: event.subtitle, description: event.description, iconUrl: event.iconUrl, icon: event.icon, href: event.href, noIcon: event.noIcon };
+  const leftData = { year: event.year, title: event.title, subtitle: event.subtitle, description: event.description, iconUrl: event.iconUrl, iconUrls: event.iconUrls, icon: event.icon, href: event.href, noIcon: event.noIcon };
   const rightData = event.right ? { ...leftData, iconUrls: undefined, ...event.right } : leftData;
 
-  const cardContent = buildInner(leftData);
-  const rightCardContent = buildInner(rightData);
+  const cardContent = buildInner(leftData, true);
+  const rightCardContent = buildInner(rightData, false);
+  const singleCardContent = effectiveAlignment === "right" ? buildInner(leftData, false) : cardContent;
 
   const cardClass = "relative z-30 rounded-lg bg-card/50 backdrop-blur border-2 border-primary/20 w-[calc(50%-12px)] mt-0";
 
@@ -179,7 +181,7 @@ const TimelineItem = memo(function TimelineItem({
     >
       <div ref={itemRef} className="absolute inset-0 pointer-events-none" />
       {dot}
-      {cardMotion(cardContent, effectiveAlignment === "left" ? "mr-[calc(50%+12px)]" : "ml-[calc(50%+12px)]")}
+      {cardMotion(singleCardContent, effectiveAlignment === "left" ? "mr-[calc(50%+12px)]" : "ml-[calc(50%+12px)]")}
     </div>
   );
 });
@@ -259,7 +261,7 @@ export const ScrollTimeline = ({
       {leftTitle || rightTitle ? (
         <div className="relative max-w-6xl mx-auto px-4 pt-8 pb-16 flex justify-between">
           <div className="w-[calc(50%-40px)]">
-            {leftTitle && <h2 className="text-3xl md:text-4xl font-bold" style={{ fontFamily: "'Boldonse', sans-serif", color: "#ffffff", fontSize: "clamp(1.305rem, 2.94vw, 3.27rem)" }}>{leftTitle}</h2>}
+            {leftTitle && <h2 className="text-3xl md:text-4xl font-bold" style={{ fontFamily: "'Boldonse', sans-serif", color: "#e4e4e7", fontSize: "clamp(0.87rem, 1.96vw, 2.18rem)" }}>{leftTitle}</h2>}
           </div>
           <div className="w-[calc(50%+20px)]" style={{ marginLeft: "-0.5rem" }}>
             {rightTitle && (
@@ -267,7 +269,7 @@ export const ScrollTimeline = ({
                 className="font-bold"
                 style={{
                   fontFamily: "'Boldonse', sans-serif",
-                  fontSize: "clamp(1.305rem, 2.94vw, 3.27rem)",
+                  fontSize: "clamp(0.87rem, 1.96vw, 2.18rem)",
                   background: "linear-gradient(135deg, #22c55e, #ffffff, #a855f7, #22c55e)",
                   backgroundSize: "300% 300%",
                   WebkitBackgroundClip: "text",

@@ -67,12 +67,12 @@ export const PortafolioCard = ({
         </div>
 
         {/* Content */}
-        <GlassCardContent className="border-t border-white/20 px-4 py-3">
-          <h3 className="text-2xl tracking-wide font-medium text-gray-700 leading-tight line-clamp-1">
+        <GlassCardContent className="border-t border-white/20 px-4 pt-6 pb-3">
+          <h3 className="text-2xl tracking-wide font-medium text-white leading-tight line-clamp-1">
             {name}
           </h3>
           {description && (
-            <p className="mt-2 text-lg text-gray-400 leading-relaxed line-clamp-3">
+            <p className="mt-2 text-lg text-white/60 leading-relaxed line-clamp-2">
               {description}
             </p>
           )}
@@ -85,7 +85,7 @@ export const PortafolioCard = ({
             size="full"
             onClick={(e) => { e.stopPropagation(); goDetail(); }}
           >
-            View
+            Ver proyecto
           </GlassButton>
         </GlassCardFooter>
       </GlassCard>

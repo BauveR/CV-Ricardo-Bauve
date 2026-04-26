@@ -26,17 +26,13 @@ export const PortafolioDetailPage = ({ onClose }: Props) => {
       onClose();
     } else {
       navigate("/", { replace: true });
-      setTimeout(() => {
-        window.location.hash = "#portafolio";
-      }, 100);
+      setTimeout(() => { window.location.hash = "#portafolio"; }, 100);
     }
   };
 
-  // Usar el índice del state, o defaultear a 0 si no existe
   const currentIndex = itemFromState?.index ?? 0;
   const project = validProjects[currentIndex];
 
-  // Si no hay state, usar el primer proyecto
   const data: PortafolioItemState = {
     index: currentIndex,
     name: itemFromState?.name ?? project?.text ?? "Proyecto",
@@ -45,110 +41,92 @@ export const PortafolioDetailPage = ({ onClose }: Props) => {
     link: itemFromState?.link ?? project?.link,
   };
 
-  const goPrev = () => {
-    const prevIndex = (currentIndex - 1 + validProjects.length) % validProjects.length;
-    const prevProject = validProjects[prevIndex];
-    navigate(`/portafolio/${prevIndex}`, {
-      state: {
-        index: prevIndex,
-        name: prevProject?.text,
-        primaryImage: prevProject?.resolvedImage,
-        description: prevProject?.longDescription,
-        link: prevProject?.link,
-      },
-    });
-  };
-
-  const goNext = () => {
-    const nextIndex = (currentIndex + 1) % validProjects.length;
-    const nextProject = validProjects[nextIndex];
-    navigate(`/portafolio/${nextIndex}`, {
-      state: {
-        index: nextIndex,
-        name: nextProject?.text,
-        primaryImage: nextProject?.resolvedImage,
-        description: nextProject?.longDescription,
-        link: nextProject?.link,
-      },
-    });
-  };
+  const total = validProjects.length;
+  const displayIndex = String(currentIndex + 1).padStart(2, "0");
+  const displayTotal = String(total).padStart(2, "0");
 
   return (
-    <main className="relative mx-auto max-w-[1550px] px-4 sm:px-8 md:px-12 lg:px-16 pt-8 pb-12">
-      <button
-        type="button"
-        onClick={handleClose}
-        className="absolute top-4 right-4 sm:top-6 sm:right-6 p-1.5 sm:p-2 rounded-full bg-gray-100 hover:bg-gray-200 backdrop-blur-sm transition-all duration-200 z-50 text-gray-400 hover:text-gray-500"
-        aria-label="Cerrar"
-      >
-        <svg width="14" height="14" className="sm:w-4 sm:h-4" viewBox="0 0 24 24" stroke="currentColor" fill="none" strokeWidth="1.5">
-          <path d="M6 6l12 12M18 6l-12 12" strokeLinecap="round" strokeLinejoin="round" />
-        </svg>
-      </button>
+    <main className="relative mx-auto max-w-[1550px] px-6 sm:px-10 md:px-14 lg:px-16 pt-10 pb-14">
 
-      <button
-        type="button"
-        onClick={goPrev}
-        className="absolute top-1/2 -translate-y-1/2 left-2 sm:left-4 md:left-6 p-1.5 sm:p-2 rounded-full bg-gray-100 hover:bg-gray-200 backdrop-blur-sm transition-all duration-200 z-20 text-gray-400 hover:text-gray-500"
-        aria-label="Anterior"
-      >
-        <svg width="14" height="14" className="sm:w-4 sm:h-4" viewBox="0 0 24 24" stroke="currentColor" fill="none" strokeWidth="1.5">
-          <path d="M15 18l-6-6 6-6" strokeLinecap="round" strokeLinejoin="round" />
-        </svg>
-      </button>
+      {/* Header: contador + botón cerrar */}
+      <div className="flex items-center justify-between mb-8 sm:mb-10">
+        <span
+          className="text-xs tracking-[0.2em] text-white/40 font-mono select-none"
+          style={{ fontFamily: "monospace" }}
+        >
+          {displayIndex} <span className="text-white/20">/ {displayTotal}</span>
+        </span>
+        <button
+          type="button"
+          onClick={handleClose}
+          className="flex items-center gap-2 px-3 py-1.5 rounded-full border border-white/10 bg-white/5 hover:bg-white/15 transition-all duration-200 text-white/50 hover:text-white text-xs tracking-widest"
+          aria-label="Cerrar"
+        >
+          <svg width="10" height="10" viewBox="0 0 24 24" stroke="currentColor" fill="none" strokeWidth="2">
+            <path d="M6 6l12 12M18 6l-12 12" strokeLinecap="round" strokeLinejoin="round" />
+          </svg>
+          ESC
+        </button>
+      </div>
 
-      <button
-        type="button"
-        onClick={goNext}
-        className="absolute top-1/2 -translate-y-1/2 right-2 sm:right-4 md:right-6 p-1.5 sm:p-2 rounded-full bg-gray-100 hover:bg-gray-200 backdrop-blur-sm transition-all duration-200 z-20 text-gray-400 hover:text-gray-500"
-        aria-label="Siguiente"
-      >
-        <svg width="14" height="14" className="sm:w-4 sm:h-4" viewBox="0 0 24 24" stroke="currentColor" fill="none" strokeWidth="1.5">
-          <path d="M9 6l6 6-6 6" strokeLinecap="round" strokeLinejoin="round" />
-        </svg>
-      </button>
-
-      <motion.div
-        className="flex flex-col lg:flex-row items-start lg:items-center gap-6 sm:gap-8 lg:gap-12 mt-12 sm:mt-16 max-w-[1200px] mx-auto"
-        initial={{ opacity: 0, y: 10 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.5, delay: 0.1, ease: [0.16, 1, 0.3, 1] }}
-      >
-        {/* Imagen - 20% más pequeña: de 700px a 560px */}
-        <div className="relative w-full lg:w-auto lg:flex-shrink-0 overflow-hidden rounded-2xl bg-gray-100/30">
+      {/* Layout imagen + texto */}
+      <div className="flex flex-col lg:flex-row items-center gap-8 lg:gap-14 max-w-[1200px] mx-auto">
+        {/* Imagen */}
+        <div
+          className="relative w-full lg:w-[560px] lg:flex-shrink-0 rounded-2xl overflow-hidden flex items-center justify-center"
+          style={{ height: "380px" }}
+        >
+          {/* Glow detrás de la imagen */}
+          <div className="absolute inset-0 rounded-2xl bg-gradient-to-br from-violet-500/10 via-transparent to-cyan-500/10 pointer-events-none" />
           <motion.img
             key={data.primaryImage + currentIndex}
             src={data.primaryImage}
             alt={data.name}
-            className="w-full lg:w-[560px] h-auto object-contain"
-            initial={{ opacity: 0, scale: 1.05 }}
-            animate={{ opacity: 1, scale: 1 }}
-            transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
+            className="relative z-10 w-full h-full object-contain drop-shadow-2xl"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ duration: 0.35, ease: "easeOut" }}
           />
         </div>
 
-        {/* Título y descripción - derecha en desktop, abajo en mobile */}
+        {/* Texto */}
         <motion.div
-          className="flex flex-col justify-start lg:flex-1 w-full lg:w-auto"
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.5, delay: 0.2, ease: [0.16, 1, 0.3, 1] }}
+          className="flex flex-col justify-center lg:flex-1 w-full lg:pr-[8%] gap-5"
+          key={currentIndex}
+          initial={{ opacity: 0.4 }}
+          animate={{ opacity: 1 }}
+          transition={{ duration: 0.3, ease: "easeOut" }}
         >
-          <h1 className="text-lg sm:text-xl lg:text-2xl font-medium text-gray-400 leading-tight">{data.name}</h1>
+          {/* Línea decorativa */}
+          <div className="w-10 h-px bg-gradient-to-r from-violet-400 to-cyan-400 opacity-70" />
+
+          <h1
+            className="text-sm sm:text-base lg:text-xl font-bold text-white leading-loose"
+            style={{ fontFamily: "'Boldonse', sans-serif" }}
+          >
+            {data.name}
+          </h1>
+
           {data.description && (
-            <p className="mt-3 sm:mt-4 text-sm lg:text-base leading-relaxed text-gray-400">
+            <p className="text-xs lg:text-sm leading-relaxed text-white/60">
               {data.description}
             </p>
           )}
+
           {data.link && (
             <a
               href={data.link}
               target="_blank"
               rel="noopener noreferrer"
-              className="mt-6 inline-flex items-center gap-2 px-5 py-2.5 rounded-2xl bg-gradient-to-r from-orange-500 to-orange-700 text-white text-sm font-medium shadow-lg shadow-orange-300/50 hover:shadow-orange-500/70 transition duration-300"
+              className="mt-2 self-start inline-flex items-center gap-2.5 px-5 py-2.5 rounded-full bg-slate-800 hover:bg-slate-700 text-white text-sm font-medium tracking-wide transition-all duration-300 group"
             >
-              Visit project
-              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+              Ver proyecto
+              <svg
+                width="13" height="13"
+                viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"
+                className="transition-transform duration-300 group-hover:translate-x-0.5 group-hover:-translate-y-0.5"
+              >
                 <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6" />
                 <polyline points="15 3 21 3 21 9" />
                 <line x1="10" y1="14" x2="21" y2="3" />
@@ -156,7 +134,7 @@ export const PortafolioDetailPage = ({ onClose }: Props) => {
             </a>
           )}
         </motion.div>
-      </motion.div>
+      </div>
     </main>
   );
 };

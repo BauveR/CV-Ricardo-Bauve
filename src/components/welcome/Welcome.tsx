@@ -3,6 +3,9 @@ import { motion, useScroll, useTransform, useSpring, useMotionValue } from "fram
 import { ScrollReveal } from "../ui/ScrollReveal";
 import { useIsTablet } from "../../hooks/useIsTablet";
 import { useIsMobile } from "../../hooks/useIsMobile";
+import ProfileCard from "./ProfileCard";
+import BlurText from "./BlurText";
+import Particles from "./Particles";
 
 export const Welcome = () => {
   const sectionRef = useRef<HTMLElement>(null);
@@ -42,12 +45,6 @@ export const Welcome = () => {
     x: { duration: 1.4, ease: [0.16, 1, 0.3, 1] as const },
   };
 
-  // Estilos por breakpoint — una sola fuente de verdad por elemento
-  const pngStyle = {
-    top: isTablet ? "23%" : "17%",
-    height: isTablet ? "50%" : "70%",
-  };
-
   const contentStyle = isDesktop
     ? { width: "63%", paddingRight: "2.5rem", marginLeft: "auto" }
     : isTablet
@@ -78,9 +75,22 @@ export const Welcome = () => {
       onMouseMove={handleMouseMove}
       onMouseLeave={handleMouseLeave}
     >
-      {/* Fondo */}
-      <div className="absolute inset-0 z-0" style={{ background: "linear-gradient(to top, #5249FF, #E3FFD9)" }} />
-      {/* Buffer móvil: extiende el color base para absorber el salto de Safari */}
+      {/* Fondo sólido — full width */}
+      <div className="absolute inset-0 z-0" style={{ background: "#0f172a" }} />
+      {/* Partículas — full width */}
+      <div className="absolute inset-0 z-10 pointer-events-none">
+        <Particles
+          particleColors={["#5249FF"]}
+          particleCount={180}
+          particleSpread={8}
+          speed={0.08}
+          particleBaseSize={160}
+          moveParticlesOnHover={false}
+          alphaParticles={true}
+          disableRotation={false}
+        />
+      </div>
+      {/* Buffer móvil */}
       {isMobile && (
         <div
           className="absolute z-0"
@@ -88,111 +98,180 @@ export const Welcome = () => {
             left: 0, right: 0,
             bottom: "calc(-4rem - env(safe-area-inset-bottom))",
             height: "calc(4rem + env(safe-area-inset-bottom) + 2px)",
-            background: "#5249FF",
+            background: "#0f172a",
           }}
         />
       )}
 
-      {/* PNG — desktop & tablet, absoluto respecto a la sección */}
-      {!isMobile && (
-        <motion.div
-          className="absolute h-full pointer-events-none z-20"
-          style={{ left: "-10%", top: pngStyle.top }}
-          initial={{ x: "-100vw", opacity: 0, filter: "blur(20px)" }}
-          animate={{ x: 0, opacity: 1, filter: "blur(0px)" }}
-          transition={entranceTransition}
-        >
-          <motion.img
-            src="https://res.cloudinary.com/dmweipuof/image/upload/f_auto,q_auto,w_700/v1773766079/cute_bauve3_koppbd.png"
-            alt="Ricardo Bauve ilustración"
-            className="w-auto object-contain"
-            style={{ x: imgX, translateX: mouseX, height: pngStyle.height }}
-            fetchPriority="high"
-            decoding="async"
-          />
-        </motion.div>
-      )}
+      {/* Contenedor de contenido — limitado a max-w-screen-2xl */}
+      <div className="relative z-20 w-full max-w-screen-2xl mx-auto min-h-[100svh] flex items-center">
 
-      {/* Contenido principal */}
-      <div className="relative z-20 flex flex-col items-start gap-8" style={contentStyle}>
-
-        {/* PNG — solo mobile */}
-        {isMobile && (
-          <motion.div
-            className="w-full flex justify-start"
-            initial={{ x: "-100vw", opacity: 0, filter: "blur(20px)" }}
-            animate={{ x: "-30vw", opacity: 1, filter: "blur(0px)" }}
-            transition={entranceTransition}
+        {/* ProfileCard — desktop & tablet */}
+        {!isMobile && (
+          <div
+            className="absolute"
+            style={{
+              left: isTablet ? "6%" : "10%",
+              top: "50%",
+              transform: "translateY(-50%)",
+            }}
           >
-            <img
-              src="https://res.cloudinary.com/dmweipuof/image/upload/f_auto,q_auto,w_400/v1773766079/cute_bauve3_koppbd.png"
-              alt="Ricardo Bauve ilustración"
-              className="h-24 w-auto object-contain mx-auto mt-16"
-              fetchPriority="high"
-              decoding="async"
-            />
-          </motion.div>
+            <motion.div
+              initial={{ x: "-100vw", opacity: 0, filter: "blur(20px)" }}
+              animate={{ x: 0, opacity: 1, filter: "blur(0px)" }}
+              transition={entranceTransition}
+            >
+              <motion.div style={{ x: imgX, translateX: mouseX }}>
+                <ProfileCard
+                  name="Ricardo Bauve"
+                  title="Frontend Developer"
+                  handle="r_bauve"
+                  status="Online"
+                  contactText="Contact Me"
+                  avatarUrl="https://res.cloudinary.com/dmweipuof/image/upload/v1777127500/Gemini_Generated_Image_9zc15y9zc15y9zc1_1_fedwtl.png"
+                  showUserInfo={true}
+                  showDetails={false}
+                  enableTilt={true}
+                  enableMobileTilt={false}
+                  linkedinUrl="https://www.linkedin.com/in/ricardobauve/"
+                  behindGlowColor="rgba(125, 190, 255, 0.67)"
+                  behindGlowEnabled={true}
+                  innerGradient="linear-gradient(145deg,#60496e8c 0%,#71C4FF44 100%)"
+                />
+              </motion.div>
+            </motion.div>
+          </div>
         )}
 
-        {/* SVG 1 — entra desde derecha, scroll hacia izquierda */}
-        <motion.div
-          className="w-full"
-          style={svg1WrapperStyle}
-          initial={{ x: "100vw", opacity: 0, filter: "blur(20px)" }}
-          animate={{ x: 0, opacity: 0.85, filter: "blur(0px)" }}
-          transition={entranceTransition}
-        >
-          <motion.img
-            src="https://res.cloudinary.com/dmweipuof/image/upload/f_auto,q_auto/v1773017009/Ricardo_bauve_2026-03_gy4g97.svg"
-            alt="Ricardo Bauve"
-            style={{ x: x1, width: svgWidth }}
-          />
-        </motion.div>
+        {/* Contenido principal */}
+        <div className="relative flex flex-col items-start gap-8" style={contentStyle}>
 
-        {/* SVG 2 — entra desde izquierda, scroll hacia derecha */}
-        <motion.div
-          className="w-full"
-          style={svg2WrapperStyle}
-          initial={{ x: "-100vw", opacity: 0, filter: "blur(20px)" }}
-          animate={{ x: 0, opacity: 0.85, filter: "blur(0px)" }}
-          transition={entranceTransition}
-        >
-          <motion.img
-            src="https://res.cloudinary.com/dmweipuof/image/upload/f_auto,q_auto/v1773017005/Ricardo_bauve_2026-02_q1vtri.svg"
-            alt="Ricardo Bauve"
-            style={{ x: x2, width: svgWidth }}
-          />
-        </motion.div>
+          {/* ProfileCard — solo mobile */}
+          {isMobile && (
+            <motion.div
+              className="w-full flex justify-center"
+              initial={{ x: "-100vw", opacity: 0, filter: "blur(20px)" }}
+              animate={{ x: 0, opacity: 1, filter: "blur(0px)" }}
+              transition={entranceTransition}
+              style={{ marginTop: "4rem" }}
+            >
+              <div style={{ transform: "scale(0.52)", transformOrigin: "top center" }}>
+                <ProfileCard
+                  name="Ricardo Bauve"
+                  title="Frontend Developer"
+                  handle="r_bauve"
+                  status="Online"
+                  contactText="Contact Me"
+                  avatarUrl="https://res.cloudinary.com/dmweipuof/image/upload/v1777127500/Gemini_Generated_Image_9zc15y9zc15y9zc1_1_fedwtl.png"
+                  showUserInfo={false}
+                  showDetails={false}
+                  enableTilt={false}
+                  enableMobileTilt={false}
+                  behindGlowColor="rgba(125, 190, 255, 0.67)"
+                  behindGlowEnabled={true}
+                  innerGradient="linear-gradient(145deg,#60496e8c 0%,#71C4FF44 100%)"
+                />
+              </div>
+            </motion.div>
+          )}
 
-        {/* Grid de texto — 2 columnas en desktop/tablet, 1 en mobile */}
-        <div className="relative z-10" style={textGridStyle}>
-          <p
-            className="tracking-[0.05em] text-white font-sans font-bold leading-relaxed"
-            style={{ fontSize: isDesktop ? "0.875rem" : isTablet ? "1.14rem" : "1.0625rem", letterSpacing: isDesktop ? "0.15em" : undefined }}
+          {/* TEXTO 1 — RICARDO */}
+          <motion.div
+            className="w-full"
+            style={svg1WrapperStyle}
+            initial={{ x: "100vw", opacity: 0, filter: "blur(20px)" }}
+            animate={{ x: 0, opacity: 0.85, filter: "blur(0px)" }}
+            transition={entranceTransition}
           >
-            Diseñador y comunicador visual<br />
-            Product owner jr.<br />
-            Frontend Developer
-          </p>
-          <div className="flex flex-col gap-4">
-            <ScrollReveal
-              textClassName="text-xs md:text-sm text-white font-sans font-medium"
-              staggerDelay={0.02}
-              blurStrength={4}
-              threshold={0.05}
-              baseRotation={2}
+            <motion.span
+              style={{
+                x: x1,
+                display: "block",
+                fontFamily: "'Boldonse', sans-serif",
+                fontSize: "clamp(1.5rem, 4.33vw, 4.67rem)",
+                color: "#e4e4e7",
+                lineHeight: 1,
+                width: svgWidth,
+              }}
             >
-              Coleccionista, reparador, constructor. Me muevo entre objetos que tienen algo que decir: piezas que acumulan tiempo en su superficie, que guardan en su materia una forma de conocimiento que el ojo solo aprende tocando. Me pregunto por qué ciertos productos permanecen, por qué conectan con tantos a través de las décadas, cómo una marca puede reinventarse y seguir siendo, en el fondo, ella misma. En un mundo donde los límites entre lo humano, lo material y lo tecnológico se disuelven y rehacen sin descanso, creo que la autenticidad no es un origen fijo sino un gesto que se repite, que se hereda y se transforma.
-            </ScrollReveal>
-            <ScrollReveal
-              textClassName="text-xs md:text-sm text-white/70 font-sans font-medium italic"
-              staggerDelay={0.05}
-              blurStrength={6}
-              threshold={0.3}
-              baseRotation={0}
+              <BlurText
+                text="RICARDO"
+                animateBy="letters"
+                direction="top"
+                delay={80}
+                stepDuration={0.4}
+              />
+            </motion.span>
+          </motion.div>
+
+          {/* TEXTO 2 — BAUVE */}
+          <motion.div
+            className="w-full"
+            style={svg2WrapperStyle}
+            initial={{ x: "-100vw", opacity: 0, filter: "blur(20px)" }}
+            animate={{ x: 0, opacity: 0.85, filter: "blur(0px)" }}
+            transition={entranceTransition}
+          >
+            <motion.span
+              style={{
+                x: x2,
+                display: "block",
+                fontFamily: "'Boldonse', sans-serif",
+                fontSize: "clamp(1.5rem, 4.33vw, 4.67rem)",
+                color: "#e4e4e7",
+                lineHeight: 1,
+                width: svgWidth,
+              }}
             >
-              "Las tecnologías que usamos nos modelan constantemente, igual que nosotros las modelamos a ellas." — N. Katherine Hayles
-            </ScrollReveal>
+              <BlurText
+                text="BAUVE"
+                animateBy="letters"
+                direction="top"
+                delay={80}
+                stepDuration={0.4}
+              />
+            </motion.span>
+          </motion.div>
+
+          {/* Grid de texto */}
+          <div className="relative z-10" style={textGridStyle}>
+            <p
+              className="tracking-[0.05em] text-zinc-200 font-sans font-bold leading-relaxed"
+              style={{ fontSize: isDesktop ? "0.875rem" : isTablet ? "1.14rem" : "1.0625rem", letterSpacing: isDesktop ? "0.15em" : undefined }}
+            >
+              Diseñador y comunicador visual<br />
+              Product owner jr.<br />
+              Frontend Developer
+            </p>
+            <div className="flex flex-col gap-4">
+              <ScrollReveal
+                textClassName="text-xs md:text-sm text-zinc-200 font-sans font-normal"
+                staggerDelay={0.02}
+                blurStrength={4}
+                threshold={0.05}
+                baseRotation={2}
+              >
+                Coleccionista, reparador, constructor. Me muevo entre objetos que tienen algo que decir, piezas que acumulan tiempo en su superficie, que guardan en su materia una forma de conocimiento que el ojo solo aprende tocando. ¿Por qué ciertos productos permanecen? ¿Por qué conectan con tantos a través de las décadas? ¿Cómo una marca puede reinventarse y mantener su esencia?
+              </ScrollReveal>
+              <ScrollReveal
+                textClassName="text-xs md:text-sm text-zinc-200 font-sans font-normal"
+                staggerDelay={0.02}
+                blurStrength={4}
+                threshold={0.05}
+                baseRotation={2}
+              >
+                En un mundo donde los límites entre lo humano, lo material y lo tecnológico se disuelven y rehacen sin descanso, creo que la autenticidad no es un origen fijo sino un gesto que se repite, que se hereda y se transforma.
+              </ScrollReveal>
+              <ScrollReveal
+                textClassName="text-xs md:text-sm text-zinc-200/70 font-sans font-normal italic"
+                staggerDelay={0.05}
+                blurStrength={6}
+                threshold={0.3}
+                baseRotation={0}
+              >
+                "Las tecnologías que usamos nos modelan constantemente, igual que nosotros las modelamos a ellas." — N. Katherine Hayles
+              </ScrollReveal>
+            </div>
           </div>
         </div>
       </div>

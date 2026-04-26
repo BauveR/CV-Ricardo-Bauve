@@ -133,7 +133,7 @@ const OrbitItem = memo(({ config, isMobile }: { config: SkillConfig; isMobile: b
       >
         {icon}
         <div
-          className="absolute left-1/2 -translate-x-1/2 whitespace-nowrap pointer-events-none text-white font-bold"
+          className="absolute left-1/2 -translate-x-1/2 whitespace-nowrap pointer-events-none text-zinc-200 font-bold"
           style={{ top: "100%", marginTop: 4, fontSize: 12 }}
         >
           {label}

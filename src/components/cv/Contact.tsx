@@ -28,7 +28,7 @@ export function Contact({ email, phone, linkedin, github, web }: Props) {
               size="sm"
               borderRadius={24}
               className="whitespace-nowrap"
-              textClassName="flex items-center gap-1.5 text-white font-medium text-sm"
+              textClassName="flex items-center gap-1.5 text-zinc-200 font-medium text-sm"
             >
               <span className="font-semibold text-base md:text-lg">
                 {i === 0 ? <FaLinkedin className="text-base md:text-xl" /> : it.label}
@@ -48,7 +48,7 @@ export function Contact({ email, phone, linkedin, github, web }: Props) {
             size="sm"
             borderRadius={24}
             className="whitespace-nowrap"
-            textClassName="flex items-center gap-1.5 text-white font-medium text-sm"
+            textClassName="flex items-center gap-1.5 text-zinc-200 font-medium text-sm"
           >
             <span className="font-semibold text-base md:text-lg">📄</span>
             <span>Descargar CV</span>
