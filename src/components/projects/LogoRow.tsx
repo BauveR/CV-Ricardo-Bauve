@@ -43,7 +43,7 @@ const pickNext = (excluded: number[]): number[] => {
 export const LogoRow = () => {
   const isMobile = useIsMobile();
   const isTablet = useIsTablet();
-  const logoHeight = isMobile ? 226 : isTablet ? 150 : 72;
+  const logoHeight = isMobile ? 40 : isTablet ? 80 : 72;
 
   const [indices, setIndices] = useState([0, 1, 2]);
   const [cycleKey, setCycleKey] = useState(0);
@@ -57,12 +57,12 @@ export const LogoRow = () => {
   }, []);
 
   return (
-    <div className="flex justify-center items-center w-full" style={{ height: logoHeight, gap: isMobile || isTablet ? "2rem" : "1rem" }}>
+    <div className="flex justify-center items-center w-full" style={{ height: logoHeight, gap: isMobile ? "0.75rem" : isTablet ? "2rem" : "1rem" }}>
       {indices.map((logoIndex, slot) => (
         <div
           key={slot}
           className="relative h-full flex items-center justify-center"
-          style={{ width: isMobile || isTablet ? "33%" : logoHeight * 1.5 }}
+          style={{ width: isMobile ? logoHeight * 2 : isTablet ? "33%" : logoHeight * 1.5 }}
         >
           <AnimatePresence mode="sync">
             <motion.img

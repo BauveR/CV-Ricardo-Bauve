@@ -5,6 +5,8 @@ import { PROFILE_DATA } from "../../constants/profileData";
 import { ScrollTimeline } from "../lightswind/scroll-timeline";
 import { OrbitingSkills } from "./OrbitingSkills";
 import { experienceList } from "./data/cvData";
+import { useIsMobile } from "../../hooks/useIsMobile";
+import { useIsTablet } from "../../hooks/useIsTablet";
 
 const ALIGNMENTS: ("left" | "right" | "both")[] = ["both", "both", "both", "right", "right", "left"];
 
@@ -62,6 +64,8 @@ const timelineEvents = experienceList.map((exp, i) => ({
 
 export const MainContent = () => {
   const { contact } = PROFILE_DATA;
+  const isMobile = useIsMobile();
+  const isTablet = useIsTablet();
   const skillsRef = useRef<HTMLDivElement>(null);
   const [skillsInView, setSkillsInView] = useState(false);
 
@@ -77,14 +81,18 @@ export const MainContent = () => {
     return () => window.removeEventListener("scroll", check);
   }, [skillsInView]);
 
+  const mtContact    = isMobile ? "mt-12" : isTablet ? "mt-20" : "mt-32";
+  const mtSkills     = isMobile ? "mt-12" : isTablet ? "mt-20" : "mt-36";
+  const mtGrid       = isMobile ? "mt-12" : isTablet ? "mt-16" : "mt-28";
+  const titleSize    = isMobile ? "1.1rem"  : "clamp(0.87rem, 1.96vw, 2.18rem)";
+
   return (
     <section className="relative w-full min-h-[100svh] [overflow-x:clip]" style={{ background: "linear-gradient(to bottom, #5249FF, #0f172a)" }}>
       <div className="w-full max-w-screen-2xl mx-auto">
-      {/* separador por el menú fijo del App */}
       <div className="h-4 md:h-0" />
 
       {/* Timeline de experiencia */}
-      <div className="relative z-20 w-full max-w-4xl mx-auto mt-12">
+      <div className={`relative z-20 w-full max-w-4xl mx-auto mt-8 ${isMobile ? "px-2" : "px-4"}`}>
         <ScrollTimeline
           events={timelineEvents}
           leftTitle="Estudios"
@@ -99,11 +107,11 @@ export const MainContent = () => {
         />
       </div>
 
-      {/* Barra de contacto centrada sobre el grid */}
-      <div className="relative z-20 w-full mt-32 px-4">
+      {/* Barra de contacto */}
+      <div className={`relative z-20 w-full ${mtContact} px-4`}>
         <h2
           className="text-center text-zinc-200 mb-4"
-          style={{ fontFamily: "'Boldonse', sans-serif", fontSize: "clamp(0.87rem, 1.96vw, 2.18rem)" }}
+          style={{ fontFamily: "'Boldonse', sans-serif", fontSize: titleSize }}
         >
           Contacto
         </h2>
@@ -113,10 +121,10 @@ export const MainContent = () => {
       </div>
 
       {/* Loop de skills */}
-      <div className="relative z-20 w-full mt-36 px-4">
+      <div className={`relative z-20 w-full ${mtSkills} px-4`}>
         <h2
           className="text-center text-zinc-200 mb-8"
-          style={{ fontFamily: "'Boldonse', sans-serif", fontSize: "clamp(0.87rem, 1.96vw, 2.18rem)" }}
+          style={{ fontFamily: "'Boldonse', sans-serif", fontSize: titleSize }}
         >
           Tecnologías y programas
         </h2>
@@ -124,7 +132,7 @@ export const MainContent = () => {
       </div>
 
       {/* Skills + Sobre mí */}
-      <div className="relative z-20 w-[90vw] md:w-[60vw] max-w-4xl mx-auto pb-20 mt-28 grid grid-cols-1 md:grid-cols-2 gap-x-[5vw] gap-y-12">
+      <div className={`relative z-20 w-[90vw] md:w-[60vw] max-w-4xl mx-auto pb-20 ${mtGrid} grid grid-cols-1 md:grid-cols-2 gap-x-[5vw] gap-y-12`}>
 
         {/* Columna izquierda: Skills */}
         <div className="flex flex-col items-start text-left md:items-end md:text-right">
@@ -132,7 +140,7 @@ export const MainContent = () => {
             className="mb-6"
             style={{
               fontFamily: "'Boldonse', sans-serif",
-              fontSize: "clamp(0.87rem, 1.96vw, 2.18rem)",
+              fontSize: titleSize,
               background: "linear-gradient(135deg, #22c55e, #ffffff, #a855f7, #22c55e)",
               backgroundSize: "300% 300%",
               WebkitBackgroundClip: "text",
@@ -186,7 +194,7 @@ export const MainContent = () => {
         <div className="flex flex-col items-start text-left">
           <h2
             className="mb-6 text-zinc-200"
-            style={{ fontFamily: "'Boldonse', sans-serif", fontSize: "clamp(0.87rem, 1.96vw, 2.18rem)" }}
+            style={{ fontFamily: "'Boldonse', sans-serif", fontSize: titleSize }}
           >
             Sobre mí
           </h2>

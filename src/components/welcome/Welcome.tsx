@@ -49,28 +49,33 @@ export const Welcome = () => {
     ? { width: "63%", paddingRight: "2.5rem", marginLeft: "auto" }
     : isTablet
     ? { width: "100%", padding: "0 2rem" }
-    : { width: "100%", padding: "0 1.5rem" };
+    : { width: "100%", padding: "0 2.5rem" };
 
   const svg1WrapperStyle = isTablet
     ? { marginTop: "-30rem", marginLeft: "0rem" }
+    : isMobile
+    ? { marginTop: "-3.25rem" }
     : undefined;
 
   const svg2WrapperStyle = isTablet
     ? { marginLeft: "0rem" }
+    : isMobile
+    ? { marginTop: "-2rem" }
     : undefined;
 
   const svgWidth = isTablet ? "62%" : "80%";
+  const fontSize = isMobile ? "clamp(2rem, 10vw, 3.5rem)" : "clamp(1.5rem, 4.33vw, 4.67rem)";
 
   const textGridStyle = isTablet
     ? { position: "absolute" as const, bottom: "-32rem", left: "8%", width: "90vw", display: "grid", gridTemplateColumns: "1fr 2fr", gap: "2rem" }
     : isDesktop
     ? { width: "80%", display: "grid", gridTemplateColumns: "1fr 2fr", gap: "3rem" }
-    : { display: "grid", gridTemplateColumns: "1fr", gap: "0.75rem" };
+    : { display: "grid", gridTemplateColumns: "1fr", gap: "1.5rem" };
 
   return (
     <section
       ref={sectionRef}
-      className="relative w-full min-h-[100svh] flex items-center"
+      className={`relative w-full flex items-center ${isMobile ? "min-h-[120svh]" : "min-h-[100svh]"}`}
       style={{ overflow: isMobile ? "visible" : "hidden" }}
       onMouseMove={handleMouseMove}
       onMouseLeave={handleMouseLeave}
@@ -104,7 +109,7 @@ export const Welcome = () => {
       )}
 
       {/* Contenedor de contenido — limitado a max-w-screen-2xl */}
-      <div className="relative z-20 w-full max-w-screen-2xl mx-auto min-h-[100svh] flex items-center">
+      <div className={`relative z-20 w-full max-w-screen-2xl mx-auto flex items-center ${isMobile ? "min-h-[120svh]" : "min-h-[100svh]"}`}>
 
         {/* ProfileCard — desktop & tablet */}
         {!isMobile && (
@@ -144,7 +149,7 @@ export const Welcome = () => {
         )}
 
         {/* Contenido principal */}
-        <div className="relative flex flex-col items-start gap-8" style={contentStyle}>
+        <div className={`relative flex flex-col items-start ${isMobile ? "gap-14" : "gap-8"}`} style={contentStyle}>
 
           {/* ProfileCard — solo mobile */}
           {isMobile && (
@@ -153,9 +158,9 @@ export const Welcome = () => {
               initial={{ x: "-100vw", opacity: 0, filter: "blur(20px)" }}
               animate={{ x: 0, opacity: 1, filter: "blur(0px)" }}
               transition={entranceTransition}
-              style={{ marginTop: "4rem" }}
+              style={{ marginTop: "0.5rem", justifyContent: "flex-start", marginLeft: "1rem", marginBottom: "-7rem" }}
             >
-              <div style={{ transform: "scale(0.52)", transformOrigin: "top center" }}>
+              <div style={{ transform: "scale(0.72)", transformOrigin: "top left" }}>
                 <ProfileCard
                   name="Ricardo Bauve"
                   title="Frontend Developer"
@@ -188,7 +193,7 @@ export const Welcome = () => {
                 x: x1,
                 display: "block",
                 fontFamily: "'Boldonse', sans-serif",
-                fontSize: "clamp(1.5rem, 4.33vw, 4.67rem)",
+                fontSize: fontSize,
                 color: "#e4e4e7",
                 lineHeight: 1,
                 width: svgWidth,
@@ -217,7 +222,7 @@ export const Welcome = () => {
                 x: x2,
                 display: "block",
                 fontFamily: "'Boldonse', sans-serif",
-                fontSize: "clamp(1.5rem, 4.33vw, 4.67rem)",
+                fontSize: fontSize,
                 color: "#e4e4e7",
                 lineHeight: 1,
                 width: svgWidth,

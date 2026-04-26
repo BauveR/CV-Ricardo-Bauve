@@ -30,6 +30,7 @@ export function ProjectsSection({ sectionRef, triggerRef, cvRef }: Props) {
   const rawX = useTransform(scrollYProgress, [0, 1], ["80vw", "-120vw"]);
   const x = useSpring(rawX, { stiffness: 40, damping: 20, restDelta: 2, restSpeed: 2 });
 
+
   const rawTitleX = useTransform(scrollYProgress, [0, 0.2], ["120vw", "0vw"]);
   const titleScrollX = useSpring(rawTitleX, { stiffness: 80, damping: 20, mass: 0.3, restDelta: 2, restSpeed: 2 });
 
@@ -57,10 +58,10 @@ export function ProjectsSection({ sectionRef, triggerRef, cvRef }: Props) {
         {isMobile ? (
           /* ── Mobile: columna única ── */
           <div className="flex flex-col items-center gap-4 py-8 px-4">
-            <motion.div style={{ x: titleScrollX }} {...fadeIn}>
+            <motion.div style={{ x: titleScrollX, marginTop: "0rem" }} {...fadeIn}>
               <ProjectTitle size="clamp(0.87rem, 5vw, 1.4rem)" />
             </motion.div>
-            <div style={{ maxWidth: "90vw", pointerEvents: "none", marginTop: "0.5rem" }}>
+            <div style={{ width: "90vw", pointerEvents: "none", marginTop: "2rem" }}>
               <LogoRow />
             </div>
             <motion.div {...fadeIn}>
@@ -145,13 +146,15 @@ export function ProjectsSection({ sectionRef, triggerRef, cvRef }: Props) {
       <div
         className="relative w-full"
         style={{
-          height: carouselHeight,
-          overflow: "hidden",
+          ...(!isMobile ? {
+            height: carouselHeight,
+            overflow: "hidden",
+            WebkitMaskImage: "linear-gradient(to bottom, transparent 0%, black 14%)",
+            maskImage: "linear-gradient(to bottom, transparent 0%, black 14%)",
+          } : {}),
           zIndex: 10,
           marginTop: 0,
           marginBottom: isMobile ? "3rem" : "6rem",
-          WebkitMaskImage: "linear-gradient(to bottom, transparent 0%, black 14%)",
-          maskImage: "linear-gradient(to bottom, transparent 0%, black 14%)",
         }}
       >
         <motion.div
@@ -166,6 +169,7 @@ export function ProjectsSection({ sectionRef, triggerRef, cvRef }: Props) {
         >
           <motion.div style={{ x: isMobile ? 0 : x, pointerEvents: "none" }}>
             <div style={{ transform: isMobile ? "none" : "scale(0.558)", transformOrigin: "top left", pointerEvents: "auto" }}>
+
               <PortafolioGrid />
             </div>
           </motion.div>

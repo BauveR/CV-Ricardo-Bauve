@@ -89,7 +89,7 @@ export default function NavbarSections({ active, onGo }: Props) {
             <div className="flex items-center gap-3">
               {/* Burger */}
               <button
-                className="lg:hidden p-2 rounded-md hover:bg-gray-100"
+                className="lg:hidden p-2 rounded-md hover:bg-white/10 text-white"
                 aria-label="Abrir menú"
                 aria-expanded={mobileOpen}
                 onClick={() => setMobileOpen(true)}
