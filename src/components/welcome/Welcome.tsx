@@ -250,7 +250,7 @@ export const Welcome = () => {
             </p>
             <div className="flex flex-col gap-4">
               <ScrollReveal
-                textClassName="text-xs md:text-sm text-zinc-200 font-sans font-normal"
+                textClassName="text-sm md:text-sm text-zinc-200 font-sans font-normal"
                 staggerDelay={0.02}
                 blurStrength={4}
                 threshold={0.05}
@@ -259,7 +259,7 @@ export const Welcome = () => {
                 Coleccionista, reparador, constructor. Me muevo entre objetos que tienen algo que decir, piezas que acumulan tiempo en su superficie, que guardan en su materia una forma de conocimiento que el ojo solo aprende tocando. ¿Por qué ciertos productos permanecen? ¿Por qué conectan con tantos a través de las décadas? ¿Cómo una marca puede reinventarse y mantener su esencia?
               </ScrollReveal>
               <ScrollReveal
-                textClassName="text-xs md:text-sm text-zinc-200 font-sans font-normal"
+                textClassName="text-sm md:text-sm text-zinc-200 font-sans font-normal"
                 staggerDelay={0.02}
                 blurStrength={4}
                 threshold={0.05}
@@ -268,7 +268,7 @@ export const Welcome = () => {
                 En un mundo donde los límites entre lo humano, lo material y lo tecnológico se disuelven y rehacen sin descanso, creo que la autenticidad no es un origen fijo sino un gesto que se repite, que se hereda y se transforma.
               </ScrollReveal>
               <ScrollReveal
-                textClassName="text-xs md:text-sm text-zinc-200/70 font-sans font-normal italic"
+                textClassName="text-sm md:text-sm text-zinc-200/70 font-sans font-normal italic"
                 staggerDelay={0.05}
                 blurStrength={6}
                 threshold={0.3}
