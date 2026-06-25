@@ -167,12 +167,12 @@ const Particles = ({
 
     const mesh = new Mesh(gl, { mode: gl.POINTS, geometry, program });
 
-    let rafId: number;
+    let rafId: number | null = null;
     let lastTime = performance.now();
     let elapsed = 0;
+    let running = false;
 
     const update = (t: number) => {
-      rafId = requestAnimationFrame(update);
       elapsed += (t - lastTime) * speed;
       lastTime = t;
 
@@ -193,17 +193,35 @@ const Particles = ({
       }
 
       renderer.render({ scene: mesh, camera });
+      if (running) rafId = requestAnimationFrame(update);
     };
 
-    rafId = requestAnimationFrame(update);
+    const startLoop = () => {
+      if (running) return;
+      running = true;
+      lastTime = performance.now();
+      rafId = requestAnimationFrame(update);
+    };
+
+    const stopLoop = () => {
+      running = false;
+      if (rafId !== null) { cancelAnimationFrame(rafId); rafId = null; }
+    };
+
+    const observer = new IntersectionObserver(
+      ([entry]) => { if (entry.isIntersecting) startLoop(); else stopLoop(); },
+      { threshold: 0.01 }
+    );
+    observer.observe(container);
 
     return () => {
+      observer.disconnect();
+      stopLoop();
       window.removeEventListener('resize', resize);
       if (moveParticlesOnHover) container.removeEventListener('mousemove', handleMouseMove);
-      cancelAnimationFrame(rafId);
       if (container.contains(gl.canvas)) container.removeChild(gl.canvas);
     };
-  }, [particleCount, particleSpread, speed, moveParticlesOnHover, particleHoverFactor, alphaParticles, particleBaseSize, sizeRandomness, cameraDistance, disableRotation, pixelRatio]);
+  }, [particleCount, particleSpread, speed, particleColors, moveParticlesOnHover, particleHoverFactor, alphaParticles, particleBaseSize, sizeRandomness, cameraDistance, disableRotation, pixelRatio]);
 
   return <div ref={containerRef} className={`particles-container ${className}`.trim()} />;
 };

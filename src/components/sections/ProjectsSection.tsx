@@ -1,12 +1,15 @@
-import { RefObject } from "react";
+import { RefObject, lazy, Suspense, useRef, useEffect } from "react";
 import { motion, useScroll, useTransform, useSpring, type Transition } from "framer-motion";
 import { ScrollOrb } from "../common/ScrollOrb";
 import RotatingText from "../common/RotatingText";
 import { LogoRow } from "../projects/LogoRow";
 import { PortafolioGrid } from "../portafolio/PortafolioGrid";
-import { OctopusCanvas } from "./OctopusCanvas";
 import { useIsMobile } from "../../hooks/useIsMobile";
 import { useIsTablet } from "../../hooks/useIsTablet";
+
+const OctopusCanvas = lazy(() =>
+  import("./OctopusCanvas").then((m) => ({ default: m.OctopusCanvas }))
+);
 
 const OCTOPUS_URL = "https://res.cloudinary.com/dmweipuof/image/upload/v1777226778/octopus_draco_v6zfka.glb";
 const VIDEO_URL   = "https://res.cloudinary.com/dmweipuof/video/upload/v1777228943/09A370A6-45A5-47FC-86D7-DDB4C4F95636_vvrwhu.mp4";
@@ -17,6 +20,39 @@ type Props = {
   triggerRef: RefObject<HTMLElement | null>;
   cvRef: RefObject<HTMLElement | null>;
 };
+
+function LazyVideo({ src, style, className }: { src: string; style?: React.CSSProperties; className?: string }) {
+  const videoRef = useRef<HTMLVideoElement>(null);
+  useEffect(() => {
+    const el = videoRef.current;
+    if (!el) return;
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) {
+          el.play().catch(() => {});
+        } else {
+          el.pause();
+        }
+      },
+      { threshold: 0.1 }
+    );
+    observer.observe(el);
+    return () => observer.disconnect();
+  }, []);
+  return (
+    <video
+      ref={videoRef}
+      muted
+      loop
+      playsInline
+      preload="none"
+      style={style}
+      className={className}
+    >
+      <source src={src} type="video/mp4" />
+    </video>
+  );
+}
 
 export function ProjectsSection({ sectionRef, triggerRef, cvRef }: Props) {
   const isMobile = useIsMobile();
@@ -65,7 +101,9 @@ export function ProjectsSection({ sectionRef, triggerRef, cvRef }: Props) {
               <LogoRow />
             </div>
             <motion.div {...fadeIn}>
-              <OctopusCanvas url={OCTOPUS_URL} />
+              <Suspense fallback={null}>
+                <OctopusCanvas url={OCTOPUS_URL} />
+              </Suspense>
             </motion.div>
             <motion.a
               href={COSMOS_URL}
@@ -74,12 +112,10 @@ export function ProjectsSection({ sectionRef, triggerRef, cvRef }: Props) {
               {...fadeIn}
               style={{ borderRadius: "0.75rem", overflow: "hidden", display: "block", width: "100%", maxWidth: 280 }}
             >
-              <video
-                autoPlay muted loop playsInline
+              <LazyVideo
+                src={VIDEO_URL}
                 style={{ width: "100%", borderRadius: "0.75rem", display: "block" }}
-              >
-                <source src={VIDEO_URL} type="video/mp4" />
-              </video>
+              />
               <CosmosLabel />
             </motion.a>
           </div>
@@ -96,7 +132,9 @@ export function ProjectsSection({ sectionRef, triggerRef, cvRef }: Props) {
             {/* Col 1 — Octopus */}
             <div className="flex justify-center items-center">
               <motion.div {...fadeIn}>
-                <OctopusCanvas url={OCTOPUS_URL} />
+                <Suspense fallback={null}>
+                  <OctopusCanvas url={OCTOPUS_URL} />
+                </Suspense>
               </motion.div>
             </div>
 
@@ -128,12 +166,10 @@ export function ProjectsSection({ sectionRef, triggerRef, cvRef }: Props) {
                   maxHeight: isTablet ? 440 : 620,
                   aspectRatio: "9/16",
                 }}>
-                  <video
-                    autoPlay muted loop playsInline
+                  <LazyVideo
+                    src={VIDEO_URL}
                     style={{ width: "100%", height: "100%", objectFit: "cover", display: "block" }}
-                  >
-                    <source src={VIDEO_URL} type="video/mp4" />
-                  </video>
+                  />
                 </div>
                 <CosmosLabel />
               </motion.a>

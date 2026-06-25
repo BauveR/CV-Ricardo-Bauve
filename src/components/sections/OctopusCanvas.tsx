@@ -63,15 +63,15 @@ function getViewCfg(): ViewCfg {
 
 useGLTF.setDecoderPath("https://www.gstatic.com/draco/versioned/decoders/1.5.6/");
 
-// Actualiza la cámara cada frame según el viewCfg activo
+// Actualiza la cámara solo cuando cambia viewCfg
 function CameraSync({ viewCfg }: { viewCfg: ViewCfg }) {
   const { camera, invalidate } = useThree();
-  useFrame(() => {
+  useEffect(() => {
     camera.position.y = viewCfg.cameraY;
     camera.position.z = viewCfg.cameraZ;
     camera.lookAt(viewCfg.cameraLookAtX, viewCfg.cameraLookAtY, 0);
     invalidate();
-  });
+  }, [camera, invalidate, viewCfg]);
   return null;
 }
 
@@ -81,7 +81,8 @@ function Model({ url, scrollY }: { url: string; scrollY: number }) {
   const { actions, names } = useAnimations(animations, group);
   const rotY  = useRef(0);
   const rotX  = useRef(0);
-  const idleY = useRef(0); // acumula el giro idle continuo
+  const idleY = useRef(0);
+  const { invalidate } = useThree();
 
   useEffect(() => {
     if (names.length > 0) {
@@ -96,21 +97,20 @@ function Model({ url, scrollY }: { url: string; scrollY: number }) {
     if (!group.current) return;
     const t = state.clock.getElapsedTime();
 
-    // Giro Y: scroll + drift idle continuo
     const targetY = (scrollY / CONFIG.scrollPerRotation) * Math.PI * 2;
     rotY.current = THREE.MathUtils.lerp(rotY.current, targetY, 1 - Math.pow(0.05, delta));
     idleY.current += delta * CONFIG.idleSpinY;
 
-    // Tilt X: scroll + balanceo orgánico
     const targetX = scrollY * CONFIG.scrollTiltX;
     rotX.current = THREE.MathUtils.lerp(rotX.current, targetX, 1 - Math.pow(0.03, delta));
 
     group.current.rotation.y = rotY.current + idleY.current;
     group.current.rotation.x = rotX.current + Math.sin(t * CONFIG.wobbleSpeedX) * CONFIG.wobbleAmpX;
     group.current.rotation.z = Math.sin(t * CONFIG.wobbleSpeedZ) * CONFIG.wobbleAmpZ;
-
-    // Flote suave arriba/abajo
     group.current.position.y = Math.sin(t * CONFIG.floatSpeed) * CONFIG.floatAmp;
+
+    // Con frameloop="demand", solicitar el siguiente frame mientras el modelo está animando
+    invalidate();
   });
 
   return <primitive ref={group} object={scene} scale={1} />;
@@ -119,9 +119,23 @@ function Model({ url, scrollY }: { url: string; scrollY: number }) {
 export function OctopusCanvas({ url }: { url: string }) {
   const [scrollY, setScrollY] = useState(0);
   const [viewCfg, setViewCfg] = useState<ViewCfg>(() => getViewCfg());
+  const [visible, setVisible] = useState(false);
   const invalidateRef = useRef<(() => void) | null>(null);
+  const containerRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
+    const container = containerRef.current;
+    if (!container) return;
+    const observer = new IntersectionObserver(
+      ([entry]) => setVisible(entry.isIntersecting),
+      { threshold: 0.01 }
+    );
+    observer.observe(container);
+    return () => observer.disconnect();
+  }, []);
+
+  useEffect(() => {
+    if (!visible) return;
     const onScroll = () => {
       setScrollY(window.scrollY);
       invalidateRef.current?.();
@@ -136,10 +150,11 @@ export function OctopusCanvas({ url }: { url: string }) {
       window.removeEventListener("scroll", onScroll);
       window.removeEventListener("resize", onResize);
     };
-  }, []);
+  }, [visible]);
 
   return (
     <div
+      ref={containerRef}
       style={{
         width: viewCfg.canvasSize,
         height: viewCfg.canvasSize,
@@ -148,25 +163,27 @@ export function OctopusCanvas({ url }: { url: string }) {
         overflow: "hidden",
       }}
     >
-      <Canvas
-        frameloop="always"
-        camera={{ position: [0, viewCfg.cameraY, viewCfg.cameraZ], fov: CONFIG.cameraFov, near: 0.1, far: 100 }}
-        gl={{ antialias: true, alpha: true }}
-        style={{ background: "transparent", width: "100%", height: "100%" }}
-        dpr={[1, 2]}
-        onCreated={({ invalidate }) => { invalidateRef.current = invalidate; }}
-      >
-        <ambientLight intensity={1.2} />
-        <directionalLight position={[4, 6, 4]} intensity={1.0} color="#fff4e0" />
-        <directionalLight position={[-4, 4, -4]} intensity={0.6} color="#d4e8ff" />
-        <directionalLight position={[0, -4, 2]} intensity={0.4} color="#ffffff" />
+      {visible && (
+        <Canvas
+          frameloop="demand"
+          camera={{ position: [0, viewCfg.cameraY, viewCfg.cameraZ], fov: CONFIG.cameraFov, near: 0.1, far: 100 }}
+          gl={{ antialias: true, alpha: true }}
+          style={{ background: "transparent", width: "100%", height: "100%" }}
+          dpr={1}
+          onCreated={({ invalidate }) => { invalidateRef.current = invalidate; }}
+        >
+          <ambientLight intensity={1.2} />
+          <directionalLight position={[4, 6, 4]} intensity={1.0} color="#fff4e0" />
+          <directionalLight position={[-4, 4, -4]} intensity={0.6} color="#d4e8ff" />
+          <directionalLight position={[0, -4, 2]} intensity={0.4} color="#ffffff" />
 
-        <Suspense fallback={null}>
-          <CameraSync viewCfg={viewCfg} />
-          <Model url={url} scrollY={scrollY} />
-          <Environment preset="city" />
-        </Suspense>
-      </Canvas>
+          <Suspense fallback={null}>
+            <CameraSync viewCfg={viewCfg} />
+            <Model url={url} scrollY={scrollY} />
+            <Environment preset="city" />
+          </Suspense>
+        </Canvas>
+      )}
     </div>
   );
 }

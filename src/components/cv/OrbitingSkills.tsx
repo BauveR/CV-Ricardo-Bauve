@@ -11,7 +11,6 @@ import {
   SiMysql, SiMongodb, SiWix,
 } from "react-icons/si";
 import { TbScissors, TbMovie, TbBrandWindows, TbSparkles } from "react-icons/tb";
-import { useIsMobile } from "../../hooks/useIsMobile";
 
 type GlowColor = "cyan" | "purple" | "orange" | "green";
 
@@ -110,7 +109,7 @@ const OrbitPath = memo(({ radius, glowColor, delay = 0 }: { radius: number; glow
 });
 OrbitPath.displayName = "OrbitPath";
 
-const OrbitItem = memo(({ config, isMobile }: { config: SkillConfig; isMobile: boolean }) => {
+const OrbitItem = memo(({ config }: { config: SkillConfig }) => {
   const [hovered, setHovered] = useState(false);
   const { size, icon, iconColor, label } = config;
 
@@ -123,8 +122,6 @@ const OrbitItem = memo(({ config, isMobile }: { config: SkillConfig; isMobile: b
       <div
         className="relative w-full h-full rounded-full bg-gray-900/80 flex items-center justify-center cursor-pointer transition-all duration-200"
         style={{
-          backdropFilter: isMobile ? "none" : "blur(4px)",
-          WebkitBackdropFilter: isMobile ? "none" : "blur(4px)",
           transform: hovered ? "scale(1.3)" : "scale(1)",
           boxShadow: hovered ? `0 0 24px ${iconColor}60, 0 0 48px ${iconColor}30` : undefined,
           fontSize: size * 0.52,
@@ -147,7 +144,6 @@ OrbitItem.displayName = "OrbitItem";
 const INNER = 700;
 
 export function OrbitingSkills() {
-  const isMobile = useIsMobile();
   const [inView, setInView] = useState(false);
   const containerRef = React.useRef<HTMLDivElement>(null);
 
@@ -258,7 +254,7 @@ export function OrbitingSkills() {
                             animationPlayState: playState,
                           }}
                         >
-                          <OrbitItem config={cfg} isMobile={isMobile} />
+                          <OrbitItem config={cfg} />
                         </div>
                       </div>
                     );

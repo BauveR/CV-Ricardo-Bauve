@@ -34,7 +34,7 @@ export function ScrollReveal({
   springConfig = { damping: 25, stiffness: 100, mass: 1 },
 }: ScrollRevealProps) {
   const containerRef = useRef<HTMLDivElement>(null);
-  const isInView = useInView(containerRef, { amount: threshold, once: false });
+  const isInView = useInView(containerRef, { amount: threshold, once: true });
 
   const { scrollYProgress } = useScroll({
     target: containerRef,
